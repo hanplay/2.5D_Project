@@ -29,6 +29,11 @@ public class MoveToGroundState : BasicState
             unit.FlipRight();
     }
 
+    public override bool CanBegin()
+    {
+        return true;
+    }
+
 
     public override void Begin()
     {
@@ -37,6 +42,7 @@ public class MoveToGroundState : BasicState
 
     protected override void End()
     {
+        base.End();
         unit.SetState(unit.GetIdleState());
         unit.GetState().Begin();
         SetNextState(null);

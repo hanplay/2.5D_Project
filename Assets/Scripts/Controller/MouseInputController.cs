@@ -87,7 +87,8 @@ public class MouseInputController : MonoBehaviour
 
             if(selectedPlayer.IsTargetable(targetUnit))
             {
-                selectedPlayer.SetNextState(selectedPlayer.GetChaseTargetState(targetUnit));
+                selectedPlayer.SetTargetunit(targetUnit);
+                selectedPlayer.SetNextState(selectedPlayer.GetChaseTargetState());
             }
             else
             {

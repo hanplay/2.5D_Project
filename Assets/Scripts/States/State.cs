@@ -3,8 +3,8 @@
 public abstract class State 
 {
     protected Unit unit;
-    protected Unit targetUnit;
     protected Animator animator;
+    protected bool isStateTargetingUnit;
     private State nextState = null;
 
     public State(Unit unit)
@@ -13,7 +13,22 @@ public abstract class State
         animator = unit.transform.Find("model").GetComponent<Animator>();
     }
 
-    public abstract void Tick(float deltaTime);
+    public virtual void Tick(float deltaTime)
+    {
+        if(null != nextState)
+        {
+            if(nextState.CanAccept(this))
+            {
+                nextState.Accept(this);
+            }
+        }
+
+        if(IsEnded())
+        {
+            End();
+        }
+
+    }
 
     #region Visitor Pattern
 
@@ -26,9 +41,20 @@ public abstract class State
 
     #endregion
 
+    public abstract bool CanBegin();
     public abstract void Begin();
     protected abstract bool IsEnded();
-    protected abstract void End();
+    protected virtual void End()
+    {
+        if(null != nextState)
+        {
+            if(nextState.CanBegin())
+            {
+                unit.SetState(nextState);
+                nextState = null;
+            }
+        }
+    }
     
     public void SetNextState(State nextState)
     {
@@ -38,5 +64,7 @@ public abstract class State
     {
         return nextState;
     }
+
+    public abstract void OnTargetIsDead();
 
 }

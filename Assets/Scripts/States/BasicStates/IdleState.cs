@@ -2,12 +2,17 @@
 
 public class IdleState : BasicState
 {
-
+    
     public IdleState(Unit unit) : base(unit) { }
 
     public override void Begin()
     {
         animator.Play("Idle");
+    }
+
+    public override bool CanBegin()
+    {
+        return true;
     }
 
     protected override void End()

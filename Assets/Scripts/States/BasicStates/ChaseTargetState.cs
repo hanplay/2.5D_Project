@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 //this state must have nextState
-public class ChaseTargetState : BasicState , ITargetExistState
+public class ChaseTargetState : BasicState 
 {
     private Rigidbody rigidbody;
     private float speed = 5f; //temperal value
+
+    public override bool CanBegin()
+    {
+        return true;
+    }
 
     public ChaseTargetState(Unit unit) : base(unit)
     {
@@ -19,35 +25,30 @@ public class ChaseTargetState : BasicState , ITargetExistState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime); 
-        Vector3 direction = unit.DirectionToUnit(targetUnit);        
+        Vector3 direction = unit.ToTargetUnitDirection();        
         direction.Normalize();
         rigidbody.velocity = direction * speed;       
         
     }
     protected override bool IsEnded()
     {
-        if (unit.GetBaseAttackState(targetUnit).GetRange() >= unit.DistanceToUnit(targetUnit))
+        if (null == GetNextState())
         {
-            return true;
+            if (unit.GetBaseAttackState().IsTargetUnitInRange())
+                return true;
+            else
+                return false;
         }
-        return false;
+        else
+            return false;
     }
 
     protected override void End() 
     {
-        unit.SetState(unit.GetBaseAttackState(targetUnit));
+        base.End();
+        unit.SetState(unit.GetBaseAttackState());
         unit.GetState().Begin();
         SetNextState(null);
     }
 
-
-    public void SetTargetUnit(Unit targetUnit)
-    {
-        this.targetUnit = targetUnit;
-    }
-
-    public void OnTargetIsDead()
-    {
-        targetUnit = null;
-    }
 }

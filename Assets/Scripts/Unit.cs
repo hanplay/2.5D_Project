@@ -7,12 +7,14 @@ public abstract class Unit : MonoBehaviour
 	public event EventHandler OnTargeted;
 	public event EventHandler OnDead;
 
+	private Unit targetUnit;
+
 	private Transform modelTransform;
 	private BasicFXVixualizer BasicFXVisualizer;
 	private List<Buff> buffs = new List<Buff>();
 
+	private State state;
     #region State 
-	private BasicState state;
 	private IdleState idleState;
 	private MoveToGroundState moveToGroundState;
 	private BaseAttackState baseAttackState;
@@ -27,27 +29,25 @@ public abstract class Unit : MonoBehaviour
 		moveToGroundState.SetDestination(destination);
 		return moveToGroundState;
     }
-	public BaseAttackState GetBaseAttackState(Unit targetUnit)
+	public BaseAttackState GetBaseAttackState()
     {
-		baseAttackState.SetTargetUnit(targetUnit);
 		return baseAttackState;			
     }
-	public ChaseTargetState GetChaseTargetState(Unit targetUnit)
+	public ChaseTargetState GetChaseTargetState()
     {
-		chaseTargetState.SetTargetUnit(targetUnit);
 		return chaseTargetState;
     }
 
-	public void SetState(BasicState state)
+	public void SetState(State state)
     {
 		this.state = state;
     }
-	public BasicState GetState()
+	public State GetState()
     {
 		return state;
     }
 
-	public void SetNextState(BasicState nextState)
+	public void SetNextState(State nextState)
     {
 		state.SetNextState(nextState);
     }
@@ -123,37 +123,37 @@ public abstract class Unit : MonoBehaviour
 		transform.localScale = scale;
 	}
 
-	//public float ToTargetUnitDistance()
- //   {
-	//	return Vector3.Distance(transform.position, targetUnit.GetPosition());
- //   }
+    public float ToTargetUnitDistance()
+    {
+        return Vector3.Distance(transform.position, targetUnit.GetPosition());
+    }
 
-	//public Vector3 ToTargetUnitDirection()
- //   {
-	//	Vector3 direction = targetUnit.GetPosition() - transform.position;
-	//	direction.Normalize();
-	//	return direction;
- //   }
+    public Vector3 ToTargetUnitDirection()
+    {
+        Vector3 direction = targetUnit.GetPosition() - transform.position;
+        direction.Normalize();
+        return direction;
+    }
 
-	//public bool TargetUnitExist()
- //   {
-	//	if (null == targetUnit)
-	//		return false;
-	//	else
-	//		return true;
- //   }
+    public bool TargetUnitExist()
+    {
+        if (null == targetUnit)
+            return false;
+        else
+            return true;
+    }
 
-	//public void SetTargetunit(Unit targetUnit)
- //   {
-	//	this.targetUnit = targetUnit;
- //   }
+    public void SetTargetunit(Unit targetUnit)
+    {
+        this.targetUnit = targetUnit;
+    }
 
-	//public Unit GetTargetUnit()
- //   {
-	//	return targetUnit;
- //   }
+    public Unit GetTargetUnit()
+    {
+        return targetUnit;
+    }
 
-	public float DistanceToUnit(Unit unit)
+    public float DistanceToUnit(Unit unit)
     {
 		return Vector3.Distance(transform.position, unit.GetPosition());
     }

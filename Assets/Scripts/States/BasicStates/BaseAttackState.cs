@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BaseAttackState : BasicState, ITargetExistState
+public class BaseAttackState : BasicState
 {
     private float duration;
     private float range = 1.5f;
@@ -8,11 +8,20 @@ public class BaseAttackState : BasicState, ITargetExistState
     public BaseAttackState(Unit unit) : base(unit)
     {
     }
+    public override bool CanBegin()
+    {
+        if (unit.ToTargetUnitDistance() > range)
+        {
+            return false;
+        }
+        else
+            return true;
+    }
 
     public override void Begin()
     {
         unit.BaseAttackAction = Work;
-        animator.Play("Attack", -1);
+        animator.Play("Attack");
         duration = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 
@@ -30,15 +39,15 @@ public class BaseAttackState : BasicState, ITargetExistState
 
     protected override void End()
     {
-        if(unit.DistanceToUnit(targetUnit) < range)
+        if(unit.ToTargetUnitDistance() > range)
         {
-            unit.SetState(this);
+            unit.SetState(unit.GetChaseTargetState());
             unit.GetState().Begin();
             SetNextState(null);
         }
         else
         {
-            unit.SetState(unit.GetChaseTargetState(targetUnit));
+            unit.SetState(this);
             unit.GetState().Begin();
             SetNextState(null);
         }
@@ -64,14 +73,12 @@ public class BaseAttackState : BasicState, ITargetExistState
         return range;
     }
 
-    public void SetTargetUnit(Unit targetUnit)
+    public bool IsTargetUnitInRange()
     {
-        this.targetUnit = targetUnit;
+        if (unit.ToTargetUnitDistance() > range)
+            return false;
+        else
+            return true;
     }
 
-    public void OnTargetIsDead()
-    {
-        targetUnit = null;
-        SetNextState(unit.GetIdleState());
-    }
 }

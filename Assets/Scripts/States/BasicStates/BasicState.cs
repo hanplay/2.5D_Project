@@ -2,9 +2,7 @@
 
 public abstract class BasicState : State
 {
-    protected BasicState(Unit unit) : base(unit)
-    {
-    }
+    protected BasicState(Unit unit) : base(unit) { }
 
 
     public override void Accept(State state)
@@ -16,35 +14,19 @@ public abstract class BasicState : State
         return state.CanVisit(this);
     }
 
+
     public override bool CanVisit(BasicState basicState)
     {
-        return true;
+        return basicState.CanBegin();
     }
 
     public override bool CanVisit(SkillState skillState)
     {
-        throw new System.NotImplementedException();
+        return skillState.CanBegin();
     }
 
-    public override void Tick(float deltaTime)
-    {
-        if(IsEnded())
-        {
-            End();
-        }
-        if(null == targetUnit)
-        {
 
-        }
-        if (null == GetNextState())
-            return;
-        if(true == GetNextState().CanAccept(this))
-        {
-            GetNextState().Accept(this);
-        }
 
-      
-    }
 
     public override void Visit(BasicState basicState)
     {
@@ -55,7 +37,16 @@ public abstract class BasicState : State
 
     public override void Visit(SkillState skillState)
     {
-        throw new System.NotImplementedException();
+        unit.SetState(skillState);
+        skillState.Begin();
+        SetNextState(null);
+    }
+    public override void OnTargetIsDead()
+    {
+        if(isStateTargetingUnit)
+        {
+            unit.SetNextState(unit.GetIdleState());
+        }
     }
 }
 
