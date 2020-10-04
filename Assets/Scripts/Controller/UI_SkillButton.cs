@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class UI_SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
 {
     public event EventHandler OnButtonPressed;
-    
+
+    private SkillState skillState;
     private bool isCoolDownTime = false;
     private Image skillBlockerImage;
     private Color blockColor = new Color(0f, 0f, 0f, 0.5f);
@@ -39,7 +40,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        print("OnPointerDown");
+        
     }
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -69,5 +70,14 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         isCoolDownTime = false;
     }
 
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
     
 }

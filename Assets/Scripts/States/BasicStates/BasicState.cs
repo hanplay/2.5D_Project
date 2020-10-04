@@ -48,5 +48,10 @@ public abstract class BasicState : State
             unit.SetNextState(unit.GetIdleState());
         }
     }
+
+    public override bool CanCancel()
+    {
+        return true;
+    }
 }
 

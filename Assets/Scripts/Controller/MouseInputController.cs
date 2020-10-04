@@ -1,14 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using GameUtility;
 
 public class MouseInputController : MonoBehaviour
 {
+    public event EventHandler OnPlayerClicked;
+    public class OnPlayerClickedEvent : EventArgs
+    {
+        public Player clickedPlayer;
+    }
+
     private Player selectedPlayer;
     private Vector3 downedPosition;
     private Unit previousTargetedUnit;
     private bool isDragging;
+    private ButtonSkillController buttonSkillController;
 
     private Camera mainCamera;
     int layerMask;
@@ -17,6 +23,7 @@ public class MouseInputController : MonoBehaviour
     {
         mainCamera = Camera.main;
         layerMask = LayerMask.GetMask(LayerName.Player, LayerName.Enemy, LayerName.Ground);
+        buttonSkillController = GetComponent<ButtonSkillController>();
     }
 
     
@@ -80,8 +87,7 @@ public class MouseInputController : MonoBehaviour
 
             if(false == isDragging && selectedPlayer == targetUnit as Player)
             {
-                //OnCursorClick();
-                print("Click");
+                OnCursorClick();
                 return;
             }
 
@@ -103,7 +109,19 @@ public class MouseInputController : MonoBehaviour
 
     private void OnCursorDownPlayer(Player player)
     {
+        if(null != selectedPlayer)
+        {
+            selectedPlayer.OnDead -= SelectedPlayer_OnDead;
+        }
         selectedPlayer = player;
+        selectedPlayer.OnDead += SelectedPlayer_OnDead;
+    }
+
+    private void SelectedPlayer_OnDead(object sender, EventArgs e)
+    {
+        selectedPlayer.GetTravelRouteWriter().HideRouteLine();
+        selectedPlayer.OnDead -= SelectedPlayer_OnDead;
+        selectedPlayer = null;
     }
 
     private void OnCursorDragEnterUnit(Unit unit)
@@ -124,7 +142,7 @@ public class MouseInputController : MonoBehaviour
     //The click is taking care of down and up signals in same position
     private void OnCursorClick()
     {
-
+        OnPlayerClicked.Invoke(this, new OnPlayerClickedEvent { clickedPlayer = selectedPlayer });
     }
 
 

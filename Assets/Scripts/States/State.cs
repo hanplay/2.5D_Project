@@ -6,6 +6,7 @@ public abstract class State
     protected Animator animator;
     protected bool isStateTargetingUnit;
     private State nextState = null;
+    
 
     public State(Unit unit)
     {
@@ -65,6 +66,8 @@ public abstract class State
         return nextState;
     }
 
+    public abstract bool CanCancel();
+  
     public abstract void OnTargetIsDead();
 
 }

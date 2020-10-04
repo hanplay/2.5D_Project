@@ -1,37 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using GameUtility;
 
 public class ButtonSkillController : MonoBehaviour
 {
-    private Camera mainCamera;
+    private MouseInputController mouseInputController;
     private Player player;
-    private int layerMask;
 
-    private UI_SkillButton[] uI_SkillButtonList = new UI_SkillButton[Player.SkillCount];
-
-    //Singletone
-    private static ButtonSkillController instance;
-    public static ButtonSkillController GetInstance()
-    {
-        return instance;
-    }
+    private List<UI_SkillButton> uI_SkillButtonList = new List<UI_SkillButton>();
 
     private void Awake()
     {
-        instance = this;
-        mainCamera = Camera.main;
-        layerMask = LayerMask.GetMask(LayerName.Player, LayerName.Enemy, LayerName.Ground);
+        mouseInputController = GetComponent<MouseInputController>();
+        mouseInputController.OnPlayerClicked += MouseInputController_OnPlayerClicked;
+
+        foreach (Transform childTransform in transform)
+        {
+            uI_SkillButtonList.Add(childTransform.GetComponent<UI_SkillButton>());
+        }
+        uI_SkillButtonList.TrimExcess();
     }
 
-    private void Update()
+    private void MouseInputController_OnPlayerClicked(object sender, System.EventArgs e)
     {
-
-
+        if(null != player)
+        {
+            player.OnDead -= Player_OnDead;
+        }
+        var onPlayerClickedEvent = e as MouseInputController.OnPlayerClickedEvent;
+        player =  onPlayerClickedEvent.clickedPlayer;
+        player.OnDead += Player_OnDead;
+        // start
     }
 
-    public void SetPlayer(Player player)
+    private void Player_OnDead(object sender, System.EventArgs e)
     {
-        this.player = player;
+        player = null;
+        for(int i = 0; i < uI_SkillButtonList.Count; i++)
+        {
+            uI_SkillButtonList[i].Hide();
+        }
+        
     }
 
 }

@@ -74,5 +74,13 @@ public abstract class Player : Unit
 		return travelRouteWriter;
     }
 
+	public SkillState GetSkill(int i)
+    {
+		return skillList[i];
+    }
 
+	public int GetSkillCount()
+    {
+		return skillList.Length;
+    }
 }

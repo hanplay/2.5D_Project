@@ -36,11 +36,8 @@ public class ChaseTargetState : BasicState
         {
             if (unit.GetBaseAttackState().IsTargetUnitInRange())
                 return true;
-            else
-                return false;
         }
-        else
-            return false;
+        return false;
     }
 
     protected override void End() 
