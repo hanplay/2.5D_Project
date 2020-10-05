@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using GameUtility;
 
 public class BaseAttackState : BasicState
 {
     private float duration;
     private float range = 1.5f;
 
-    public BaseAttackState(Unit unit) : base(unit)
+    public BaseAttackState(Unit unit) : base(unit, StateType.Basic & StateType.TargetExist)
     {
     }
     public override bool CanBegin()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameUtility;
+using UnityEngine;
 
 public class MoveToGroundState : BasicState
 {
@@ -10,7 +11,7 @@ public class MoveToGroundState : BasicState
     {
         this.destination = destination;
     }
-    public MoveToGroundState(Unit unit) : base(unit) 
+    public MoveToGroundState(Unit unit) : base(unit, StateType.Basic) 
     {
         rigidbody = unit.GetComponent<Rigidbody>();
     }
@@ -42,7 +43,6 @@ public class MoveToGroundState : BasicState
 
     protected override void End()
     {
-        base.End();
         unit.SetState(unit.GetIdleState());
         unit.GetState().Begin();
         SetNextState(null);

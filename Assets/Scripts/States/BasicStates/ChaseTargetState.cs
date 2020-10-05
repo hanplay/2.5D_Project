@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using GameUtility;
 
 //this state must have nextState
 public class ChaseTargetState : BasicState 
@@ -7,14 +8,14 @@ public class ChaseTargetState : BasicState
     private Rigidbody rigidbody;
     private float speed = 5f; //temperal value
 
+  
+    public ChaseTargetState(Unit unit) : base(unit, StateType.Basic & StateType.TargetExist)
+    {
+        rigidbody = unit.GetComponent<Rigidbody>();
+    }
     public override bool CanBegin()
     {
         return true;
-    }
-
-    public ChaseTargetState(Unit unit) : base(unit)
-    {
-        rigidbody = unit.GetComponent<Rigidbody>();
     }
     public override void Begin()
     {
@@ -42,7 +43,6 @@ public class ChaseTargetState : BasicState
 
     protected override void End() 
     {
-        base.End();
         unit.SetState(unit.GetBaseAttackState());
         unit.GetState().Begin();
         SetNextState(null);

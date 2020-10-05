@@ -1,9 +1,10 @@
 ﻿using UnityEngine.Assertions;
+using GameUtility;
 
 public class IdleState : BasicState
 {
     
-    public IdleState(Unit unit) : base(unit) { }
+    public IdleState(Unit unit) : base(unit, StateType.Basic) { }
 
     public override void Begin()
     {
