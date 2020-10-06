@@ -3,9 +3,7 @@
 [System.Serializable]
 public abstract class Skill 
 {
-    [SerializeField]
-    private SkillDatum skillDatum;
-
+  
     private bool isLocked;
     private bool isCooldown;
 
@@ -16,10 +14,7 @@ public abstract class Skill
 
     private Player player;
 
-    public Skill(SkillDatum skillDatum, Player player)
-    {
-        this.skillDatum = skillDatum;
-	}
+
 
     public void Tick(float deltaTime)
     {
@@ -74,6 +69,5 @@ public abstract class Skill
 	public void Execute(Animator animator)
 	{
         isCooldown = true;
-        animator.Play(skillDatum.GetStateName());
 	}
 }

@@ -1,5 +1,7 @@
-﻿using GameUtility;
+﻿using UnityEngine;
+using GameUtility;
 using System;
+
 public enum SkillType
 {
     Heal,
@@ -16,37 +18,74 @@ public enum SkillType
 
 public abstract class SkillState : State
 {
+    private Player player;
+
+    [SerializeField]
     protected float duration;
-    private float cooldownTime;
-    private bool canCancel;
-    private float range;
+    [SerializeField]
+    protected float cooldownTime;
+    protected float lagTime;
 
 
-    public SkillState(Player player, int stateType) : base(player, stateType) { }
+
+    public SkillState(Player player, int stateType) : base(player, stateType) 
+    {
+        this.player = player;
+    }
     //public SkillState(Player player, SkillDatum skillDatum) :base(player, )
     //{
 
     //}
+    public override void Begin()
+    {
+        for (int i = 0; i < player.GetSkillCount(); i++)
+        {
+            if(null != player.GetSkill(i))
+            {
+
+
+            }
+        }
+    }
 
     public override void Accept(State state)
     {
-        throw new NotImplementedException();
+     
+        if(HasProperty(StateType.TargetExist))
+        {
+            SetNextState(null);
+            State chainState = unit.GetChaseTargetState();
+            chainState.SetNextState(this);
+            unit.SetCurrentState(chainState);
+            unit.GetCurrentState().Begin();
+        
+        }
+        else
+        {
+            SetNextState(null);
+            unit.SetCurrentState(this);
+            unit.GetCurrentState().Begin();
+        }
+        
     }
 
     public override bool CanAccept(State state)
     {
-        if(state.HasProperty(StateType.Skill & StateType.CanCancel))
+        if(state.HasProperty(StateType.Skill | StateType.CanCancel))
         {
             if(false == HasProperty(StateType.CannotBeCanceled))
                 return CanBegin();
         }
-        return false;
-            
+        else if(false == state.HasProperty(StateType.Skill))
+        {
+            return CanBegin();
+        }
+        return false;          
     }
 
     public override void Tick(float deltaTime)
     {
-        duration -= deltaTime;
+        lagTime += deltaTime;
         if (null != GetNextState())
         {
             if (GetNextState().CanAccept(this))
@@ -64,7 +103,7 @@ public abstract class SkillState : State
 
     protected override void End()
     {
-        duration = 0f;
+        lagTime = 0f;
         SetNextState(null);
         unit.SetCurrentState(unit.ProperBasicState());
         unit.GetCurrentState().Begin();
@@ -72,11 +111,17 @@ public abstract class SkillState : State
 
     protected override bool IsEnded()
     {
-        if (duration > 0)
+        if (lagTime < cooldownTime)
             return false;
         else
         {
             return true;
         }
     }
+
+    public float GetRemainedProportion()
+    {
+        return (cooldownTime - lagTime) / cooldownTime;
+    }
+
 }

@@ -14,7 +14,6 @@ public class MouseInputController : MonoBehaviour
     private Vector3 downedPosition;
     private Unit previousTargetedUnit;
     private bool isDragging;
-    private ButtonSkillController buttonSkillController;
 
     private Camera mainCamera;
     int layerMask;
@@ -23,7 +22,6 @@ public class MouseInputController : MonoBehaviour
     {
         mainCamera = Camera.main;
         layerMask = LayerMask.GetMask(LayerName.Player, LayerName.Enemy, LayerName.Ground);
-        buttonSkillController = GetComponent<ButtonSkillController>();
     }
 
     
@@ -85,7 +83,7 @@ public class MouseInputController : MonoBehaviour
                 return;            
             Unit targetUnit = raycastHit.collider.GetComponent<Unit>();
 
-            if(false == isDragging && selectedPlayer == targetUnit as Player)
+            if(selectedPlayer == targetUnit as Player)
             {
                 OnCursorClick();
                 return;
@@ -104,6 +102,8 @@ public class MouseInputController : MonoBehaviour
             selectedPlayer.GetTravelRouteWriter().HideRouteLine();
             selectedPlayer = null;
         }
+
+    
     }
 
 
