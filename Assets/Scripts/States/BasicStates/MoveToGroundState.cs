@@ -43,8 +43,8 @@ public class MoveToGroundState : BasicState
 
     protected override void End()
     {
-        unit.SetState(unit.GetIdleState());
-        unit.GetState().Begin();
+        unit.SetCurrentState(unit.GetIdleState());
+        unit.GetCurrentState().Begin();
         SetNextState(null);
     }
 

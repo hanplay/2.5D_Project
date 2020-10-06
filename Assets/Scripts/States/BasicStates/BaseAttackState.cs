@@ -42,14 +42,14 @@ public class BaseAttackState : BasicState
     {
         if(unit.ToTargetUnitDistance() > range)
         {
-            unit.SetState(unit.GetChaseTargetState());
-            unit.GetState().Begin();
+            unit.SetCurrentState(unit.GetChaseTargetState());
+            unit.GetCurrentState().Begin();
             SetNextState(null);
         }
         else
         {
-            unit.SetState(this);
-            unit.GetState().Begin();
+            unit.SetCurrentState(this);
+            unit.GetCurrentState().Begin();
             SetNextState(null);
         }
     }

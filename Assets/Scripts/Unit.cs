@@ -38,11 +38,30 @@ public abstract class Unit : MonoBehaviour
 		return chaseTargetState;
     }
 
-	public void SetState(State state)
+	public BasicState ProperBasicState()
+    {
+		if (TargetUnitExist())
+		{
+			if (baseAttackState.IsTargetUnitInRange())
+			{
+				return baseAttackState;
+			}
+			else
+			{
+				return chaseTargetState;
+			}
+		}
+		else
+		{
+			return idleState;
+		}
+	}
+
+	public void SetCurrentState(State state)
     {
 		this.state = state;
     }
-	public State GetState()
+	public State GetCurrentState()
     {
 		return state;
     }

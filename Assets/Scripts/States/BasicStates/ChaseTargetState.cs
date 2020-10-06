@@ -43,8 +43,8 @@ public class ChaseTargetState : BasicState
 
     protected override void End() 
     {
-        unit.SetState(unit.GetBaseAttackState());
-        unit.GetState().Begin();
+        unit.SetCurrentState(unit.GetBaseAttackState());
+        unit.GetCurrentState().Begin();
         SetNextState(null);
     }
 

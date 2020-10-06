@@ -23,10 +23,16 @@ public abstract class State
         ex) State : 010110,  parameter stateType : 010010 -> true
             State : 001001,  parameter stateType : 010001 -> false
     */
-    public bool HaveProperty(int stateType)
+    public bool HasProperty(int stateType)
     {
-        int i = (this.stateType & (~stateType)) | (this.stateType | (~stateType));
-        if (int.MaxValue == i)
+        /*
+            0 oper 0 -> 1
+            0 oper 1 -> 0
+            1 oper 0 -> 1
+            1 oper 1 -> 1                            
+        */
+        int bitMask = (this.stateType & (~stateType)) | (this.stateType | (~stateType));
+        if (int.MaxValue == bitMask)
         {
             return true;
         }
@@ -43,8 +49,8 @@ public abstract class State
         return nextState;
     }
 
-    public abstract bool CanTrigger(State state);
-    public abstract void Trigger(State state);
+    public abstract bool CanAccept(State state);
+    public abstract void Accept(State state);
     public abstract bool CanBegin();
     public abstract void Begin();
     protected abstract bool IsEnded();
