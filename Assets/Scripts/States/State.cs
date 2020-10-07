@@ -2,16 +2,16 @@
 
 public abstract class State 
 {
-    protected Unit unit;
+    protected Player player;
     protected Animator animator;
     private State nextState = null;
     private int stateType;
     
 
-    public State(Unit unit, int stateType)
+    public State(Player player, int stateType)
     {
-        this.unit = unit;
-        animator = unit.transform.Find("model").GetComponent<Animator>();
+        this.player = player;
+        animator = player.transform.Find("model").GetComponent<Animator>();
         this.stateType = stateType;
     }
 

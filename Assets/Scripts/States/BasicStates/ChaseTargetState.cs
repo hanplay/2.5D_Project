@@ -9,9 +9,9 @@ public class ChaseTargetState : BasicState
     private float speed = 5f; //temperal value
 
   
-    public ChaseTargetState(Unit unit) : base(unit, StateType.Basic & StateType.TargetExist)
+    public ChaseTargetState(Player player) : base(player, StateType.Basic & StateType.TargetExist)
     {
-        rigidbody = unit.GetComponent<Rigidbody>();
+        rigidbody = player.GetComponent<Rigidbody>();
     }
     public override bool CanBegin()
     {
@@ -26,7 +26,7 @@ public class ChaseTargetState : BasicState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime); 
-        Vector3 direction = unit.ToTargetUnitDirection();        
+        Vector3 direction = player.ToTargetUnitDirection();        
         direction.Normalize();
         rigidbody.velocity = direction * speed;       
         
@@ -35,7 +35,7 @@ public class ChaseTargetState : BasicState
     {
         if (null == GetNextState())
         {
-            if (unit.GetBaseAttackState().IsTargetUnitInRange())
+            if (player.GetBaseAttackState().IsTargetUnitInRange())
                 return true;
         }
         return false;
@@ -43,8 +43,8 @@ public class ChaseTargetState : BasicState
 
     protected override void End() 
     {
-        unit.SetCurrentState(unit.GetBaseAttackState());
-        unit.GetCurrentState().Begin();
+        player.SetCurrentState(player.GetBaseAttackState());
+        player.GetCurrentState().Begin();
         SetNextState(null);
     }
 

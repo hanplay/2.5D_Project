@@ -109,20 +109,20 @@ public class MouseInputController : MonoBehaviour
 
     private void OnCursorDownPlayer(Player player)
     {
-        if(null != selectedPlayer)
-        {
-            selectedPlayer.OnDead -= SelectedPlayer_OnDead;
-        }
+        //if(null != selectedPlayer)
+        //{
+        //    selectedPlayer.OnDead -= SelectedPlayer_OnDead;
+        //}
         selectedPlayer = player;
-        selectedPlayer.OnDead += SelectedPlayer_OnDead;
+        //selectedPlayer.OnDead += SelectedPlayer_OnDead;
     }
 
-    private void SelectedPlayer_OnDead(object sender, EventArgs e)
-    {
-        selectedPlayer.GetTravelRouteWriter().HideRouteLine();
-        selectedPlayer.OnDead -= SelectedPlayer_OnDead;
-        selectedPlayer = null;
-    }
+    //private void SelectedPlayer_OnDead(object sender, EventArgs e)
+    //{
+    //    selectedPlayer.GetTravelRouteWriter().HideRouteLine();
+    //    selectedPlayer.OnDead -= SelectedPlayer_OnDead;
+    //    selectedPlayer = null;
+    //}
 
     private void OnCursorDragEnterUnit(Unit unit)
     {

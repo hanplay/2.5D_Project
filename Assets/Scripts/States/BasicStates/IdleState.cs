@@ -4,7 +4,7 @@ using GameUtility;
 public class IdleState : BasicState
 {
     
-    public IdleState(Unit unit) : base(unit, StateType.Basic) { }
+    public IdleState(Player player) : base(player, StateType.Basic) { }
 
     public override void Begin()
     {

@@ -11,23 +11,23 @@ public class MoveToGroundState : BasicState
     {
         this.destination = destination;
     }
-    public MoveToGroundState(Unit unit) : base(unit, StateType.Basic) 
+    public MoveToGroundState(Player player) : base(player, StateType.Basic) 
     {
-        rigidbody = unit.GetComponent<Rigidbody>();
+        rigidbody = player.GetComponent<Rigidbody>();
     }
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
 
-        Vector3 toDestinationDirection = destination - unit.GetPosition();
+        Vector3 toDestinationDirection = destination - player.GetPosition();
         toDestinationDirection.y = 0f;
         toDestinationDirection.Normalize();
         rigidbody.velocity = toDestinationDirection * speed;
 
         if (0 > toDestinationDirection.x)
-            unit.FlipLeft();
+            player.FlipLeft();
         if (0 < toDestinationDirection.x)
-            unit.FlipRight();
+            player.FlipRight();
     }
 
     public override bool CanBegin()
@@ -43,14 +43,14 @@ public class MoveToGroundState : BasicState
 
     protected override void End()
     {
-        unit.SetCurrentState(unit.GetIdleState());
-        unit.GetCurrentState().Begin();
+        player.SetCurrentState(player.GetIdleState());
+        player.GetCurrentState().Begin();
         SetNextState(null);
     }
 
     protected override bool IsEnded()
     {
-        if (0.8f < Vector3.Distance(destination, unit.GetPosition()))
+        if (0.8f < Vector3.Distance(destination, player.GetPosition()))
         {
             return false;
         }

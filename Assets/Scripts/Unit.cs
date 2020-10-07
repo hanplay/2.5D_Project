@@ -13,77 +13,14 @@ public abstract class Unit : MonoBehaviour
 	private BasicFXVixualizer BasicFXVisualizer;
 	private List<Buff> buffs = new List<Buff>();
 
-	private State state;
-    #region State 
-	private IdleState idleState;
-	private MoveToGroundState moveToGroundState;
-	private BaseAttackState baseAttackState;
-	private ChaseTargetState chaseTargetState;
 
-	public IdleState GetIdleState()
-    {
-		return idleState;
-    }
-	public MoveToGroundState GetMoveToGroundState(Vector3 destination)
-    {
-		moveToGroundState.SetDestination(destination);
-		return moveToGroundState;
-    }
-	public BaseAttackState GetBaseAttackState()
-    {
-		return baseAttackState;			
-    }
-	public ChaseTargetState GetChaseTargetState()
-    {
-		return chaseTargetState;
-    }
-
-	public BasicState ProperBasicState()
-    {
-		if (TargetUnitExist())
-		{
-			if (baseAttackState.IsTargetUnitInRange())
-			{
-				return baseAttackState;
-			}
-			else
-			{
-				return chaseTargetState;
-			}
-		}
-		else
-		{
-			return idleState;
-		}
-	}
-
-	public void SetCurrentState(State state)
-    {
-		this.state = state;
-    }
-	public State GetCurrentState()
-    {
-		return state;
-    }
-
-	public void SetNextState(State nextState)
-    {
-		state.SetNextState(nextState);
-    }
-
-	#endregion
 
 	public Action BaseAttackAction;
 
 	protected virtual void Awake()
 	{
 		BasicFXVisualizer = GetComponent<BasicFXVixualizer>();
-		#region State 
-		state = idleState = new IdleState(this);
-		moveToGroundState = new MoveToGroundState(this);
-		baseAttackState = new BaseAttackState(this);
-		chaseTargetState = new ChaseTargetState(this);
-		#endregion
+
     }
 
     protected void Update()
@@ -97,7 +34,6 @@ public abstract class Unit : MonoBehaviour
 	}
 	protected void FixedUpdate()
     {
-		state.Tick(Time.fixedDeltaTime);
     }
 
 	public Vector3 GetPosition()
@@ -114,7 +50,6 @@ public abstract class Unit : MonoBehaviour
 	public abstract HealthPointsSystem GetHealthPointsSystem();
 
 	public abstract void BeDamaged(int damage);
-
 
 
 	public void Die()

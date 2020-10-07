@@ -29,7 +29,65 @@ public abstract class Player : Unit
 	public Action[] SkillAction = new Action[SkillActionCount];
 
 
-	
+	private State state;
+	#region State 
+	private IdleState idleState;
+	private MoveToGroundState moveToGroundState;
+	private BaseAttackState baseAttackState;
+	private ChaseTargetState chaseTargetState;
+
+	public IdleState GetIdleState()
+	{
+		return idleState;
+	}
+	public MoveToGroundState GetMoveToGroundState(Vector3 destination)
+	{
+		moveToGroundState.SetDestination(destination);
+		return moveToGroundState;
+	}
+	public BaseAttackState GetBaseAttackState()
+	{
+		return baseAttackState;
+	}
+	public ChaseTargetState GetChaseTargetState()
+	{
+		return chaseTargetState;
+	}
+
+	public BasicState ProperBasicState()
+	{
+		if (TargetUnitExist())
+		{
+			if (baseAttackState.IsTargetUnitInRange())
+			{
+				return baseAttackState;
+			}
+			else
+			{
+				return chaseTargetState;
+			}
+		}
+		else
+		{
+			return idleState;
+		}
+	}
+
+	public void SetCurrentState(State state)
+	{
+		this.state = state;
+	}
+	public State GetCurrentState()
+	{
+		return state;
+	}
+
+	public void SetNextState(State nextState)
+	{
+		state.SetNextState(nextState);
+	}
+
+	#endregion
 	protected virtual void Awake()
     {	
         base.Awake();
@@ -37,6 +95,12 @@ public abstract class Player : Unit
 		healthPointsSystem = new HealthPointsSystem(statsDatum, equipmentSystem, levelSystem);
 		statsSystem = new StatsSystem(statsDatum, equipmentSystem, levelSystem);
 		travelRouteWriter = GetComponent<TravelRouteWriter>();
+		#region State 
+		state = idleState = new IdleState(this);
+		moveToGroundState = new MoveToGroundState(this);
+		baseAttackState = new BaseAttackState(this);
+		chaseTargetState = new ChaseTargetState(this);
+		#endregion
 	}
 
 	
@@ -45,6 +109,10 @@ public abstract class Player : Unit
 		base.Update();
     }
 
+	private void FixedUpdate()
+    {
+		state.Tick(Time.fixedDeltaTime);
+	}
 
 	public override void BeDamaged(int damage)
 	{

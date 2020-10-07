@@ -6,12 +6,12 @@ public class BaseAttackState : BasicState
     private float duration;
     private float range = 1.5f;
 
-    public BaseAttackState(Unit unit) : base(unit, StateType.Basic & StateType.TargetExist)
+    public BaseAttackState(Player player) : base(player, StateType.Basic & StateType.TargetExist)
     {
     }
     public override bool CanBegin()
     {
-        if (unit.ToTargetUnitDistance() > range)
+        if (player.ToTargetUnitDistance() > range)
         {
             return false;
         }
@@ -21,7 +21,7 @@ public class BaseAttackState : BasicState
 
     public override void Begin()
     {
-        unit.BaseAttackAction = Work;
+        player.BaseAttackAction = Work;
         animator.Play("Attack");
         duration = animator.GetCurrentAnimatorStateInfo(0).length;
     }
@@ -40,16 +40,16 @@ public class BaseAttackState : BasicState
 
     protected override void End()
     {
-        if(unit.ToTargetUnitDistance() > range)
+        if(player.ToTargetUnitDistance() > range)
         {
-            unit.SetCurrentState(unit.GetChaseTargetState());
-            unit.GetCurrentState().Begin();
+            player.SetCurrentState(player.GetChaseTargetState());
+            player.GetCurrentState().Begin();
             SetNextState(null);
         }
         else
         {
-            unit.SetCurrentState(this);
-            unit.GetCurrentState().Begin();
+            player.SetCurrentState(this);
+            player.GetCurrentState().Begin();
             SetNextState(null);
         }
     }
@@ -76,7 +76,7 @@ public class BaseAttackState : BasicState
 
     public bool IsTargetUnitInRange()
     {
-        if (unit.ToTargetUnitDistance() > range)
+        if (player.ToTargetUnitDistance() > range)
             return false;
         else
             return true;

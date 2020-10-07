@@ -18,8 +18,6 @@ public enum SkillType
 
 public abstract class SkillState : State
 {
-    private Player player;
-
     [SerializeField]
     protected float duration;
     [SerializeField]
@@ -54,17 +52,17 @@ public abstract class SkillState : State
         if(HasProperty(StateType.TargetExist))
         {
             SetNextState(null);
-            State chainState = unit.GetChaseTargetState();
+            State chainState = player.GetChaseTargetState();
             chainState.SetNextState(this);
-            unit.SetCurrentState(chainState);
-            unit.GetCurrentState().Begin();
+            player.SetCurrentState(chainState);
+            player.GetCurrentState().Begin();
         
         }
         else
         {
             SetNextState(null);
-            unit.SetCurrentState(this);
-            unit.GetCurrentState().Begin();
+            player.SetCurrentState(this);
+            player.GetCurrentState().Begin();
         }
         
     }
@@ -105,8 +103,8 @@ public abstract class SkillState : State
     {
         lagTime = 0f;
         SetNextState(null);
-        unit.SetCurrentState(unit.ProperBasicState());
-        unit.GetCurrentState().Begin();
+        player.SetCurrentState(player.ProperBasicState());
+        player.GetCurrentState().Begin();
     }
 
     protected override bool IsEnded()

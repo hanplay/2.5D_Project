@@ -3,13 +3,13 @@ using UnityEngine;
 
 public abstract class BasicState : State
 {
-    protected BasicState(Unit unit, int stateType) : base(unit, stateType) { }
+    protected BasicState(Player player, int stateType) : base(player, stateType) { }
 
     public override void Accept(State state)
     {
         state.SetNextState(null);
-        unit.SetCurrentState(this);
-        unit.GetCurrentState().Begin();
+        player.SetCurrentState(this);
+        player.GetCurrentState().Begin();
     }
 
     public override bool CanAccept(State state)

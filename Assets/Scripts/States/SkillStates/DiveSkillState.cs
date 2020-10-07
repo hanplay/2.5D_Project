@@ -22,8 +22,8 @@ public class DiveSkillState : SkillState
         animator.Play("Jump");
         duration = 0.8f;
         totalTime = duration;
-        originPosition = unit.GetPosition();
-        targetPosition = unit.GetTargetUnit().GetPosition();
+        originPosition = player.GetPosition();
+        targetPosition = player.GetTargetUnit().GetPosition();
         
     }
 
@@ -39,7 +39,7 @@ public class DiveSkillState : SkillState
     public override void Tick(float deltaTime)
     {
         diveLagTime += deltaTime;
-        unit.SetPosition(new Vector3(originPosition.x + (targetPosition.x - originPosition.x) * diveLagTime / totalTime,
+        player.SetPosition(new Vector3(originPosition.x + (targetPosition.x - originPosition.x) * diveLagTime / totalTime,
                                     -constant * totalTime * diveLagTime + constant * (diveLagTime * diveLagTime) + originPosition.y,
                                     originPosition.z + (targetPosition.z - originPosition.z) * diveLagTime / totalTime));
         base.Tick(deltaTime);
