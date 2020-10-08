@@ -1,23 +1,15 @@
 ﻿using UnityEngine;
 using GameUtility;
 
-public class BaseAttackState : BasicState
+public class BaseAttackState : BasicState, ITargetExistsState
 {
     private float duration;
     private float range = 1.5f;
 
-    public BaseAttackState(Player player) : base(player, StateType.Basic & StateType.TargetExist)
+    public BaseAttackState(Player player) : base(player)
     {
     }
-    public override bool CanBegin()
-    {
-        if (player.ToTargetUnitDistance() > range)
-        {
-            return false;
-        }
-        else
-            return true;
-    }
+
 
     public override void Begin()
     {
@@ -40,17 +32,17 @@ public class BaseAttackState : BasicState
 
     protected override void End()
     {
-        if(player.ToTargetUnitDistance() > range)
+        if(player.DistanceToUnit(targetUnit) > player.GetBaseAttackStrategy().GetRange())
         {
-            player.SetCurrentState(player.GetChaseTargetState());
-            player.GetCurrentState().Begin();
-            SetNextState(null);
+            player.SetState(player.GetChaseTargetState(targetUnit));
+            player.GetState().Begin();
+            
         }
         else
         {
-            player.SetCurrentState(this);
-            player.GetCurrentState().Begin();
-            SetNextState(null);
+            player.SetState(this);
+            player.GetState().Begin();
+            
         }
     }
 
@@ -76,10 +68,20 @@ public class BaseAttackState : BasicState
 
     public bool IsTargetUnitInRange()
     {
-        if (player.ToTargetUnitDistance() > range)
+        if (player.DistanceToUnit(targetUnit) > player.GetBaseAttackStrategy().GetRange())
             return false;
         else
             return true;
     }
 
+    public void OnTargetDead()
+    {
+        player.SetState(player.GetIdleState());
+        player.GetState().Begin();
+    }
+
+    public void SetTargetUnit(Unit targetUnit)
+    {
+        this.targetUnit = targetUnit;
+    }
 }

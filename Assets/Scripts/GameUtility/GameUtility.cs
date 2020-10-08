@@ -24,12 +24,11 @@ namespace GameUtility
 		public const string UnPointable = "UnPointable";
 	}
 
-	public struct StateType
-    {
+	public struct CommandMode
+	{
 		public const int Basic = 0x0;				//000000
-		public const int Skill = 0x1;				//000001
-		public const int TargetExist = 0x2;			//000010
-		public const int CanCancel = 0x4;			//000100
-		public const int CannotBeCanceled = 0x8;	//001000
-    }
+		public const int Skill = 0x1;               //000001
+		public const int TargetExist = 0x2;         //000010
+		public const int CanCancel = 0x4;           //000100
+	}
 }

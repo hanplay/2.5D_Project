@@ -10,11 +10,7 @@ public abstract class Skill
     private float cooldownTime;
     private float lagTime = 0f;
 
-    private readonly string animationName;
-
-    private Player player;
-
-
+    private float range;
 
     public void Tick(float deltaTime)
     {
@@ -34,15 +30,6 @@ public abstract class Skill
         return 1f - lagTime / cooldownTime;
     }
     
-    
-    public void TryToExecute(Animator animator)
-    {        
-        if(CanExecute())
-        {
-            Execute(animator);
-            isCooldown = true;
-		}
-	}
 
     public bool IsLocked()
     {
@@ -64,10 +51,5 @@ public abstract class Skill
         isLocked = true;
 	}
 
-    public abstract bool CanExecute();
 
-	public void Execute(Animator animator)
-	{
-        isCooldown = true;
-	}
 }

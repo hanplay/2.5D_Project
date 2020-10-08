@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using GameUtility;
 
-public class DiveSkillState : SkillState
+public class DiveSkillState : SkillState, ITargetExistsState
 {
+    private Unit targetUnit;
     [SerializeField]
     private GameObject smokePrefab;
     private float diveLagTime = 0f;
@@ -12,7 +13,7 @@ public class DiveSkillState : SkillState
     private float constant = -20f;
 
     public DiveSkillState(Player player) : 
-        base(player, StateType.Skill | StateType.CanCancel | StateType.TargetExist | StateType.CannotBeCanceled)
+        base(player)
     { }
 
     public override void Begin()
@@ -23,18 +24,29 @@ public class DiveSkillState : SkillState
         duration = 0.8f;
         totalTime = duration;
         originPosition = player.GetPosition();
-        targetPosition = player.GetTargetUnit().GetPosition();
+        targetPosition = targetUnit.GetPosition();
         
     }
 
-    public override bool CanBegin()
+    public override bool CanAccept(Command command)
     {
-        return true;
+        return false;
+    }
+
+    public void OnTargetDead()
+    {
+        targetUnit = null;
+    }
+
+    public void SetTargetUnit(Unit targetUnit)
+    {
+        this.targetUnit = targetUnit;
     }
 
 
     /*
-     * Tick 함수는 player.SetPosition() 함수로 deltaTime 마다 player를 
+     * Tick 함수는 player.SetPosition() 함수로 deltaTime 마다 
+     * player를 포물선 운동시킨다
      */
     public override void Tick(float deltaTime)
     {
@@ -48,8 +60,12 @@ public class DiveSkillState : SkillState
 
     protected override void End()
     {
+        if(null == targetUnit)
+        {
+            player.SetState(player.GetIdleState());
+            player.GetState().Begin();
+        }
         Debug.Log("Dive Damage Arise!!");
         //Object.Instantiate(smokePrefab, unit.GetPosition(), Quaternion.identity);
-        base.End();
     }
 }

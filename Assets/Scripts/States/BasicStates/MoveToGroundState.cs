@@ -11,7 +11,7 @@ public class MoveToGroundState : BasicState
     {
         this.destination = destination;
     }
-    public MoveToGroundState(Player player) : base(player, StateType.Basic) 
+    public MoveToGroundState(Player player) : base(player ) 
     {
         rigidbody = player.GetComponent<Rigidbody>();
     }
@@ -30,11 +30,6 @@ public class MoveToGroundState : BasicState
             player.FlipRight();
     }
 
-    public override bool CanBegin()
-    {
-        return true;
-    }
-
 
     public override void Begin()
     {
@@ -43,9 +38,8 @@ public class MoveToGroundState : BasicState
 
     protected override void End()
     {
-        player.SetCurrentState(player.GetIdleState());
-        player.GetCurrentState().Begin();
-        SetNextState(null);
+        player.SetState(player.GetIdleState());
+        player.GetState().Begin();       
     }
 
     protected override bool IsEnded()

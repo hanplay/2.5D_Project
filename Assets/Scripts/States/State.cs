@@ -4,61 +4,55 @@ public abstract class State
 {
     protected Player player;
     protected Animator animator;
-    private State nextState = null;
-    private int stateType;
-    
+    protected Unit targetUnit;
+    protected Command command;
 
-    public State(Player player, int stateType)
+    public State(Player player)
     {
         this.player = player;
         animator = player.transform.Find("model").GetComponent<Animator>();
-        this.stateType = stateType;
     }
 
-    public abstract void Tick(float deltaTime);
-    
-    /*
-        만약에 State가 stateType에 해당하는 속성을 모두 가지고 있으면 True를
-        반환
-        ex) State : 010110,  parameter stateType : 010010 -> true
-            State : 001001,  parameter stateType : 010001 -> false
-    */
-    public bool HasProperty(int stateType)
+    public virtual void Tick(float deltaTime)
     {
-        /*
-            0 oper 0 -> 1
-            0 oper 1 -> 0
-            1 oper 0 -> 1
-            1 oper 1 -> 1                            
-        */
-        int bitMask = (this.stateType & (~stateType)) | (this.stateType | (~stateType));
-        if (int.MaxValue == bitMask)
+        if (null != command)
         {
-            return true;
+            if(CanAccept(command))
+            {
+                command.Execute();
+                command = null;
+            }
+            else
+            {
+
+            }
         }
-        else
-            return false;
+
+        if(IsEnded())
+        {
+            End();
+            command = null;
+        }
     }
 
-    public void SetNextState(State nextState)
-    {
-        this.nextState = nextState;
-    }
-    public State GetNextState()
-    {
-        return nextState;
-    }
+    public abstract bool CanAccept(Command command);
 
-    public abstract bool CanAccept(State state);
-    public abstract void Accept(State state);
-    public abstract bool CanBegin();
+
     public abstract void Begin();
-    protected abstract bool IsEnded();
+
     protected abstract void End();
-    
-    
-    public int GetStateType()
+    protected abstract bool IsEnded();
+    public bool IsTargetUnitExist()
     {
-        return stateType;
+        if (null == targetUnit)
+            return false;
+        else
+            return true;
     }
+
+    public void SetCommand(Command command)
+    {
+        this.command = command;
+    }
+
 }

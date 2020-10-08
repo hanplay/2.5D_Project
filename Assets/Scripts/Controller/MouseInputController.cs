@@ -91,12 +91,11 @@ public class MouseInputController : MonoBehaviour
 
             if(selectedPlayer.IsTargetable(targetUnit))
             {
-                selectedPlayer.SetTargetunit(targetUnit);
-                selectedPlayer.SetNextState(selectedPlayer.GetChaseTargetState());
+                selectedPlayer.GetState().SetCommand(new AttackCommand(selectedPlayer, targetUnit));                
             }
             else
             {
-                selectedPlayer.SetNextState(selectedPlayer.GetMoveToGroundState(raycastHit.point));
+                selectedPlayer.GetState().SetCommand(new MoveCommand(selectedPlayer, raycastHit.point));
             }
 
             selectedPlayer.GetTravelRouteWriter().HideRouteLine();

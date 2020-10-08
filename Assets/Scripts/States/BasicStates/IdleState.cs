@@ -4,17 +4,13 @@ using GameUtility;
 public class IdleState : BasicState
 {
     
-    public IdleState(Player player) : base(player, StateType.Basic) { }
+    public IdleState(Player player) : base(player) { }
 
     public override void Begin()
     {
         animator.Play("Idle");
     }
 
-    public override bool CanBegin()
-    {
-        return true;
-    }
 
     protected override void End()
     {

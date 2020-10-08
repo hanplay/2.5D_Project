@@ -7,15 +7,16 @@ public abstract class Unit : MonoBehaviour
 	public event EventHandler OnTargeted;
 	public event EventHandler OnDead;
 
-	private Unit targetUnit;
-
-	private Transform modelTransform;
 	private BasicFXVixualizer BasicFXVisualizer;
 	private List<Buff> buffs = new List<Buff>();
 
-
-
 	public Action BaseAttackAction;
+
+	private BaseAttackStrategy baseAttackStrategy = new BaseAttackStrategy();
+	public BaseAttackStrategy GetBaseAttackStrategy() 
+	{
+		return baseAttackStrategy;
+	}
 
 	protected virtual void Awake()
 	{
@@ -77,35 +78,35 @@ public abstract class Unit : MonoBehaviour
 		transform.localScale = scale;
 	}
 
-    public float ToTargetUnitDistance()
-    {
-        return Vector3.Distance(transform.position, targetUnit.GetPosition());
-    }
+    //public float ToTargetUnitDistance()
+    //{
+    //    return Vector3.Distance(transform.position, targetUnit.GetPosition());
+    //}
 
-    public Vector3 ToTargetUnitDirection()
-    {
-        Vector3 direction = targetUnit.GetPosition() - transform.position;
-        direction.Normalize();
-        return direction;
-    }
+    //public Vector3 ToTargetUnitDirection()
+    //{
+    //    Vector3 direction = targetUnit.GetPosition() - transform.position;
+    //    direction.Normalize();
+    //    return direction;
+    //}
 
-    public bool TargetUnitExist()
-    {
-        if (null == targetUnit)
-            return false;
-        else
-            return true;
-    }
+    //public bool TargetUnitExist()
+    //{
+    //    if (null == targetUnit)
+    //        return false;
+    //    else
+    //        return true;
+    //}
 
-    public void SetTargetunit(Unit targetUnit)
-    {
-        this.targetUnit = targetUnit;
-    }
+    //public void SetTargetunit(Unit targetUnit)
+    //{
+    //    this.targetUnit = targetUnit;
+    //}
 
-    public Unit GetTargetUnit()
-    {
-        return targetUnit;
-    }
+    //public Unit GetTargetUnit()
+    //{
+    //    return targetUnit;
+    //}
 
     public float DistanceToUnit(Unit unit)
     {

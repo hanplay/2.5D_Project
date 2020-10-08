@@ -30,7 +30,7 @@ public class ButtonSkillController : MonoBehaviour
     private void ButtonSkillController_OnButtonPressed(object sender, System.EventArgs e)
     {
         UI_SkillButton.SkillButtonDownEventArgs skillButtonDownEventArgs = e as UI_SkillButton.SkillButtonDownEventArgs;
-        player.SetNextState(skillButtonDownEventArgs.ButtonDownSkillState);
+       
     }
 
 

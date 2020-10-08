@@ -26,7 +26,7 @@ public abstract class SkillState : State
 
 
 
-    public SkillState(Player player, int stateType) : base(player, stateType) 
+    public SkillState(Player player) : base(player) 
     {
         this.player = player;
     }
@@ -46,65 +46,12 @@ public abstract class SkillState : State
         }
     }
 
-    public override void Accept(State state)
-    {
-     
-        if(HasProperty(StateType.TargetExist))
-        {
-            SetNextState(null);
-            State chainState = player.GetChaseTargetState();
-            chainState.SetNextState(this);
-            player.SetCurrentState(chainState);
-            player.GetCurrentState().Begin();
-        
-        }
-        else
-        {
-            SetNextState(null);
-            player.SetCurrentState(this);
-            player.GetCurrentState().Begin();
-        }
-        
-    }
-
-    public override bool CanAccept(State state)
-    {
-        if(state.HasProperty(StateType.Skill | StateType.CanCancel))
-        {
-            if(false == HasProperty(StateType.CannotBeCanceled))
-                return CanBegin();
-        }
-        else if(false == state.HasProperty(StateType.Skill))
-        {
-            return CanBegin();
-        }
-        return false;          
-    }
-
     public override void Tick(float deltaTime)
     {
-        lagTime += deltaTime;
-        if (null != GetNextState())
-        {
-            if (GetNextState().CanAccept(this))
-            {
-                GetNextState().Accept(this);
-            }
-        }
-
         if (IsEnded())
         {
             End();
         }
-    }
-
-
-    protected override void End()
-    {
-        lagTime = 0f;
-        SetNextState(null);
-        player.SetCurrentState(player.ProperBasicState());
-        player.GetCurrentState().Begin();
     }
 
     protected override bool IsEnded()

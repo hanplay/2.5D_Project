@@ -5,7 +5,7 @@ using GameUtility;
 
 public abstract class AutomatedMoveSkillState : SkillState
 {
-    public AutomatedMoveSkillState(Player player) : base(player, StateType.Skill | StateType.CanCancel | StateType.CannotBeCanceled)
+    public AutomatedMoveSkillState(Player player) : base(player)
     {
     }
     public override void Tick(float deltaTime)

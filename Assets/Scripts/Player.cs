@@ -45,47 +45,28 @@ public abstract class Player : Unit
 		moveToGroundState.SetDestination(destination);
 		return moveToGroundState;
 	}
-	public BaseAttackState GetBaseAttackState()
+	public BaseAttackState GetBaseAttackState(Unit targetUnit)
 	{
+		baseAttackState.SetTargetUnit(targetUnit);
 		return baseAttackState;
 	}
-	public ChaseTargetState GetChaseTargetState()
+	public ChaseTargetState GetChaseTargetState(Unit targetUnit)
 	{
+		chaseTargetState.SetTargetUnit(targetUnit);
 		return chaseTargetState;
 	}
 
-	public BasicState ProperBasicState()
-	{
-		if (TargetUnitExist())
-		{
-			if (baseAttackState.IsTargetUnitInRange())
-			{
-				return baseAttackState;
-			}
-			else
-			{
-				return chaseTargetState;
-			}
-		}
-		else
-		{
-			return idleState;
-		}
-	}
 
-	public void SetCurrentState(State state)
-	{
-		this.state = state;
-	}
-	public State GetCurrentState()
+	public State GetState()
 	{
 		return state;
 	}
 
-	public void SetNextState(State nextState)
-	{
-		state.SetNextState(nextState);
-	}
+	public void SetState(State state)
+    {
+		this.state = state;
+    }
+
 
 	#endregion
 	protected virtual void Awake()
