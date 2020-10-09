@@ -3,7 +3,8 @@
 [System.Serializable]
 public abstract class Skill 
 {
-  
+    private SkillState skillState;
+
     private bool isLocked;
     private bool isCooldown;
 
@@ -29,6 +30,11 @@ public abstract class Skill
     {
         return 1f - lagTime / cooldownTime;
     }
+
+    public SkillState GetSkillState()
+    {
+        return skillState;
+    }
     
 
     public bool IsLocked()
@@ -51,5 +57,6 @@ public abstract class Skill
         isLocked = true;
 	}
 
+    public abstract int GetIndexNumber();
 
 }

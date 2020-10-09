@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using GameUtility;
 
+
 public class DiveSkillState : SkillState, ITargetExistsState
 {
     private Unit targetUnit;
@@ -12,9 +13,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
     private float totalTime;
     private float constant = -20f;
 
-    public DiveSkillState(Player player) : 
-        base(player)
-    { }
+    public DiveSkillState(Player player) : base(player) {}
 
     public override void Begin()
     {
@@ -60,12 +59,16 @@ public class DiveSkillState : SkillState, ITargetExistsState
 
     protected override void End()
     {
+        //Object.Instantiate(smokePrefab, unit.GetPosition(), Quaternion.identity);
         if(null == targetUnit)
         {
             player.SetState(player.GetIdleState());
             player.GetState().Begin();
         }
-        Debug.Log("Dive Damage Arise!!");
-        //Object.Instantiate(smokePrefab, unit.GetPosition(), Quaternion.identity);
+        else
+        {
+            Debug.Log("Dive Damage Arise!!");
+
+        }
     }
 }

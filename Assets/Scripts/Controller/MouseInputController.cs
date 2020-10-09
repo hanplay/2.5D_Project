@@ -142,6 +142,7 @@ public class MouseInputController : MonoBehaviour
     private void OnCursorClick()
     {
         OnPlayerClicked.Invoke(this, new OnPlayerClickedEvent { clickedPlayer = selectedPlayer });
+        selectedPlayer.GetTravelRouteWriter().HideRouteLine();
     }
 
 
