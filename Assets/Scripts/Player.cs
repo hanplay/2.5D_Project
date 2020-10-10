@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Player : Unit
@@ -8,6 +9,8 @@ public abstract class Player : Unit
 
 	[SerializeField]
 	protected string characterName;
+
+	private Dictionary<string, float> clipLengths = new Dictionary<string, float>();
 
 
 
@@ -28,34 +31,40 @@ public abstract class Player : Unit
     private SkillState[] skillList = new SkillState[SkillCount];
 	public Action[] SkillAction = new Action[SkillActionCount];
 
+	private InputBuffer inputHandler;
+	public InputBuffer GetInputHandler()
+    {
+		//if(null == inputHandler)
+  //      {
+		//	print("input Handler assign!");
+		//	inputHandler = new InputHandler(this);
+  //      }
+		return inputHandler;
+    }
+
+
 
 	private State state;
 	#region State 
 	private IdleState idleState;
-	private MoveToGroundState moveToGroundState;
-	private BaseAttackState baseAttackState;
-	private ChaseTargetState chaseTargetState;
+	private AttackState attackState;
+	private MoveState moveState;
+
 
 	public IdleState GetIdleState()
 	{
 		return idleState;
 	}
-	public MoveToGroundState GetMoveToGroundState(Vector3 destination)
-	{
-		moveToGroundState.SetDestination(destination);
-		return moveToGroundState;
-	}
-	public BaseAttackState GetBaseAttackState(Unit targetUnit)
-	{
-		baseAttackState.SetTargetUnit(targetUnit);
-		return baseAttackState;
-	}
-	public ChaseTargetState GetChaseTargetState(Unit targetUnit)
-	{
-		chaseTargetState.SetTargetUnit(targetUnit);
-		return chaseTargetState;
-	}
 
+	public AttackState GetAttackState()
+    {
+		return attackState;
+    }
+
+	public MoveState GetMoveState()
+    {
+		return moveState;
+    }
 
 	public State GetState()
 	{
@@ -76,23 +85,32 @@ public abstract class Player : Unit
 		healthPointsSystem = new HealthPointsSystem(statsDatum, equipmentSystem, levelSystem);
 		statsSystem = new StatsSystem(statsDatum, equipmentSystem, levelSystem);
 		travelRouteWriter = GetComponent<TravelRouteWriter>();
+
 		#region State 
+		inputHandler = new InputBuffer(this);
 		state = idleState = new IdleState(this);
-		moveToGroundState = new MoveToGroundState(this);
-		baseAttackState = new BaseAttackState(this);
-		chaseTargetState = new ChaseTargetState(this);
-		#endregion
-	}
+		attackState = new AttackState(this);
+		moveState = new MoveState(this);
+        #endregion
+
+        RuntimeAnimatorController runtimeAnimatorController = transform.Find("model").GetComponent<Animator>().runtimeAnimatorController;
+        AnimationClip[] animationClips = runtimeAnimatorController.animationClips;
+        for (int i = 0; i < animationClips.Length; i++)
+        {
+            clipLengths.Add(animationClips[i].name, animationClips[i].length);
+            Debug.Log(animationClips[i].name + ": " + animationClips[i].length);
+
+        }
+    }
 
 	
 	protected void Update()
     {
 		base.Update();
     }
-
-	private void FixedUpdate()
+	protected void FixedUpdate()
     {
-		state.Tick(Time.fixedDeltaTime);
+		state.Tick(Time.deltaTime);
 	}
 
 	public override void BeDamaged(int damage)
@@ -131,5 +149,10 @@ public abstract class Player : Unit
 	public int GetSkillCount()
     {
 		return skillList.Length;
+    }
+
+	public float GetClipLength(string name)
+    {
+		return clipLengths[name];
     }
 }

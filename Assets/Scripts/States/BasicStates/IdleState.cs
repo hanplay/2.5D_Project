@@ -1,24 +1,41 @@
-﻿using UnityEngine.Assertions;
-using GameUtility;
+﻿
 
 public class IdleState : BasicState
 {
-    
-    public IdleState(Player player) : base(player) { }
+    public IdleState(Player player) : base(player)
+    {
+    }
 
     public override void Begin()
     {
         animator.Play("Idle");
+        inputBuffer.Refresh();
     }
 
-
-    protected override void End()
+    public override void Tick(float deltaTime)
     {
-        Assert.IsTrue(true, "Idle State End Call!");
-    }
+        if (InputType.Attack == inputBuffer.GetInputType())
+        {
+            if (player.GetBaseAttackStrategy().GetRange() < player.DistanceToUnit(inputBuffer.GetTargetUnit()))
+            {
+                player.SetState(player.GetMoveState());
+                player.GetState().Begin();
+            }
+            else
+            {
+                player.SetState(player.GetAttackState());
+                player.GetState().Begin();
+            }
+        }
+        else if (InputType.Move == inputBuffer.GetInputType())
+        {
+            player.SetState(player.GetMoveState());
+            player.GetState().Begin();
+        }
+        else if (InputType.Skill == inputBuffer.GetInputType())
+        {
+            //
+        }
 
-    protected override bool IsEnded()
-    {
-        return false;
     }
 }

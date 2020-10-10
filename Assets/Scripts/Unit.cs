@@ -33,10 +33,7 @@ public abstract class Unit : MonoBehaviour
 			buff.Tick(Time.deltaTime);
 		}
 	}
-	protected void FixedUpdate()
-    {
-    }
-
+	
 	public Vector3 GetPosition()
     {
 		return transform.position;

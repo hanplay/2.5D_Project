@@ -46,23 +46,23 @@ public abstract class SkillState : State
         }
     }
 
-    public override void Tick(float deltaTime)
-    {
-        if (IsEnded())
-        {
-            End();
-        }
-    }
+    //public override void Tick(float deltaTime)
+    //{
+    //    if (IsEnded())
+    //    {
+    //        End();
+    //    }
+    //}
 
-    protected override bool IsEnded()
-    {
-        if (lagTime < cooldownTime)
-            return false;
-        else
-        {
-            return true;
-        }
-    }
+    //protected override bool IsEnded()
+    //{
+    //    if (lagTime < cooldownTime)
+    //        return false;
+    //    else
+    //    {
+    //        return true;
+    //    }
+    //}
 
     public float GetRemainedProportion()
     {

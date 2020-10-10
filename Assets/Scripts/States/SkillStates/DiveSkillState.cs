@@ -27,10 +27,6 @@ public class DiveSkillState : SkillState, ITargetExistsState
         
     }
 
-    public override bool CanAccept(Command command)
-    {
-        return false;
-    }
 
     public void OnTargetDead()
     {
@@ -53,22 +49,22 @@ public class DiveSkillState : SkillState, ITargetExistsState
         player.SetPosition(new Vector3(originPosition.x + (targetPosition.x - originPosition.x) * diveLagTime / totalTime,
                                     -constant * totalTime * diveLagTime + constant * (diveLagTime * diveLagTime) + originPosition.y,
                                     originPosition.z + (targetPosition.z - originPosition.z) * diveLagTime / totalTime));
-        base.Tick(deltaTime);
+        //base.Tick(deltaTime);
 
     }
 
-    protected override void End()
-    {
-        //Object.Instantiate(smokePrefab, unit.GetPosition(), Quaternion.identity);
-        if(null == targetUnit)
-        {
-            player.SetState(player.GetIdleState());
-            player.GetState().Begin();
-        }
-        else
-        {
-            Debug.Log("Dive Damage Arise!!");
+    //protected void End()
+    //{
+    //    //Object.Instantiate(smokePrefab, unit.GetPosition(), Quaternion.identity);
+    //    if(null == targetUnit)
+    //    {
+    //        player.SetState(player.GetIdleState());
+    //        player.GetState().Begin();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Dive Damage Arise!!");
 
-        }
-    }
+    //    }
+    //}
 }

@@ -1,15 +1,14 @@
 ﻿using GameUtility;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BasicState : State
 {
-    protected BasicState(Player player) : base(player) { }
-
-    public override bool CanAccept(Command command)
+    public BasicState(Player player) : base(player) 
     {
-        return command.CanExecute();
+        stateMode = StateMode.Basic;
     }
 
 
 }
-
