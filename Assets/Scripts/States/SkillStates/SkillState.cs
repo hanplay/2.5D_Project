@@ -18,13 +18,12 @@ public enum SkillType
 
 public abstract class SkillState : State
 {
-    [SerializeField]
     protected float duration;
-    [SerializeField]
-    protected float cooldownTime;
-    protected float lagTime;
 
+    public SkillState(Player player, SkillDatum skillDatum) : base(player)
+    {
 
+    }
 
     public SkillState(Player player) : base(player) 
     {
@@ -63,10 +62,5 @@ public abstract class SkillState : State
     //        return true;
     //    }
     //}
-
-    public float GetRemainedProportion()
-    {
-        return (cooldownTime - lagTime) / cooldownTime;
-    }
 
 }

@@ -13,7 +13,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
     private float totalTime;
     private float constant = -20f;
 
-    public DiveSkillState(Player player) : base(player) {}
+    public DiveSkillState(Player player, SkillDatum skillDatum) : base(player, skillDatum) {}
 
     public override void Begin()
     {

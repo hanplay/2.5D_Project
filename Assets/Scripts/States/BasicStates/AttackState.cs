@@ -19,10 +19,11 @@ public class AttackState : BasicState
 
     public override void Tick(float deltaTime)
     {
-        lagTime += deltaTime;
-
-        if (InputType.Attack == inputBuffer.GetInputType())
+        
+        if(IsInputTypeAttack())
         {
+            lagTime += deltaTime;
+
             if (player.GetBaseAttackStrategy().GetRange() > player.DistanceToUnit(inputBuffer.GetTargetUnit()))
             {
                 if(lagTime >= duration)
@@ -30,7 +31,6 @@ public class AttackState : BasicState
                     lagTime = 0f;
                     Begin();
                 }
-  
             }
             else
             {
@@ -38,22 +38,40 @@ public class AttackState : BasicState
                 player.GetState().Begin();
             }
         }
+        else
+        {
+            //
+            if (InputType.Move == inputBuffer.GetInputType())
+            {
+                player.SetState(player.GetMoveState());
+                player.GetState().Begin();
+                return;
+            }
+            else if (InputType.Skill == inputBuffer.GetInputType())
+            {
+                return;
+            }
+            else if (InputType.None == inputBuffer.GetInputType())
+            {
+                player.SetState(player.GetIdleState());
+                player.GetState().Begin();
+                return;
+            }
+        }
+        
 
-        else if (InputType.Move == inputBuffer.GetInputType())
-        {
-            player.SetState(player.GetMoveState());
-            player.GetState().Begin();
-        }
-        else if (InputType.Skill == inputBuffer.GetInputType())
-        {
-
-        }
-        else //(InputType.None == inputHandler.GetInputType())
-        {
-            player.SetState(player.GetIdleState());
-            player.GetState().Begin();
-        }
     }
+
+    private bool IsInputTypeAttack()
+    {
+        if (InputType.Attack == inputBuffer.GetInputType())
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
 
     private void Work()
     {

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
 public abstract class Skill 
 {
     private SkillState skillState;
@@ -56,7 +55,5 @@ public abstract class Skill
     {
         isLocked = true;
 	}
-
-    public abstract int GetIndexNumber();
 
 }

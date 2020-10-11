@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum InputType
 {
@@ -23,13 +22,6 @@ public class InputBuffer
         this.player = player;
     }
 
-    public void Tick(float deltaTime)
-    {
-        if(InputType.Move == inputType && null != skill)
-        {
-
-        }
-    }
 
     public void Refresh()
     {
@@ -94,6 +86,6 @@ public class InputBuffer
 
     public void ReceiveSkillInput(int i)
     {
-
+       
     }
 }
