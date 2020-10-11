@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AttackState : BasicState
 {
@@ -17,61 +15,24 @@ public class AttackState : BasicState
             duration = player.GetClipLength("Attack");
     }
 
-    public override void Tick(float deltaTime)
+    public override void Tick(float deltaTime, Command command)
     {
-        
-        if(IsInputTypeAttack())
-        {
-            lagTime += deltaTime;
-
-            if (player.GetBaseAttackStrategy().GetRange() > player.DistanceToUnit(inputBuffer.GetTargetUnit()))
-            {
-                if(lagTime >= duration)
-                {
-                    lagTime = 0f;
-                    Begin();
-                }
-            }
-            else
-            {
-                player.SetState(player.GetMoveState());
-                player.GetState().Begin();
-            }
-        }
-        else
-        {
-            //
-            if (InputType.Move == inputBuffer.GetInputType())
-            {
-                player.SetState(player.GetMoveState());
-                player.GetState().Begin();
-                return;
-            }
-            else if (InputType.Skill == inputBuffer.GetInputType())
-            {
-                return;
-            }
-            else if (InputType.None == inputBuffer.GetInputType())
-            {
-                player.SetState(player.GetIdleState());
-                player.GetState().Begin();
-                return;
-            }
-        }
-        
-
+        command.Visit(this);
+        lagTime += deltaTime;
     }
 
-    private bool IsInputTypeAttack()
+    public bool IsInDelayTime()
     {
-        if (InputType.Attack == inputBuffer.GetInputType())
-        {
+        if (lagTime < duration)
             return true;
-        }
         else
             return false;
     }
 
+    public void InitializeLagTime()
+    {
+        lagTime = 0f;
+    }
 
     private void Work()
     {

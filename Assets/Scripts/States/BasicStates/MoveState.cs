@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using GameUtility;
-
-
 
 public class MoveState : BasicState
 {
@@ -18,41 +15,17 @@ public class MoveState : BasicState
         animator.Play("Run");
     }
 
-    public override void Tick(float deltaTime)
+    public override void Tick(float deltaTime, Command command)
     {
-        rigidbody.velocity = inputBuffer.Direction() * speed;
-        if (InputType.Attack == inputBuffer.GetInputType())
-        {
-            if (player.GetBaseAttackStrategy().GetRange() < player.DistanceToUnit(inputBuffer.GetTargetUnit()))
-            {
-                return;
-            }
-            else
-            {
-                player.SetState(player.GetAttackState());
-                player.GetState().Begin();
-            }
-        }
- 
-        else if (InputType.Move == inputBuffer.GetInputType())
-        {
-            if(0.8f > Vector3.Distance(player.GetPosition(), inputBuffer.Destination()))
-            {
-                player.SetState(player.GetIdleState());
-                player.GetState().Begin();
-            }
-
-        }
-        else if (InputType.Skill == inputBuffer.GetInputType())
-        {
-            
-        }
-        else //(InputType.None == inputHandler.GetInputType())
-        {
-            player.SetState(player.GetIdleState());
-            player.GetState().Begin();
-        }
+        command.Visit(this);
     }
 
+    public void MoveTo(Vector3 destination)
+    {
+        Vector3 direction = destination - player.GetPosition();
+        direction.y = 0f;
+        direction.Normalize();
+        rigidbody.velocity = direction * speed;
+    }
   
 }

@@ -91,11 +91,11 @@ public class MouseInputController : MonoBehaviour
 
             if(selectedPlayer.IsTargetable(targetUnit))
             {
-                selectedPlayer.GetInputHandler().ReceiveMouseInput(targetUnit);           
+                selectedPlayer.SetCommand(new AttackCommand(selectedPlayer, targetUnit));
             }
             else
             {
-                selectedPlayer.GetInputHandler().ReceiveMouseInput(raycastHit.point);
+                selectedPlayer.SetCommand(new MoveCommand(selectedPlayer, raycastHit.point));
             }
 
             selectedPlayer.GetTravelRouteWriter().HideRouteLine();

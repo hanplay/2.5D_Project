@@ -31,20 +31,14 @@ public abstract class Player : Unit
     private SkillState[] skillList = new SkillState[SkillCount];
 	public Action[] SkillAction = new Action[SkillActionCount];
 
-	private InputBuffer inputHandler;
-	public InputBuffer GetInputHandler()
+	private Command command;
+	public void SetCommand(Command command)
     {
-		//if(null == inputHandler)
-  //      {
-		//	print("input Handler assign!");
-		//	inputHandler = new InputHandler(this);
-  //      }
-		return inputHandler;
+		this.command = command;
     }
 
-
-
 	private State state;
+	
 	#region State 
 	private IdleState idleState;
 	private AttackState attackState;
@@ -77,6 +71,7 @@ public abstract class Player : Unit
     }
 
 
+
 	#endregion
 	protected virtual void Awake()
     {	
@@ -86,8 +81,9 @@ public abstract class Player : Unit
 		statsSystem = new StatsSystem(statsDatum, equipmentSystem, levelSystem);
 		travelRouteWriter = GetComponent<TravelRouteWriter>();
 
+		command = new NullCommand(this);
+
 		#region State 
-		inputHandler = new InputBuffer(this);
 		state = idleState = new IdleState(this);
 		attackState = new AttackState(this);
 		moveState = new MoveState(this);
@@ -112,7 +108,7 @@ public abstract class Player : Unit
     }
 	protected void FixedUpdate()
     {
-		state.Tick(Time.deltaTime);
+		state.Tick(Time.deltaTime, command);
 	}
 
 	public override void BeDamaged(int damage)
