@@ -43,7 +43,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
      * Tick 함수는 player.SetPosition() 함수로 deltaTime 마다 
      * player를 포물선 운동시킨다
      */
-    public override void Tick(float deltaTime, Command command)
+    public override void TickAccept(float deltaTime, Command command)
     {
         diveLagTime += deltaTime;
         player.SetPosition(new Vector3(originPosition.x + (targetPosition.x - originPosition.x) * diveLagTime / totalTime,

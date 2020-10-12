@@ -1,19 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using GameUtility;
 
 public class ButtonSkillController : MonoBehaviour
 {
-    private MouseInputController mouseInputController;
-    private Player player;
+    //Singleton
+    private static ButtonSkillController instance;
+    public static ButtonSkillController GetInstance()
+    {
+        return instance;
+    }
 
+
+    private Player player;
     private List<UI_SkillButton> uI_SkillButtonList = new List<UI_SkillButton>();
 
     private void Awake()
     {
-        mouseInputController = GetComponent<MouseInputController>();
-        mouseInputController.OnPlayerClicked += MouseInputController_OnPlayerClicked;
-
+        instance = this;
         foreach (Transform childTransform in transform)
         {
             uI_SkillButtonList.Add(childTransform.GetComponent<UI_SkillButton>());
@@ -40,8 +43,6 @@ public class ButtonSkillController : MonoBehaviour
         {
             player.OnDead -= Player_OnDead;
         }
-        var onPlayerClickedEvent = e as MouseInputController.OnPlayerClickedEvent;
-        player =  onPlayerClickedEvent.clickedPlayer;
         player.OnDead += Player_OnDead;
 
         BindPlayerSkillsToUI_SkillButtons();
@@ -79,4 +80,8 @@ public class ButtonSkillController : MonoBehaviour
         }
     }
 
+    public void SetPlayer(Player player)
+    {
+        this.player = player;
+    }
 }

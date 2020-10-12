@@ -15,7 +15,7 @@ public class AttackState : BasicState
             duration = player.GetClipLength("Attack");
     }
 
-    public override void Tick(float deltaTime, Command command)
+    public override void TickAccept(float deltaTime, Command command)
     {
         command.Visit(this);
         lagTime += deltaTime;

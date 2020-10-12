@@ -15,7 +15,7 @@ public class MoveState : BasicState
         animator.Play("Run");
     }
 
-    public override void Tick(float deltaTime, Command command)
+    public override void TickAccept(float deltaTime, Command command)
     {
         command.Visit(this);
     }

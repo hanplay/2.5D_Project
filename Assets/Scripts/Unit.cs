@@ -7,7 +7,7 @@ public abstract class Unit : MonoBehaviour
 	public event EventHandler OnTargeted;
 	public event EventHandler OnDead;
 
-	private BasicFXVixualizer BasicFXVisualizer;
+	private BasicFXVixualizer basicFXVisualizer;
 	private List<Buff> buffs = new List<Buff>();
 
 	public Action BaseAttackAction;
@@ -20,7 +20,7 @@ public abstract class Unit : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		BasicFXVisualizer = GetComponent<BasicFXVixualizer>();
+		basicFXVisualizer = GetComponent<BasicFXVixualizer>();
 
     }
 
@@ -53,13 +53,15 @@ public abstract class Unit : MonoBehaviour
 	public void Die()
 	{				
 		OnDead?.Invoke(this, EventArgs.Empty);
-		BasicFXVisualizer.FlickFadeaway(1f, 10);
+		basicFXVisualizer.FlickFadeaway(1f, 10);
 		Destroy(gameObject);
 	}
 
 	public BasicFXVixualizer GetBasicFXVisualizer()
     {
-		return BasicFXVisualizer;
+		if (null == basicFXVisualizer)
+			print("basicFXVisualizer null");
+		return basicFXVisualizer;
     }
 
 
@@ -74,36 +76,6 @@ public abstract class Unit : MonoBehaviour
 		scale.x = -1f;
 		transform.localScale = scale;
 	}
-
-    //public float ToTargetUnitDistance()
-    //{
-    //    return Vector3.Distance(transform.position, targetUnit.GetPosition());
-    //}
-
-    //public Vector3 ToTargetUnitDirection()
-    //{
-    //    Vector3 direction = targetUnit.GetPosition() - transform.position;
-    //    direction.Normalize();
-    //    return direction;
-    //}
-
-    //public bool TargetUnitExist()
-    //{
-    //    if (null == targetUnit)
-    //        return false;
-    //    else
-    //        return true;
-    //}
-
-    //public void SetTargetunit(Unit targetUnit)
-    //{
-    //    this.targetUnit = targetUnit;
-    //}
-
-    //public Unit GetTargetUnit()
-    //{
-    //    return targetUnit;
-    //}
 
     public float DistanceToUnit(Unit unit)
     {

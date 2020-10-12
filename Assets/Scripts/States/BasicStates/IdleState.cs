@@ -12,7 +12,7 @@ public class IdleState : BasicState
         player.SetCommand(new NullCommand(player));
     }
 
-    public override void Tick(float deltaTime, Command command) 
+    public override void TickAccept(float deltaTime, Command command) 
     {
         command.Visit(this);
     }

@@ -25,20 +25,18 @@ public abstract class Player : Unit
 	protected HealthPointsSystem healthPointsSystem;
 	protected StatsSystem statsSystem;
 
-	private TravelRouteWriter travelRouteWriter;
-
 	[SerializeField]
     private SkillState[] skillList = new SkillState[SkillCount];
 	public Action[] SkillAction = new Action[SkillActionCount];
 
 	private Command command;
-	public void SetCommand(Command command)
+    #region Command
+    public void SetCommand(Command command)
     {
 		this.command = command;
     }
-
-	private State state;
-	
+    #endregion
+    private State state;
 	#region State 
 	private IdleState idleState;
 	private AttackState attackState;
@@ -79,7 +77,6 @@ public abstract class Player : Unit
 		levelSystem = new LevelSystem();
 		healthPointsSystem = new HealthPointsSystem(statsDatum, equipmentSystem, levelSystem);
 		statsSystem = new StatsSystem(statsDatum, equipmentSystem, levelSystem);
-		travelRouteWriter = GetComponent<TravelRouteWriter>();
 
 		command = new NullCommand(this);
 
@@ -108,7 +105,7 @@ public abstract class Player : Unit
     }
 	protected void FixedUpdate()
     {
-		state.Tick(Time.deltaTime, command);
+		state.TickAccept(Time.deltaTime, command);
 	}
 
 	public override void BeDamaged(int damage)
@@ -133,11 +130,6 @@ public abstract class Player : Unit
 	{
 		return levelSystem;
 	}
-
-	public TravelRouteWriter GetTravelRouteWriter()
-    {
-		return travelRouteWriter;
-    }
 
 	public SkillState GetSkill(int i)
     {

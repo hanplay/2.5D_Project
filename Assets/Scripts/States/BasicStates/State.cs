@@ -16,7 +16,7 @@ public abstract class State
     }
 
     public abstract void Begin();
-    public abstract void Tick(float deltaTime, Command command);
+    public abstract void TickAccept(float deltaTime, Command command);
  
 
     public void ChangeToMoveState()
