@@ -26,4 +26,9 @@ public class MoveCommand : Command
         attackState.InitializeLagTime();
         attackState.ChangeToMoveState();
     }
+
+    public override void Visit(SkillState skillState)
+    {
+        throw new System.NotImplementedException();
+    }
 }

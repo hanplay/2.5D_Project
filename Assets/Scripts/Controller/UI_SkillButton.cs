@@ -5,39 +5,42 @@ using UnityEngine.UI;
 
 public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
 {
-    public event EventHandler OnButtonPressed;
-    
 
-    private SkillState skillState;
-    private Image SkillImage;
+    private Skill skill;
+    private Image skillImage;
     private Image skillBlockerImage;
     private Color blockColor = new Color(0f, 0f, 0f, 0.5f);
 
-    public class SkillButtonDownEventArgs : EventArgs
-    {
-        public SkillState ButtonDownSkillState;
-    }
     void Awake()
     {
+        skillImage = GetComponent<Image>();
         skillBlockerImage = transform.Find("UI_SkillBlocker").GetComponent<Image>();
+        skillBlockerImage.color = blockColor;
         skillBlockerImage.enabled = false;
-    }
-
-    private void Start()
-    {
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (null == skill)
+            return;
+        if(skill.IsCoolDownTime())
+        {
+            skillImage.fillAmount = skill.GetRemainingCoolDownTimeProportion();
+        }
    
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnButtonPressed?.Invoke(this, new SkillButtonDownEventArgs{ ButtonDownSkillState = skillState });
+        if(skill.IsTargetSkill())
+        {
+            skill.OrderPlayerTargetSkillCommand();
+        }
+        else
+        {
+            skill.OrderPlayerBasicSkillCommand();
+        }
     }
-
-
 
     public void Hide()
     {
@@ -46,17 +49,16 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
 
     public void Show()
     {
-        gameObject.SetActive(true);
+        if (null == skill)
+            gameObject.SetActive(false);
+        else
+            gameObject.SetActive(true);
     }
 
-    public void ShowIfSkillStateExist()
+    public void SetSkill(Skill skill)
     {
-        if (null != skillState)
-            Show();
+        this.skill = skill;
+        skillImage.sprite = skill.GetSkillSprite();
     }
-    
-    public void SetSkillState(SkillState skillState)
-    {
-        this.skillState = skillState;
-    }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Microsoft.VisualBasic;
 
 public abstract class Player : Unit
 {
@@ -8,11 +9,12 @@ public abstract class Player : Unit
 	public const int SkillActionCount = 4;
 
 	[SerializeField]
+	protected SkillData skillData;
+
+	[SerializeField]
 	protected string characterName;
 
 	private Dictionary<string, float> clipLengths = new Dictionary<string, float>();
-
-
 
 	[SerializeField]
 	protected EquipmentSystem equipmentSystem;
@@ -26,7 +28,7 @@ public abstract class Player : Unit
 	protected StatsSystem statsSystem;
 
 	[SerializeField]
-    private SkillState[] skillList = new SkillState[SkillCount];
+    protected Skill[] skillList = new Skill[SkillCount];
 	public Action[] SkillAction = new Action[SkillActionCount];
 
 	private Command command;
@@ -93,14 +95,17 @@ public abstract class Player : Unit
         for (int i = 0; i < animationClips.Length; i++)
         {
             clipLengths.Add(animationClips[i].name, animationClips[i].length);
-            Debug.Log(animationClips[i].name + ": " + animationClips[i].length);
-
         }
     }
 
-	
+	private Command commandBuffer;
 	protected void Update()
     {
+		if(command != commandBuffer)
+        {
+			commandBuffer = command;
+			Debug.Log(command.ToString());
+        }
 		base.Update();
     }
 	protected void FixedUpdate()
@@ -131,7 +136,7 @@ public abstract class Player : Unit
 		return levelSystem;
 	}
 
-	public SkillState GetSkill(int i)
+	public Skill GetSkill(int i)
     {
 		return skillList[i];
     }

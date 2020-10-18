@@ -18,4 +18,12 @@ public class NullCommand : Command
         attackState.InitializeLagTime();
         attackState.ChangeToIdleState();
     }
+
+    public override void Visit(SkillState skillState)
+    {
+        if(skillState.IsEnd())
+        {
+            skillState.ChangeToIdleState();
+        }        
+    }
 }

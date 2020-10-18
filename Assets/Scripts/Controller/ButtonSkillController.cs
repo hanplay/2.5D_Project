@@ -10,7 +10,6 @@ public class ButtonSkillController : MonoBehaviour
         return instance;
     }
 
-
     private Player player;
     private List<UI_SkillButton> uI_SkillButtonList = new List<UI_SkillButton>();
 
@@ -23,32 +22,8 @@ public class ButtonSkillController : MonoBehaviour
         }
         uI_SkillButtonList.TrimExcess();
 
-        for(int i = 0; i < uI_SkillButtonList.Count; i++)
-        {
-            uI_SkillButtonList[i].OnButtonPressed += ButtonSkillController_OnButtonPressed;
-        }
-
     }
 
-    private void ButtonSkillController_OnButtonPressed(object sender, System.EventArgs e)
-    {
-        UI_SkillButton.SkillButtonDownEventArgs skillButtonDownEventArgs = e as UI_SkillButton.SkillButtonDownEventArgs;
-       
-    }
-
-
-    private void MouseInputController_OnPlayerClicked(object sender, System.EventArgs e)
-    {
-        if(null != player)
-        {
-            player.OnDead -= Player_OnDead;
-        }
-        player.OnDead += Player_OnDead;
-
-        BindPlayerSkillsToUI_SkillButtons();
-        ShowUI_SkillButtons();
-
-    }
 
     private void Player_OnDead(object sender, System.EventArgs e)
     {
@@ -57,31 +32,30 @@ public class ButtonSkillController : MonoBehaviour
         {
             uI_SkillButtonList[i].Hide();
         }
-        
     }
 
-    private void BindPlayerSkillsToUI_SkillButtons()
+    private void BindPlayerSkillsToUI_SkillButtonsAndShow()
     {
         for(int i = 0; i < player.GetSkillCount(); i++)
         {
             if(null != player.GetSkill(i))
             {
-                uI_SkillButtonList[i].SetSkillState(player.GetSkill(i));
+                uI_SkillButtonList[i].SetSkill(player.GetSkill(i));
+                uI_SkillButtonList[i].Show();
             }
         }
 
     }
 
-    private void ShowUI_SkillButtons()
-    {
-        for(int i = 0; i < uI_SkillButtonList.Count; i++)
-        {
-            uI_SkillButtonList[i].ShowIfSkillStateExist();
-        }
-    }
-
     public void SetPlayer(Player player)
     {
+        if(null != this.player)
+        {
+            this.player.OnDead -= Player_OnDead;
+        }
+        player.OnDead += Player_OnDead;
+
         this.player = player;
+        BindPlayerSkillsToUI_SkillButtonsAndShow();
     }
 }

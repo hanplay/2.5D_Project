@@ -1,66 +1,32 @@
 ﻿using UnityEngine;
-using GameUtility;
-using System;
-
-public enum SkillType
-{
-    Heal,
-    Meteor,
-    Aggro,
-    Dive,
-    Charge,
-    RapidFire,
-    PoisonedArrow,
-    IceAge,
-    Buff,
-    COUNT,
-}
 
 public abstract class SkillState : State
 {
+    protected Skill skill;
     protected float duration;
+    protected bool isEnd;
 
-    public SkillState(Player player, SkillDatum skillDatum) : base(player)
-    {
-
-    }
-
-    public SkillState(Player player) : base(player) 
+    public SkillState(Player player, Skill skill) : base(player) 
     {
         this.player = player;
     }
-    //public SkillState(Player player, SkillDatum skillDatum) :base(player, )
-    //{
 
-    //}
     public override void Begin()
     {
-        for (int i = 0; i < player.GetSkillCount(); i++)
-        {
-            if(null != player.GetSkill(i))
-            {
-
-
-            }
-        }
+        Debug.Log("Skill Begin");
+        skill.StartCooldownTime();
     }
 
-    //public override void Tick(float deltaTime)
-    //{
-    //    if (IsEnded())
-    //    {
-    //        End();
-    //    }
-    //}
+    public bool IsEnd()
+    {
+        return isEnd;
+    }
 
-    //protected override bool IsEnded()
-    //{
-    //    if (lagTime < cooldownTime)
-    //        return false;
-    //    else
-    //    {
-    //        return true;
-    //    }
-    //}
+
+    public void SetTargetUnit(Unit targetUnit)
+    {
+        this.targetUnit = targetUnit;
+    }
+
 
 }

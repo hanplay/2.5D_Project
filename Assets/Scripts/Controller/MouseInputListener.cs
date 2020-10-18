@@ -60,7 +60,6 @@ public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandl
         {
             ButtonSkillController.GetInstance().SetPlayer(player);
         }
-        
     }
 
 

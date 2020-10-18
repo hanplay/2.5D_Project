@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
-using GameUtility;
-
 
 public class DiveSkillState : SkillState, ITargetExistsState
 {
-    private Unit targetUnit;
-    [SerializeField]
     private GameObject smokePrefab;
     private float diveLagTime = 0f;
     private Vector3 originPosition;
@@ -13,8 +9,10 @@ public class DiveSkillState : SkillState, ITargetExistsState
     private float totalTime;
     private float constant = -20f;
 
-    public DiveSkillState(Player player, SkillDatum skillDatum) : base(player, skillDatum) {}
-
+    public DiveSkillState(Player player, Skill skill, GameObject smokePrefab) : base(player, skill) 
+    {
+        this.smokePrefab = smokePrefab;
+    }
     public override void Begin()
     {
         Debug.Log("Dive Skill Begin");
@@ -33,38 +31,28 @@ public class DiveSkillState : SkillState, ITargetExistsState
         targetUnit = null;
     }
 
-    public void SetTargetUnit(Unit targetUnit)
-    {
-        this.targetUnit = targetUnit;
-    }
-
-
     /*
      * Tick 함수는 player.SetPosition() 함수로 deltaTime 마다 
      * player를 포물선 운동시킨다
      */
     public override void TickAccept(float deltaTime, Command command)
     {
+        if(IsEnd())
+        {
+            End();
+        }
         diveLagTime += deltaTime;
         player.SetPosition(new Vector3(originPosition.x + (targetPosition.x - originPosition.x) * diveLagTime / totalTime,
                                     -constant * totalTime * diveLagTime + constant * (diveLagTime * diveLagTime) + originPosition.y,
                                     originPosition.z + (targetPosition.z - originPosition.z) * diveLagTime / totalTime));
-        //base.Tick(deltaTime);
 
     }
 
-    //protected void End()
-    //{
-    //    //Object.Instantiate(smokePrefab, unit.GetPosition(), Quaternion.identity);
-    //    if(null == targetUnit)
-    //    {
-    //        player.SetState(player.GetIdleState());
-    //        player.GetState().Begin();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Dive Damage Arise!!");
 
-    //    }
-    //}
+
+    protected void End()
+    {
+        GameObject smoke = GameObject.Instantiate(smokePrefab, player.GetPosition(), Quaternion.identity);
+        
+    }
 }
