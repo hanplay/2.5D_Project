@@ -41,25 +41,24 @@ public abstract class Player : Unit
     private State state;
 	#region State 
 	private IdleState idleState;
-	private AttackState attackState;
 	private MoveState moveState;
+	private AttackState attackState;
 
 
 	public IdleState GetIdleState()
 	{
 		return idleState;
 	}
-
-	public AttackState GetAttackState()
-    {
-		return attackState;
-    }
-
 	public MoveState GetMoveState()
     {
 		return moveState;
     }
 
+	public AttackState GetAttackState(Unit targetUnit)
+    {
+		attackState.SetTargetUnit(targetUnit);
+		return attackState;
+    }
 	public State GetState()
 	{
 		return state;
@@ -84,8 +83,8 @@ public abstract class Player : Unit
 
 		#region State 
 		state = idleState = new IdleState(this);
-		attackState = new AttackState(this);
 		moveState = new MoveState(this);
+		attackState = new AttackState(this);
         #endregion
 
         RuntimeAnimatorController runtimeAnimatorController = transform.Find("model").GetComponent<Animator>().runtimeAnimatorController;
@@ -95,6 +94,7 @@ public abstract class Player : Unit
         for (int i = 0; i < animationClips.Length; i++)
         {
             clipLengths.Add(animationClips[i].name, animationClips[i].length);
+
         }
     }
 

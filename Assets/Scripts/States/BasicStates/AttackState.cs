@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class AttackState : BasicState
+public class AttackState : BasicState, ITargetExistsState
 {
     private float duration;
     private float lagTime;
+
     public AttackState(Player player) : base(player) { }
- 
 
     public override void Begin()
     {
@@ -37,5 +37,10 @@ public class AttackState : BasicState
     private void Work()
     {
         Debug.Log("Damage!");
+    }
+
+    public void SetTargetUnit(Unit targetUnit)
+    {
+        this.targetUnit = targetUnit;
     }
 }

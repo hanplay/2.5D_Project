@@ -4,11 +4,11 @@ public class Skill
 {
     private Player player;
     private Sprite skillSprite;
-
     private SkillState skillState;
 
     private bool canCancel;
     private bool isTargetSkill;
+
 
     private float cooldownTime;
 
@@ -77,14 +77,13 @@ public class Skill
         return isCooldownTime;
     }
 
-
-    public bool CanCancel()
-    {
-        return canCancel;
-    }
     public bool IsTargetSkill()
     {
         return isTargetSkill;
+	}
+    public bool CanCancel()
+    {
+        return canCancel;
     }
 
     public Sprite GetSkillSprite()
@@ -94,17 +93,6 @@ public class Skill
 
     public void OrderPlayerTargetSkillCommand()
     {
-        if (null == player)
-        {
-            Debug.Log("player is null");
-        }
-
-        if (null == player.GetState())
-        {
-            Debug.Log("State is null");
-        }
-
-
         if (null == player.GetState().GetTargetUnit())
         {
             Debug.Log("target unit is null");
@@ -116,4 +104,5 @@ public class Skill
     {
         player.SetCommand(new BasicSkillCommand(player, this));        
     }
+
 }

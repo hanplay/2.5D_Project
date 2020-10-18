@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BasicFXVixualizer : MonoBehaviour
 {
+	private Unit unit;
 	private Transform modelTransform;
 	private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
@@ -12,11 +13,17 @@ public class BasicFXVixualizer : MonoBehaviour
 		modelTransform = transform.Find("model");
 		Material material = new Material(GameAssets.GetInstance().GetUnitMaterial());
 		FindSpriteRenderer(modelTransform);
-		SetMaterial(material);      
+		SetMaterial(material);
+		unit = GetComponent<Unit>();
+        unit.OnDead += Unit_OnDead;
 	}
 
+    private void Unit_OnDead(object sender, System.EventArgs e)
+    {
+		FlickFadeaway(5, 12);
+    }
 
-	private SpriteRenderer FindSpriteRenderer(Transform rootTransform)
+    private SpriteRenderer FindSpriteRenderer(Transform rootTransform)
 	{
 		foreach (Transform childTransform in rootTransform)
 		{

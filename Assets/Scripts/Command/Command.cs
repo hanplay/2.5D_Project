@@ -23,4 +23,5 @@ public abstract class Command : IVisitor
     public abstract void Visit(MoveState moveState);
     public abstract void Visit(AttackState attackState);
     public abstract void Visit(SkillState skillState);
+
 }

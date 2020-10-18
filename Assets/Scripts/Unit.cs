@@ -4,10 +4,8 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-	public event EventHandler OnTargeted;
 	public event EventHandler OnDead;
 
-	private BasicFXVixualizer basicFXVisualizer;
 	private List<Buff> buffs = new List<Buff>();
 
 	public Action BaseAttackAction;
@@ -20,7 +18,6 @@ public abstract class Unit : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		basicFXVisualizer = GetComponent<BasicFXVixualizer>();
 
     }
 
@@ -53,16 +50,8 @@ public abstract class Unit : MonoBehaviour
 	public void Die()
 	{				
 		OnDead?.Invoke(this, EventArgs.Empty);
-		basicFXVisualizer.FlickFadeaway(1f, 10);
 		Destroy(gameObject);
 	}
-
-	public BasicFXVixualizer GetBasicFXVisualizer()
-    {
-		if (null == basicFXVisualizer)
-			print("basicFXVisualizer null");
-		return basicFXVisualizer;
-    }
 
 
 	public void FlipLeft()

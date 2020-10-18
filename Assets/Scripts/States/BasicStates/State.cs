@@ -11,26 +11,26 @@ public abstract class State
         this.player = player;
         animator = player.transform.Find("model").GetComponent<Animator>();
     }
-
     public abstract void Begin();
+
+    /* TickAccept함수는 deltaTime마다 command(visitor)를 받고 실행됨*/
     public abstract void TickAccept(float deltaTime, Command command);
  
 
+    public void ChangeToIdleState()
+    {
+        player.SetState(player.GetIdleState());
+        player.GetState().Begin();
+    }
     public void ChangeToMoveState()
     {
         player.SetState(player.GetMoveState());
         player.GetState().Begin();
     }
 
-    public void ChangeToAttackState()
+    public void ChangeToAttackState(Unit targetUnit)
     {
-        player.SetState(player.GetAttackState());
-        player.GetState().Begin();
-    }
-
-    public void ChangeToIdleState()
-    {
-        player.SetState(player.GetIdleState());
+        player.SetState(player.GetAttackState(targetUnit));
         player.GetState().Begin();
     }
 

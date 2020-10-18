@@ -16,13 +16,14 @@ public class AttackCommand : Command
 
     public override void Visit(IdleState idleState)
     {
-        if(player.DistanceToUnit(targetUnit) > range)
+        if (player.DistanceToUnit(targetUnit) > range)
         {
+            player.GetMoveState().SetTargetUnit(targetUnit);
             idleState.ChangeToMoveState();
         }
         else
         {
-            idleState.ChangeToAttackState();
+            idleState.ChangeToAttackState(targetUnit);
         }
     }
 
@@ -34,15 +35,14 @@ public class AttackCommand : Command
             moveState.MoveToTargetUnit();
         else
         {
-            moveState.RefreshUnitBuffer();
-            moveState.ChangeToAttackState();
+            moveState.ChangeToAttackState(targetUnit);
         }
     }
 
 
     public override void Visit(AttackState attackState)
     {
-        if(false == attackState.IsInDelayTime())
+        if (false == attackState.IsInDelayTime())
         {
             attackState.InitializeLagTime();
             attackState.Begin();
@@ -52,6 +52,6 @@ public class AttackCommand : Command
     public override void Visit(SkillState skillState)
     {
         if (skillState.IsEnd())
-            skillState.ChangeToAttackState();
+            skillState.ChangeToAttackState(targetUnit);
     }
 }

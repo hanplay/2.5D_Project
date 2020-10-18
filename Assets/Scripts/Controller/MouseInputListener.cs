@@ -17,14 +17,7 @@ public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandl
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        RaycastResult raycastResult = eventData.pointerCurrentRaycast;
-        if(null != raycastResult.gameObject)
-        {
-            if(null != raycastResult.gameObject.GetComponent<Unit>())   
-            {
-                print("Unit!");
-            }
-        }
+        //단지 OnPointerUp의 동작을 위해 Implementing
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -65,12 +58,12 @@ public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        basicFXVixualizer.GlowFadeIn(new Color(0f, 0.2f, 0f));
+        basicFXVixualizer.GlowFadeIn(new Color(0f, 0.1f, 0f));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        basicFXVixualizer.GlowFadeOut(new Color(0f, 0.2f, 0f));
+        basicFXVixualizer.GlowFadeOut(new Color(0f, 0.1f, 0f));
     }
 
 }
