@@ -11,9 +11,8 @@ public class BasicFXVixualizer : MonoBehaviour
 	private void Awake()
 	{
 		modelTransform = transform.Find("model");
-		Material material = new Material(GameAssets.GetInstance().GetUnitMaterial());
 		FindSpriteRenderer(modelTransform);
-		SetMaterial(material);
+		SetMaterial(new Material(GameAssets.GetInstance().GetUnitMaterial()));        
 		unit = GetComponent<Unit>();
         unit.OnDead += Unit_OnDead;
 	}

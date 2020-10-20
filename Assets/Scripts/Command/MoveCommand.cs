@@ -24,12 +24,15 @@ public class MoveCommand : Command
     public override void Visit(AttackState attackState)
     {
         attackState.InitializeLagTime();
-        attackState.ChangeToMoveState();
+        player.SetState(player.GetMoveState());
+        player.GetMoveState().SetTargetUnit(null);
+        player.GetState().Begin();
+        
     }
 
     public override void Visit(SkillState skillState)
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
 }

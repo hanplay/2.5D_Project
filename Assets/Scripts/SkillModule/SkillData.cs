@@ -24,6 +24,7 @@ public class SkillData : ScriptableObject
     [SerializeField] private GameObject loopingTornado;
     [SerializeField] private GameObject hitSmoke;
     [SerializeField] private GameObject smokeExplosion;
+    [SerializeField] private GameObject deathSkullExplosion;
 
 
     public Skill CreateSkill(Player player, SkillType skillType)
