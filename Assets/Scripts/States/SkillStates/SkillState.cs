@@ -6,15 +6,25 @@ public abstract class SkillState : State
     protected float duration;
     protected bool isEnd;
 
+
+
     public SkillState(Player player, Skill skill) : base(player) 
     {
         this.player = player;
+        this.skill = skill;
     }
 
     public override void Begin()
     {
-        Debug.Log("Skill Begin");
         skill.StartCooldownTime();
+        if(null == targetUnit)
+        {
+            player.SetCommand(new NullCommand(player));
+        }
+        else
+        {
+            player.SetCommand(new AttackCommand(player, targetUnit));
+        }
     }
 
     public bool IsEnd()
@@ -28,5 +38,6 @@ public abstract class SkillState : State
         this.targetUnit = targetUnit;
     }
 
+    public abstract void Initialize();
 
 }

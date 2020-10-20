@@ -78,6 +78,11 @@ public abstract class Unit : MonoBehaviour
 		return direction;
     }
 
+
+	public void AddBuff(Buff buff)
+    {
+		buffs.Add(buff);
+    }
 	//public abstract float GetSpeed();
 
 }

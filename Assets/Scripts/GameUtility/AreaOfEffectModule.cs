@@ -1,19 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 public class AreaOfEffectModule : MonoBehaviour
 {
+    private Player owner;
     [SerializeField]
     private float lifeTime;
-    [SerializeField]
-    private int maxCount;
-    private Unit[] targetUnits;
+
+    private int damage;
+    private Buff buff;
+
+
+    public AreaOfEffectModule(Player owner, float lifeTime)
+    {
+        this.owner = owner;
+        this.lifeTime = lifeTime;
+    }
 
     private void Awake()
     {
-        targetUnits = new Unit[maxCount];
     }
 
     private void Update()
@@ -24,20 +32,15 @@ public class AreaOfEffectModule : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter()
-    {
-        
-    }
-
     void OnTriggerEnter(Collider collider)
     {
-        Enemy enemy = collider.GetComponent<Enemy>();
-        if(null != enemy)
-        {
+        Unit unit = collider.GetComponent<Unit>();
+        if (false == owner.IsTargetable(unit))
+            return;
 
+        if(null != buff)
+        {
+            unit.AddBuff(buff);
         }
     }
-
-    
-
 }

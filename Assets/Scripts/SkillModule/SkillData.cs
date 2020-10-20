@@ -1,32 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
+
+public enum SkillType
+{
+    Heal,
+    Meteor,
+    Aggro,
+    Dive,
+    Charge,
+    RapidFire,
+    PoisonedArrow,
+    IceAge,
+    Buff,
+    COUNT,
+}
 
 [CreateAssetMenu(fileName = "New Skill Data", menuName = "SkillData")]
 public class SkillData : ScriptableObject
 {
-    [SerializeField]
-    private Sprite diveSkillSprite;
-    public Sprite DiveSkillSprite { get => diveSkillSprite; }
-
-    [SerializeField]
-    private Sprite healSkillSprite;
-    public Sprite HealSkillSprite { get => healSkillSprite; }
-
-    [SerializeField]
-    private Sprite loopingTornadoSprite;
-    public Sprite LoopingTornadeSprite { get => loopingTornadoSprite; }
-
-
-
-
-    [SerializeField]
-    private GameObject loopingTornado;
-    public GameObject LoopingTornado { get => loopingTornado; }
-
-    [SerializeField]
-    private GameObject smoke;
-    public GameObject Smoke { get => smoke;}
+    [SerializeField] private Sprite diveSkillSprite;
+    [SerializeField] private Sprite healSkillSprite;
+    [SerializeField] private Sprite loopingTornadoSprite;
+    [SerializeField] private GameObject loopingTornado;
+    [SerializeField] private GameObject hitSmoke;
+    [SerializeField] private GameObject smokeExplosion;
 
 
     public Skill CreateSkill(Player player, SkillType skillType)
@@ -38,8 +35,8 @@ public class SkillData : ScriptableObject
             skill.SetCanCancel(true);
             skill.SetCooldownTime(5f);
             skill.SetIsTargetSkill(true);
-            skill.SetSkillSprite(DiveSkillSprite);
-            skill.SetSkillState(new DiveSkillState(player, skill, Smoke));
+            skill.SetSkillSprite(diveSkillSprite);
+            skill.SetSkillState(new DiveSkillState(player, skill, hitSmoke, smokeExplosion));
             return skill;
         default:
             Assert.IsTrue(true);

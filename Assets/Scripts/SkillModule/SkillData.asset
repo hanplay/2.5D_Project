@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7441cc59fd57b294798d873800b7f26f, type: 3}
-  m_Name: New Skill Data
+  m_Name: SkillData
   m_EditorClassIdentifier: 
   diveSkillSprite: {fileID: 21300000, guid: 6341005da49c17b4ebc0bd19107f0945, type: 3}
   healSkillSprite: {fileID: 21300000, guid: 42f6c722ead369b4b934a116b4324a4d, type: 3}
@@ -18,4 +18,4 @@ MonoBehaviour:
     type: 3}
   loopingTornado: {fileID: 5765895818725834987, guid: 9d2003ab0d43aa244b9eda0af9df0ea3,
     type: 3}
-  smoke: {fileID: 1938090950053980, guid: 80742bc060c084c4eb24f08faa27f31e, type: 3}
+  smoke: {fileID: 8587978461798725584, guid: a7c51c963c5d650479f03e21a4dfbdb0, type: 3}

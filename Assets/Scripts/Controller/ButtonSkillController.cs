@@ -38,7 +38,11 @@ public class ButtonSkillController : MonoBehaviour
     {
         for(int i = 0; i < player.GetSkillCount(); i++)
         {
-            if(null != player.GetSkill(i))
+            if(null == player.GetSkill(i))
+            {
+                uI_SkillButtonList[i].Hide();
+            }
+            else
             {
                 uI_SkillButtonList[i].SetSkill(player.GetSkill(i));
                 uI_SkillButtonList[i].Show();

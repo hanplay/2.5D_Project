@@ -106,11 +106,15 @@ public abstract class Player : Unit
 			commandBuffer = command;
 			Debug.Log(command.ToString());
         }
+		state.TickAccept(Time.deltaTime, command);
+		for(int i = 0; i < skillList.Length; i++)
+        {
+			skillList[i]?.Tick(Time.deltaTime);
+        }
 		base.Update();
     }
 	protected void FixedUpdate()
     {
-		state.TickAccept(Time.deltaTime, command);
 	}
 
 	public override void BeDamaged(int damage)

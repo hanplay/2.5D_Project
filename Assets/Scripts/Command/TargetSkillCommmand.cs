@@ -25,7 +25,6 @@ public class TargetSkillCommmand : SkillCommand
 
     public override void Visit(MoveState moveState)
     {
-        Debug.Log("TargetCommand MoveState");
         if (range < player.DistanceToUnit(targetUnit))
         {
             moveState.SetTargetUnit(targetUnit);

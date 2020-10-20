@@ -51,17 +51,18 @@ public class Skill
         if(isCooldownTime)
         {
             lagTime += deltaTime;
-            if(lagTime <= cooldownTime)
+            if(lagTime >= cooldownTime)
             {
                 lagTime = 0f;
                 isCooldownTime = false;
+                skillState.Initialize();
 			}
 		}           
 	}
 
 	public float GetRemainingCoolDownTimeProportion()
     {
-        return 1f - lagTime / cooldownTime;
+        return 1f - (lagTime / cooldownTime);
     }
 
     public SkillState GetSkillState()
@@ -93,15 +94,20 @@ public class Skill
 
     public void OrderPlayerTargetSkillCommand()
     {
+        if (true == isCooldownTime)
+            return;
+
         if (null == player.GetState().GetTargetUnit())
         {
-            Debug.Log("target unit is null");
+            return;
         }
         player.SetCommand(new TargetSkillCommmand(player, this, player.GetState().GetTargetUnit()));
     }
 
     public void OrderPlayerBasicSkillCommand()
     {
+        if (true == isCooldownTime)
+            return;
         player.SetCommand(new BasicSkillCommand(player, this));        
     }
 

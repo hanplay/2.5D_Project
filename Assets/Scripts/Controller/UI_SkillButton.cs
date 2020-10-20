@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,7 +15,6 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
         skillImage = GetComponent<Image>();
         skillBlockerImage = transform.Find("UI_SkillBlocker").GetComponent<Image>();
         skillBlockerImage.color = blockColor;
-        skillBlockerImage.enabled = false;
     }
 
     // Update is called once per frame
@@ -26,7 +24,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
             return;
         if(skill.IsCoolDownTime())
         {
-            skillImage.fillAmount = skill.GetRemainingCoolDownTimeProportion();
+            skillBlockerImage.fillAmount = skill.GetRemainingCoolDownTimeProportion();
         }
    
     }
@@ -49,10 +47,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
 
     public void Show()
     {
-        if (null == skill)
-            gameObject.SetActive(false);
-        else
-            gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void SetSkill(Skill skill)

@@ -52,6 +52,8 @@ public class AttackCommand : Command
     public override void Visit(SkillState skillState)
     {
         if (skillState.IsEnd())
+        {
             skillState.ChangeToAttackState(targetUnit);
+        }
     }
 }
