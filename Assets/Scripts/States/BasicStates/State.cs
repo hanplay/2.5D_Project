@@ -28,6 +28,12 @@ public abstract class State
         player.GetState().Begin();
     }
 
+    public void ChanegeToChaseState(Unit targetUnit)
+    {
+        player.SetState(player.GetChaseState(targetUnit));
+        player.GetState().Begin();
+    }
+
     public void ChangeToAttackState(Unit targetUnit)
     {
         player.SetState(player.GetAttackState(targetUnit));

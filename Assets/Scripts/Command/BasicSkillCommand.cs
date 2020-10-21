@@ -11,6 +11,10 @@
     {
         moveState.ChageToSkillState(skillState);
     }
+    public override void Visit(ChaseState chaseState)
+    {
+        chaseState.ChageToSkillState(skillState);
+    }
 
     public override void Visit(AttackState attackState)
     {
@@ -21,4 +25,5 @@
     {
         return;
     }
+
 }

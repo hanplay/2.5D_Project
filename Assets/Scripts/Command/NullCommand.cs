@@ -12,6 +12,10 @@ public class NullCommand : Command
     {
         moveState.ChangeToIdleState();
     }
+    public override void Visit(ChaseState chaseState)
+    {
+        chaseState.ChangeToIdleState();
+    }
 
     public override void Visit(AttackState attackState)
     {
@@ -26,4 +30,5 @@ public class NullCommand : Command
             skillState.ChangeToIdleState();
         }        
     }
+
 }

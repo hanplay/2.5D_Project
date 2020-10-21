@@ -15,7 +15,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
         skillImage = GetComponent<Image>();
         skillBlockerImage = transform.Find("UI_SkillBlocker").GetComponent<Image>();
         skillBlockerImage.color = blockColor;
-        skillImage.material = new Material(GameAssets.GetInstance().GetUnitMaterial());
+        //skillImage.material = new Material(GameAssets.GetInstance().GetUnitMaterial());
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
             return;
         if(skill.IsChasing())
         {
-            Glow(new Color(0.3773585f, 0.2277012f, 0f));
+            //Glow(new Color(0.3773585f, 0.2277012f, 0f));
         }
 
         if(skill.IsCoolDownTime())

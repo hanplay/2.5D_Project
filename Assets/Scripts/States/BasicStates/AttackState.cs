@@ -10,7 +10,7 @@ public class AttackState : BasicState, ITargetExistsState
     public override void Begin()
     {
         player.BaseAttackAction = Work;
-        animator.Play("Attack");
+        animator.PlayInFixedTime("Attack");
         if(0 == duration)
             duration = player.GetClipLength("Attack");
     }

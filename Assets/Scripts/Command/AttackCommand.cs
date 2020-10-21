@@ -18,8 +18,7 @@ public class AttackCommand : Command
     {
         if (player.DistanceToUnit(targetUnit) > range)
         {
-            player.GetMoveState().SetTargetUnit(targetUnit);
-            idleState.ChangeToMoveState();
+            idleState.ChanegeToChaseState(targetUnit);
         }
         else
         {
@@ -30,18 +29,30 @@ public class AttackCommand : Command
 
     public override void Visit(MoveState moveState)
     {
-        moveState.SetTargetUnit(targetUnit);
-        if (range < player.DistanceToUnit(targetUnit))
-            moveState.MoveToTargetUnit();
-        else
-        {
-            moveState.ChangeToAttackState(targetUnit);
-        }
+        moveState.ChanegeToChaseState(targetUnit);
     }
 
+    public override void Visit(ChaseState chaseState)
+    {
+        if (range >= player.DistanceToUnit(targetUnit))
+            chaseState.ChangeToAttackState(targetUnit);
+        
+       
+        if(targetUnit == chaseState.GetTargetUnit())
+            chaseState.MoveToTargetUnit();
+        
+        //원래 타겟과 새로운 타겟이 다름
+        chaseState.SetTargetUnit(targetUnit);
+        chaseState.MoveToTargetUnit();
+    }
 
     public override void Visit(AttackState attackState)
     {
+        if(range < player.DistanceToUnit(targetUnit))
+        {
+            attackState.ChanegeToChaseState(targetUnit);
+        }
+
         if (false == attackState.IsInDelayTime())
         {
             attackState.InitializeLagTime();
@@ -56,4 +67,5 @@ public class AttackCommand : Command
             skillState.ChangeToAttackState(targetUnit);
         }
     }
+
 }

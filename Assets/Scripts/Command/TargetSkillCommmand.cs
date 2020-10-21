@@ -21,6 +21,7 @@ public class TargetSkillCommmand : SkillCommand
         }
         else
         {
+            skill.GetSkillState().SetTargetUnit(targetUnit);
             idleState.ChageToSkillState(skill.GetSkillState());
         }
     }
@@ -29,13 +30,22 @@ public class TargetSkillCommmand : SkillCommand
     {
         if (range < player.DistanceToUnit(targetUnit))
         {
-            moveState.SetTargetUnit(targetUnit);
-            moveState.MoveToTargetUnit();
+            moveState.ChanegeToChaseState(targetUnit);
         }
         else
         {
             skill.GetSkillState().SetTargetUnit(targetUnit);
             moveState.ChageToSkillState(skill.GetSkillState());
+        }
+    }
+    public override void Visit(ChaseState chaseState)
+    {
+        if (range < player.DistanceToUnit(targetUnit))
+            chaseState.MoveToTargetUnit();
+        else
+        {
+            skill.GetSkillState().SetTargetUnit(targetUnit);
+            chaseState.ChageToSkillState(skill.GetSkillState());
         }
     }
 
@@ -47,6 +57,7 @@ public class TargetSkillCommmand : SkillCommand
         }
         else
         {
+            skill.GetSkillState().SetTargetUnit(targetUnit);
             attackState.ChageToSkillState(skill.GetSkillState());
         }
     }
@@ -58,4 +69,5 @@ public class TargetSkillCommmand : SkillCommand
         //    skillState.ChageToSkillState(skillState);
         //}
     }
+
 }

@@ -12,12 +12,11 @@ public class MoveState : BasicState
 
     public override void Begin()
     {
-        animator.Play("Run");
-        
     }
 
     public override void TickAccept(float deltaTime, Command command)
     {
+        animator.Play("Run");
         command.Visit(this);
     }
 
@@ -27,25 +26,5 @@ public class MoveState : BasicState
         direction.y = 0f;
         direction.Normalize();
         rigidbody.velocity = direction * speed;
-    }
-
-    public void SetTargetUnit(Unit targetUnit)
-    {
-        this.targetUnit = targetUnit;
-    }
-
-    public void RefreshUnitBuffer()
-    {
-        targetUnit = null;
-    }
-
-
-    public void MoveToTargetUnit()
-    {
-        Vector3 direction = targetUnit.GetPosition() - player.GetPosition();
-        direction.y = 0f;
-        direction.Normalize();
-        rigidbody.velocity = direction * speed;
-    }
-  
+    }  
 }

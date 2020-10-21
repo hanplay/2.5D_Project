@@ -41,6 +41,7 @@ public abstract class Player : Unit
 	#region State 
 	private IdleState idleState;
 	private MoveState moveState;
+	private ChaseState chaseState;
 	private AttackState attackState;
 
 
@@ -52,7 +53,11 @@ public abstract class Player : Unit
     {
 		return moveState;
     }
-
+	public ChaseState GetChaseState(Unit targetUnit)
+    {
+		chaseState.SetTargetUnit(targetUnit);
+		return chaseState;
+    }
 	public AttackState GetAttackState(Unit targetUnit)
     {
 		attackState.SetTargetUnit(targetUnit);
@@ -83,6 +88,7 @@ public abstract class Player : Unit
 		#region State 
 		state = idleState = new IdleState(this);
 		moveState = new MoveState(this);
+		chaseState = new ChaseState(this);
 		attackState = new AttackState(this);
         #endregion
 
@@ -93,18 +99,25 @@ public abstract class Player : Unit
         for (int i = 0; i < animationClips.Length; i++)
         {
             clipLengths.Add(animationClips[i].name, animationClips[i].length);
-
+			print(animationClips[i].name + ": " + animationClips[i].length);
         }
     }
 
 	private Command commandBuffer;
+	private State stateBuffer;
 	protected void Update()
     {
-		if(command != commandBuffer)
+		//if(command != commandBuffer)
+  //      {
+		//	commandBuffer = command;
+		//	Debug.Log(command.ToString());
+  //      }
+		if(state != stateBuffer)
         {
-			commandBuffer = command;
-			Debug.Log(command.ToString());
+			stateBuffer = state;
+			Debug.Log(state.ToString());
         }
+
 		state.TickAccept(Time.deltaTime, command);
 		for(int i = 0; i < skillList.Length; i++)
         {
