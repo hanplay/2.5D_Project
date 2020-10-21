@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TravelRouteWriter : MonoBehaviour
 {
-
+    private Unit targetUnit;
     private Transform travelRouteLine;
   
     private void Awake()
@@ -12,7 +13,7 @@ public class TravelRouteWriter : MonoBehaviour
         travelRouteLine = transform.Find("TravelRouteLine");
     }
 
-    public void DrawRouteLine(Vector3 characterPosition, Vector3 groundPosition)
+    private void DrawRouteLine(Vector3 characterPosition, Vector3 groundPosition)
     {
         travelRouteLine.gameObject.SetActive(true);
         Vector3 toPointerPosition = groundPosition - characterPosition;
@@ -23,26 +24,30 @@ public class TravelRouteWriter : MonoBehaviour
         travelRouteLine.localScale = new Vector3(1f, 1f, length);
     }
 
-    public void DrawRouteLine(Vector3 groundPosition)
+    private void Update()
     {
-        DrawRouteLine(transform.position, groundPosition);
+        if (null == targetUnit)
+            return;
+        DrawRouteLine(transform.position, targetUnit.GetPosition());
+
     }
 
-
-    public void DrawRouteLine(Vector3 characterPosition, Unit targetUnit)
+    public void DrawRouteLine(Vector3 groundPosition)
     {
-        DrawRouteLine(characterPosition, targetUnit.GetPosition());
+        targetUnit = null;
+        DrawRouteLine(transform.position, groundPosition);
     }
 
     public void DrawRouteLine(Unit targetUnit)
     {
-        DrawRouteLine(transform.position, targetUnit.GetPosition());
+        this.targetUnit = targetUnit;
     }
 
     public void HideRouteLine()
     {
+        targetUnit = null;
         travelRouteLine.gameObject.SetActive(false);
-
+        
     }
 
 }

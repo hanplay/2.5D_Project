@@ -8,7 +8,7 @@ public class Skill
 
     private bool canCancel;
     private bool isTargetSkill;
-
+    private bool isChasing;
 
     private float cooldownTime;
 
@@ -43,6 +43,15 @@ public class Skill
     public void SetSkillState(SkillState skillState)
     {
         this.skillState = skillState;
+    }
+    public void SetChase(bool isChasing)
+    {
+        this.isChasing = isChasing;
+    }
+
+    public bool IsChasing()
+    {
+        return isChasing;
     }
 
 

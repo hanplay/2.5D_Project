@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,7 +27,7 @@ public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandl
         Unit unit = raycastResult.gameObject.GetComponent<Unit>();
         if(player.IsTargetable(unit))
         {
-            travelRouteWriter.DrawRouteLine(unit.GetPosition());
+            travelRouteWriter.DrawRouteLine(unit);
         }   
         else
         {
@@ -39,6 +40,12 @@ public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandl
         travelRouteWriter.HideRouteLine();
         RaycastResult raycastResult = eventData.pointerCurrentRaycast;
         Unit unit = raycastResult.gameObject.GetComponent<Unit>();
+
+        if(player == unit as Player)
+        {
+            ButtonSkillController.GetInstance().SetPlayer(player);
+            return;
+        }
         if (player.IsTargetable(unit))
         {
             player.SetCommand(new AttackCommand(player, unit));
@@ -48,11 +55,6 @@ public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandl
             player.SetCommand(new MoveCommand(player, raycastResult.worldPosition));
         }
 
-
-        if(player == unit as Player)
-        {
-            ButtonSkillController.GetInstance().SetPlayer(player);
-        }
     }
 
 

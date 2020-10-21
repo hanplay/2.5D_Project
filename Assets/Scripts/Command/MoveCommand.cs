@@ -14,6 +14,7 @@ public class MoveCommand : Command
 
     public override void Visit(MoveState moveState)
     {
+        moveState.SetTargetUnit(null);
         moveState.MoveTo(destination);
         if(0.8f >Vector3.Distance(player.GetPosition(), destination))
         {

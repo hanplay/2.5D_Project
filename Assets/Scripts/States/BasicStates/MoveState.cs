@@ -13,6 +13,7 @@ public class MoveState : BasicState
     public override void Begin()
     {
         animator.Play("Run");
+        
     }
 
     public override void TickAccept(float deltaTime, Command command)

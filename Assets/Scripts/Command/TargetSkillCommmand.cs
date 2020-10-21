@@ -9,6 +9,8 @@ public class TargetSkillCommmand : SkillCommand
     {
         this.player = player;
         this.targetUnit = targetUnit;
+        skill.SetChase(true);
+        
     }
 
     public override void Visit(IdleState idleState)
