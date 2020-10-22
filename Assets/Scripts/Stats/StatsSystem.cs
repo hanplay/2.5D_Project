@@ -61,13 +61,13 @@ public class StatsSystem
 
 	public void AddMaxHealthPoints(int maxHealthPoints)
     {
-		addedMaxHeatlhPoints = maxHealthPoints;
+		addedMaxHeatlhPoints += maxHealthPoints;
 		CalculateMaxHealthPoints();
     }
 
 	public void AddMoveSpeed(float moveSpeed)
     {
-		addedMoveSpeed = moveSpeed;
+		addedMoveSpeed += moveSpeed;
 		CalculateMoveSpeed();
     }
 

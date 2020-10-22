@@ -34,7 +34,8 @@ public class SkillData : ScriptableObject
     [SerializeField] private GameObject hitSmoke;
     [SerializeField] private GameObject smokeExplosion;
     [SerializeField] private GameObject deathSkullExplosion;
-    
+    [SerializeField] private GameObject hasteVisualEffect;
+
 
     public Skill CreateSkill(Player player, SkillType skillType)
     {
@@ -65,7 +66,7 @@ public class SkillData : ScriptableObject
             skill.SetCooldownTime(15f);
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(hasteBuffSprite);
-            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(null, BuffType.Haste), deathSkullExplosion));
+            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(null, BuffType.Haste), hasteVisualEffect));
             if (null == skill.GetSkillState())
             {
                 Debug.Log("Haste Buff State null");

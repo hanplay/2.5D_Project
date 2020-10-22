@@ -19,6 +19,8 @@ MonoImporter:
       type: 3}
   - deathSkullExplosion: {fileID: 7624427047103384004, guid: d0bd0e1872e2a874c9eb17593a638468,
       type: 3}
+  - hasteVisualEffect: {fileID: 359295505843514115, guid: f3a3d0d92d694de42a67a821a3454b86,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
