@@ -21,10 +21,7 @@ public abstract class Player : Unit
 	[SerializeField]
 	protected LevelSystem levelSystem;
 	[SerializeField]
-	protected StatsDatum statsDatum;
-	
-	protected HealthPointsSystem healthPointsSystem;
-	protected StatsSystem statsSystem;
+	protected PlayerStatsDatum playerStatsDatum;
 
 	[SerializeField]
     protected Skill[] skillList = new Skill[SkillCount];
@@ -78,10 +75,9 @@ public abstract class Player : Unit
 	#endregion
 	protected virtual void Awake()
     {	
-        base.Awake();
 		levelSystem = new LevelSystem();
-		healthPointsSystem = new HealthPointsSystem(statsDatum, equipmentSystem, levelSystem);
-		statsSystem = new StatsSystem(statsDatum, equipmentSystem, levelSystem);
+		statsSystem = new StatsSystem(playerStatsDatum, levelSystem.GetLevel());
+		healthPointsSystem = new HealthPointsSystem(statsSystem.GetTotalMaxHealthPoints());
 
 		command = new NullCommand(this);
 
@@ -127,17 +123,6 @@ public abstract class Player : Unit
     }
 	protected void FixedUpdate()
     {
-	}
-
-	public override void BeDamaged(int damage)
-	{
-		int calculatedDamage;
-		statsSystem.CalculateDamage(damage, out calculatedDamage);
-		healthPointsSystem.SubtractHealthPoints(calculatedDamage);
-	}
-	public override HealthPointsSystem GetHealthPointsSystem()
-	{
-		return healthPointsSystem;
 	}
 
 	public string GetCharacterName()

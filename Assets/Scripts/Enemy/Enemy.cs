@@ -2,7 +2,9 @@
 
 public class Enemy : Unit
 {
-	private HealthPointsSystem healthPointsSystem;
+	[SerializeField]
+	StatsDatum statsDatum;
+
 	private float range;
 	private FSMState state = FSMState.Idle;
 	#region FSM
@@ -17,8 +19,8 @@ public class Enemy : Unit
 
     protected void Awake()
 	{
-		base.Awake();
-		healthPointsSystem = new HealthPointsSystem(100);
+		statsSystem = new StatsSystem(statsDatum);
+		healthPointsSystem = new HealthPointsSystem(statsSystem.GetTotalMaxHealthPoints());
 	}
 
 	private void FixedUpdate()
@@ -36,13 +38,4 @@ public class Enemy : Unit
         #endregion
     }
 
-    public override void BeDamaged(int damage)
-	{
-		
-	}
-
-	public override HealthPointsSystem GetHealthPointsSystem()
-	{
-		return healthPointsSystem;
-	}
 }

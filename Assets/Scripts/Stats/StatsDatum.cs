@@ -6,46 +6,31 @@ public class StatsDatum : ScriptableObject
 	[SerializeField]
 	private int baseAttackPower;
 	[SerializeField]
-	private int addedAttackPowerPerLevelUp;
-
-	[SerializeField]
 	private int baseMaxHealthPoints;
-	[SerializeField]
-	private int addedMaxHealthPointsPerLevelUp;
-
 
 	[SerializeField]
-	private int percentAttackPower;
+	private int baseArmor;
 
 	[SerializeField]
-	private int armor;
-
-
+	private float baseMoveSpeed;
 
 	public int GetBaseAttackPower()
 	{
 		return baseAttackPower;
-	}
-	public int GetAddedAttackPowerPerLevelUp()
-	{
-		return addedAttackPowerPerLevelUp;
 	}
 
 	public int GetBaseMaxHealthPoints()
 	{
 		return baseMaxHealthPoints;
 	}
-	public int GetAddedMaxHealthPointsPerLevelUp()
+
+	public int GetBaseArmor()
 	{
-		return addedMaxHealthPointsPerLevelUp;
+		return baseArmor;
 	}
 
-	public int GetPercentAttackPower()
-	{
-		return percentAttackPower;
-	}
-	public int GetArmor()
-	{
-		return armor;
-	}
+	public float GetBaseMoveSpeed()
+    {
+		return baseMoveSpeed;
+    }
 }

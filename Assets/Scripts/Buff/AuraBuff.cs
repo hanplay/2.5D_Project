@@ -5,12 +5,9 @@ using UnityEngine;
 
 public abstract class AuraBuff : Buff
 {
-	public AuraBuff(BuffDatum buffDatum, Unit targetUnit) : base(buffDatum, targetUnit)
-	{
-		
-	}
+	public AuraBuff(Unit targetUnit) : base(targetUnit) { }    
 
-	public override void ApplyEffects()
+    public override void ApplyEffects()
 	{
 		
 	}

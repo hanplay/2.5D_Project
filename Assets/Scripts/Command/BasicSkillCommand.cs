@@ -4,21 +4,21 @@
 
     public override void Visit(IdleState idleState)
     {
-        idleState.ChageToSkillState(skillState);
+        idleState.ChageToSkillState(skill.GetSkillState());
     }
 
     public override void Visit(MoveState moveState)
     {
-        moveState.ChageToSkillState(skillState);
+        moveState.ChageToSkillState(skill.GetSkillState());
     }
     public override void Visit(ChaseState chaseState)
     {
-        chaseState.ChageToSkillState(skillState);
+        chaseState.ChageToSkillState(skill.GetSkillState());
     }
 
     public override void Visit(AttackState attackState)
     {
-        attackState.ChageToSkillState(skillState);
+        attackState.ChageToSkillState(skill.GetSkillState());
     }
 
     public override void Visit(SkillState skillState)

@@ -11,8 +11,8 @@ public class Knight : Player
 	protected void Start()
     {
 		skillList[0] = skillData.CreateSkill(this, SkillType.Dive);
-		skillList[1] = null;
-		skillList[2] = null;
+		skillList[1] = skillData.CreateSkill(this, SkillType.TestBuff);
+		skillList[2] = skillData.CreateSkill(this, SkillType.HasteBuff);
 		skillList[3] = null;
 	}
 

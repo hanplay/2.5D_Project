@@ -1,29 +1,37 @@
-﻿public abstract class Buff
-{
+﻿using System;
+using UnityEngine;
 
+
+
+public abstract class Buff : ICloneable
+{
 	protected Unit targetUnit;
-	private BuffDatum buffDatum;
+	private Sprite buffSprite;
 	
 	//만약에 isEnded가 true면 tick함수를 호출하는 Unit에서 이 buff를 제거한다.
 	protected bool isEnded;
 	protected int maxStack = 1;
 	protected int currentStack;
 
-	public Buff(BuffDatum buffDatum, Unit targetUnit)
+	public const int DoNotShow = -1;
+	public Buff(Unit targetUnit) 
 	{
-		this.buffDatum = buffDatum;
 		this.targetUnit = targetUnit;
-		maxStack = buffDatum.GetMaxStack();
 	}
+
+	public void SetBuffSprite(Sprite buffSprite)
+    {
+		this.buffSprite = buffSprite;
+    }
+
+	public void SetTargetUnit(Unit targetUnit)
+    {
+		this.targetUnit = targetUnit;
+    }
 
 	public abstract void Tick(float deltaTime);
 
-	public BuffDatum GetBuffDatum()
-	{
-		return buffDatum;
-	}
-
-	virtual protected void Begin()
+	virtual public void Begin()
 	{
 		isEnded = false;
 		ApplyEffects();
@@ -51,4 +59,10 @@
 		return false;
 	}
 
+	public Sprite GetBuffSprite()
+    {
+		return buffSprite;
+    }
+    public abstract object Clone();
+	public abstract int IndexNumber();
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TimeLimitedModule : MonoBehaviour
+public class LifetimeLimitedModule : MonoBehaviour
 {
     [SerializeField]
     private float lifeTime = 3f;

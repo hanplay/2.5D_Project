@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7441cc59fd57b294798d873800b7f26f, type: 3}
   m_Name: SkillData
   m_EditorClassIdentifier: 
-  diveSkillSprite: {fileID: 21300000, guid: 6341005da49c17b4ebc0bd19107f0945, type: 3}
+  buffData: {fileID: 11400000, guid: 984f263244f50dd41baf83a81dd05a75, type: 2}
+  diveSkillSprite: {fileID: 21300000, guid: a7b33bdfe6132954ba0c69d666606366, type: 3}
   healSkillSprite: {fileID: 21300000, guid: 42f6c722ead369b4b934a116b4324a4d, type: 3}
   loopingTornadoSprite: {fileID: 21300000, guid: eced15bb959edc54c8457ab75f9a45b5,
     type: 3}
+  testBuffSprite: {fileID: 21300000, guid: 7280620c174bb824b9aa0dd358ca6d82, type: 3}
+  hasteBuffSprite: {fileID: 21300000, guid: bd342816b57b5e84ba38a25226148b7a, type: 3}
   loopingTornado: {fileID: 5765895818725834987, guid: 9d2003ab0d43aa244b9eda0af9df0ea3,
     type: 3}
   hitSmoke: {fileID: 2044047436482808057, guid: 5d183909a44df394aba9330fadf7bd44,
     type: 3}
   smokeExplosion: {fileID: 8587978461798725584, guid: a7c51c963c5d650479f03e21a4dfbdb0,
     type: 3}
-  deathSkullExplosion: {fileID: 0}
+  deathSkullExplosion: {fileID: 7624427047103384004, guid: d0bd0e1872e2a874c9eb17593a638468,
+    type: 3}

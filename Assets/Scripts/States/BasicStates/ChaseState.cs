@@ -5,11 +5,12 @@ using UnityEngine;
 public class ChaseState : BasicState
 {
     private Rigidbody rigidbody;
-    private float speed = 5f;
+    private StatsSystem statsSystem;
 
     public ChaseState(Player player) : base(player)
     {
         rigidbody = player.GetComponent<Rigidbody>();
+        statsSystem = player.GetStatsSystem();
     }
 
     public override void Begin()
@@ -38,7 +39,7 @@ public class ChaseState : BasicState
         Vector3 direction = targetUnit.GetPosition() - player.GetPosition();
         direction.y = 0f;
         direction.Normalize();
-        rigidbody.velocity = direction * speed;
+        rigidbody.velocity = direction * statsSystem.GetTotalMoveSpeed();
     }
 
 }

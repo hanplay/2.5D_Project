@@ -3890,7 +3890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillData: {fileID: 11400000, guid: a8fb0872390da5b4dbfec31364130194, type: 2}
   characterName: Shepherd
-  statsDatum: {fileID: 11400000, guid: b94e3253c8774354998b8f4013cd5028, type: 2}
+  playerStatsDatum: {fileID: 11400000, guid: f48f8d626f0ceda42bd4f53c7b2f571b, type: 2}
 --- !u!114 &4948378008679850825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5393,6 +5393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba6fd6afceb7b48489c802ab1f8f71c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsDatum: {fileID: 0}
 --- !u!114 &8628502660033032171
 MonoBehaviour:
   m_ObjectHideFlags: 0

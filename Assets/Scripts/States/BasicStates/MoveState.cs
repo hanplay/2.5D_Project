@@ -3,15 +3,17 @@
 public class MoveState : BasicState
 {
     private Rigidbody rigidbody;
-    private float speed = 5f;
+    private StatsSystem statsSystem;
 
     public MoveState(Player player) : base(player)
     {
         rigidbody = player.GetComponent<Rigidbody>();
+        statsSystem = player.GetStatsSystem();
     }
 
     public override void Begin()
     {
+        Debug.Log("Speed: " + statsSystem.GetTotalMoveSpeed());
     }
 
     public override void TickAccept(float deltaTime, Command command)
@@ -25,6 +27,6 @@ public class MoveState : BasicState
         Vector3 direction = destination - player.GetPosition();
         direction.y = 0f;
         direction.Normalize();
-        rigidbody.velocity = direction * speed;
+        rigidbody.velocity = direction * statsSystem.GetTotalMoveSpeed();
     }  
 }

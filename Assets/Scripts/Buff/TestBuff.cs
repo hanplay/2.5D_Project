@@ -1,24 +1,31 @@
 ﻿using UnityEngine;
 
-public class TestBuff : Buff
+public class TestBuff : TimedBuff
 {
-	public TestBuff(BuffDatum buffDatum, Unit targetUnit) : base(buffDatum, targetUnit)
-	{
-		
-	}
+	public TestBuff(Unit targetUnit, float duration) : base(targetUnit, duration) 
+    {
+        this.duration = duration;
+    }
 
-	public override void ApplyEffects()
+
+    public override void ApplyEffects()
 	{
 		Debug.Log("Test apply Effects");
 	}
 
-	public override void EraseEffects()
+
+    public override void EraseEffects()
 	{
 		Debug.Log("Test erase Effects");
 	}
 
-	public override void Tick(float deltaTime)
-	{
-		return;
-	}
+    public override object Clone()
+    {
+		return new TestBuff(targetUnit, duration);
+    }
+
+    public override int IndexNumber()
+    {
+        return 34;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,24 +12,26 @@ public abstract class Unit : MonoBehaviour
 	public Action BaseAttackAction;
 
 	private BaseAttackStrategy baseAttackStrategy = new BaseAttackStrategy();
+
+	protected StatsSystem statsSystem;
+	protected HealthPointsSystem healthPointsSystem;
+
 	public BaseAttackStrategy GetBaseAttackStrategy() 
 	{
 		return baseAttackStrategy;
 	}
 
-	protected virtual void Awake()
-	{
-
-    }
 
     protected void Update()
 	{
-		foreach (Buff buff in buffs)
-		{
-			if (buff.IsEnded())
-				buffs.Remove(buff);
-			buff.Tick(Time.deltaTime);
-		}
+		for(int i = 0; i < buffs.Count; i++)
+        {
+			buffs[i].Tick(Time.deltaTime);
+			if(buffs[i].IsEnded())
+            {
+				buffs.RemoveAt(i);
+            }
+        }
 	}
 	
 	public Vector3 GetPosition()
@@ -41,11 +44,6 @@ public abstract class Unit : MonoBehaviour
 	{
 		transform.position = position;
 	}
-
-	public abstract HealthPointsSystem GetHealthPointsSystem();
-
-	public abstract void BeDamaged(int damage);
-
 
 	public void Die()
 	{				
@@ -72,17 +70,37 @@ public abstract class Unit : MonoBehaviour
     }
 
 	public Vector3 DirectionToUnit(Unit unit)
-    {
+	{
 		Vector3 direction = unit.GetPosition() - transform.position;
 		direction.Normalize();
 		return direction;
-    }
-
+	}
 
 	public void AddBuff(Buff buff)
     {
 		buffs.Add(buff);
     }
-	//public abstract float GetSpeed();
+
+	public StatsSystem GetStatsSystem()
+    {
+		return statsSystem;
+    }
+
+	public HealthPointsSystem GetHealthPointsSystem()
+    {
+		return healthPointsSystem;
+    }
+
+	public void BeDamaged(int damage)
+	{
+		int calculatedDamage;
+		statsSystem.CalculateDamage(damage, out calculatedDamage);
+		healthPointsSystem.SubtractHealthPoints(calculatedDamage);
+	}
+
+	public void Heal(int healingHealthPoints)
+    {
+		healthPointsSystem.AddHealthPoints(healingHealthPoints);
+    }
 
 }

@@ -2,40 +2,19 @@
 
 public class HealthPointsSystem 
 {
-    private EquipmentSystem equipmentSystem;
-    private LevelSystem levelSystem;
-
     public event EventHandler OnHealthPointChanged;
+    public event EventHandler OnDead;
 
-    private int baseMaxHealthPoints;
-    private int addedMaxHealthPointsPerLevelUp;
-    private int addedMaxHealthPoints;
     private int maxHealthPoints = 100;
     private int healthPoints = 50;
 
-    //Player
-    public HealthPointsSystem(StatsDatum statsDatum, EquipmentSystem equipmentSystem, LevelSystem levelSystem)
-    {
-        baseMaxHealthPoints = statsDatum.GetBaseMaxHealthPoints();
-        addedMaxHealthPointsPerLevelUp = statsDatum.GetAddedMaxHealthPointsPerLevelUp();
-
-        this.equipmentSystem = equipmentSystem;
-        this.levelSystem = levelSystem;
-        CalculateMaxHealthPoints();
-        FillHealthPointsFull();
-	}
-
-    //Enemy (Monster) or common unit
     public HealthPointsSystem(int maxHealthPoints) 
     {
         this.maxHealthPoints = maxHealthPoints;
         FillHealthPointsFull();
     }
 
-    public int GetHealthPoints()
-    {
-        return healthPoints;
-	}
+
     public void AddHealthPoints(int points)
     {
         healthPoints += points;
@@ -57,6 +36,10 @@ public class HealthPointsSystem
     {
         return maxHealthPoints;
 	}
+    public int GetHealthPoints()
+    {
+        return healthPoints;
+	}
 
     public void SetMaxHealthPoints(int maxHealthPoints)
     {
@@ -73,8 +56,4 @@ public class HealthPointsSystem
         healthPoints = maxHealthPoints;
 	}
 
-    private void CalculateMaxHealthPoints()
-    {
-        maxHealthPoints = baseMaxHealthPoints + addedMaxHealthPoints;
-	}
 }

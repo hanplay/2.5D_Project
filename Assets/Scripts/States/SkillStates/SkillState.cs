@@ -4,6 +4,7 @@ public abstract class SkillState : State
 {
     protected Skill skill;
     protected float duration;
+    protected float lagTime;
     protected bool isEnd;
 
 
@@ -13,7 +14,6 @@ public abstract class SkillState : State
         this.player = player;
         this.skill = skill;
     }
-
     public override void Begin()
     {
         skill.StartCooldownTime();
@@ -25,6 +25,22 @@ public abstract class SkillState : State
         {
             player.SetCommand(new AttackCommand(player, targetUnit));
         }
+    }
+    public override void TickAccept(float deltaTime, Command command)
+    {
+        command.Visit(this);
+        if (true == isEnd)
+            return;
+        lagTime += deltaTime;
+        if (lagTime >= duration)
+        {
+            End();
+        }
+    }
+
+    protected virtual void End()
+    {
+        isEnd = true;
     }
 
     public bool IsEnd()
@@ -38,6 +54,10 @@ public abstract class SkillState : State
         this.targetUnit = targetUnit;
     }
 
-    public abstract void Initialize();
+    public virtual void Initialize()
+    {
+        isEnd = false;
+        lagTime = 0;
+    }
 
 }

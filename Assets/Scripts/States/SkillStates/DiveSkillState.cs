@@ -4,7 +4,6 @@ public class DiveSkillState : SkillState, ITargetExistsState
 {
     private GameObject hitSmoke;
     private GameObject smokeExplosion;
-    private float lagTime = 0f;
     private Vector3 originPosition;
     private Vector3 targetPosition;
     private float totalTime;
@@ -23,7 +22,10 @@ public class DiveSkillState : SkillState, ITargetExistsState
         animator.Play("Jump");
         totalTime = duration;
         originPosition = player.GetPosition();
+
         targetPosition = targetUnit.GetPosition();
+        Vector3 direction = (targetPosition - originPosition).normalized;
+        targetPosition = targetPosition - 1 * direction;
         GameObject.Instantiate(hitSmoke, player.GetPosition(), Quaternion.identity);
     }
 
@@ -35,14 +37,8 @@ public class DiveSkillState : SkillState, ITargetExistsState
 
     public override void TickAccept(float deltaTime, Command command)
     {
-        command.Visit(this);
-        if (true == isEnd)
-            return;
-        lagTime += deltaTime;
-        if(lagTime >= duration)
-        {
-            End();
-        }
+        base.TickAccept(deltaTime, command);
+
         /*
          * Tick 함수는 player.SetPosition() 함수로 deltaTime 마다 
          * player를 포물선 운동시킨다
@@ -53,14 +49,10 @@ public class DiveSkillState : SkillState, ITargetExistsState
 
     }
 
-    protected void End()
+    protected override void End()
     {
-        isEnd = true;
+        base.End();
         GameObject smoke = GameObject.Instantiate(smokeExplosion, player.GetPosition(), Quaternion.identity);
     }
-    public override void Initialize()
-    {
-        isEnd = false;
-        lagTime = 0f;
-    }    
+
 }
