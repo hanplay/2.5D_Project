@@ -21,13 +21,10 @@ public class BuffSkillState : SkillState
 
     private void Work()
     {
-        Debug.Log("Buff!!");
-       // GameObject.Instantiate(buffVisualEffect, player.transform);
-        GameObject.Instantiate(buffVisualEffect, player.GetPosition(), Quaternion.Euler(90, 0f, 0), player.transform);
-        //GameObject.Instantiate(buffVisualEffect, player.GetPosition(), Quaternion.identity);
+        Debug.Log("Buff!!");       
+        GameObject.Instantiate(buffVisualEffect, player.GetPosition(), Quaternion.Euler(90, 0f, 0), player.transform);        
 
         Buff newBuff = buff.Clone() as Buff;
-        newBuff.SetTargetUnit(player);
         player.AddBuff(newBuff);
         newBuff.Begin();
     }

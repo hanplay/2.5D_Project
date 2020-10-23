@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class StatsSystem
 	private int addedArmor;
 	private int addedMaxHeatlhPoints;
 	private float addedMoveSpeed;
+
 
 	private int totalAttackPower;
 	private int totalMaxHealthPoints;
@@ -74,6 +76,7 @@ public class StatsSystem
 	private void CalculateAttackPower()
     {
 		totalAttackPower = baseAttackPower + addedAttackPower;
+		
 		if (totalAttackPower < 1)
 			totalAttackPower = 1;
 	}
@@ -97,7 +100,26 @@ public class StatsSystem
 		if (totalMoveSpeed < 1f)
 			totalMoveSpeed = 1f;
 	}
+	
+	public int GetBaseAttackPower()
+    {
+		return baseAttackPower;
+    }
 
+	public int GetBaseArmor()
+    {
+		return baseArmor;
+    }
+	
+	public int GetBaseMaxHealthPoints()
+    {
+		return baseMaxHealthPoints;
+    }
+
+	public float GetBaseMoveSpeed()
+    {
+		return baseMoveSpeed;
+    }
 
 	public int GetTotalAttackPower()
 	{

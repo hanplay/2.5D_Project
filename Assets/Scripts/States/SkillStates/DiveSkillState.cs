@@ -26,7 +26,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
         targetPosition = targetUnit.GetPosition();
         Vector3 direction = (targetPosition - originPosition).normalized;
         targetPosition = targetPosition - 1 * direction;
-        GameObject.Instantiate(hitSmoke, player.GetPosition(), Quaternion.identity);
+        GameObject.Instantiate(hitSmoke, player.GetPosition(), Quaternion.Euler(90f, 0f,0f));
     }
 
 
@@ -52,7 +52,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
     protected override void End()
     {
         base.End();
-        GameObject smoke = GameObject.Instantiate(smokeExplosion, player.GetPosition(), Quaternion.identity);
+        GameObject smoke = GameObject.Instantiate(smokeExplosion, player.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
     }
 
 }

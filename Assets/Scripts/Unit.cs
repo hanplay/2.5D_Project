@@ -78,6 +78,7 @@ public abstract class Unit : MonoBehaviour
 
 	public void AddBuff(Buff buff)
     {
+		buff.SetTargetUnit(this);
 		buffs.Add(buff);
     }
 
@@ -102,5 +103,7 @@ public abstract class Unit : MonoBehaviour
     {
 		healthPointsSystem.AddHealthPoints(healingHealthPoints);
     }
+
+	public abstract bool IsTargetable(Unit unit);
 
 }

@@ -130,7 +130,7 @@ public abstract class Player : Unit
 		return characterName;
 	}
 
-	public abstract bool IsTargetable(Unit unit);
+
 
 	public LevelSystem GetLevelSystem()
 	{

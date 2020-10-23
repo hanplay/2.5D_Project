@@ -14,10 +14,6 @@ public abstract class Buff : ICloneable
 	protected int currentStack;
 
 	public const int DoNotShow = -1;
-	public Buff(Unit targetUnit) 
-	{
-		this.targetUnit = targetUnit;
-	}
 
 	public void SetBuffSprite(Sprite buffSprite)
     {

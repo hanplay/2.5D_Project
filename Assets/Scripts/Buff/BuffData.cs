@@ -8,6 +8,8 @@ public enum BuffType
 {
     Test,
     Haste,
+    Burn,
+    Conseal,
     Enchant, 
 
 }
@@ -17,7 +19,8 @@ public class BuffData : ScriptableObject
 {
     [SerializeField] Sprite testBuffSprite;
     [SerializeField] Sprite hasteBuffSprite;
-
+    [SerializeField] Sprite BurnDebuffSprite;
+    [SerializeField] Sprite ConsealBuffSprite;
 
 
     public Buff CreateBuff(Unit targetUnit, BuffType buffType)
@@ -26,17 +29,17 @@ public class BuffData : ScriptableObject
         switch (buffType)
         {
         case BuffType.Test:
-            buff = new TestBuff(targetUnit, 7f);
+            buff = new TestBuff(7f);
             buff.SetBuffSprite(testBuffSprite);
             return buff;
         case BuffType.Haste:
-            buff = new HasteBuff(targetUnit, 10f);
+            buff = new HasteBuff(10f);
             buff.SetBuffSprite(hasteBuffSprite);
             return buff;
         default:
             Assert.IsTrue(true);
             Debug.LogError("Buff Type does not Exist!!!!");
-            return new TestBuff(targetUnit, 7f);
+            return new TestBuff(7f);
         }
     }
 }
