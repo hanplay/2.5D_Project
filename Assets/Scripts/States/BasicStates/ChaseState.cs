@@ -13,10 +13,7 @@ public class ChaseState : BasicState
         statsSystem = player.GetStatsSystem();
     }
 
-    public override void Begin()
-    {
-    }
-
+    public override void Begin() { }
     public override void TickAccept(float deltaTime, Command command)
     {
         animator.Play("Run");
@@ -27,12 +24,6 @@ public class ChaseState : BasicState
     {
         this.targetUnit = targetUnit;
     }
-
-    //public void RefreshUnitBuffer()
-    //{
-    //    targetUnit = null;
-    //}
-
 
     public void MoveToTargetUnit()
     {

@@ -7,13 +7,13 @@ using UnityEngine.EventSystems;
 public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private Player player;
-    private BasicFXVixualizer basicFXVixualizer;
+    private BasicFXVisualizer basicFXVixualizer;
     private TravelRouteWriter travelRouteWriter;
 
     private void Awake()
     {
         player = GetComponent<Player>();
-        basicFXVixualizer = GetComponent<BasicFXVixualizer>();
+        basicFXVixualizer = GetComponent<BasicFXVisualizer>();
         travelRouteWriter = GetComponent<TravelRouteWriter>();
     }
     public void OnPointerDown(PointerEventData eventData)

@@ -6,6 +6,9 @@ MonoImporter:
   defaultReferences:
   - testBuffSprite: {fileID: 21300000, guid: 11277a3f23988ec47908362d708edaa8, type: 3}
   - hasteBuffSprite: {fileID: 21300000, guid: bd342816b57b5e84ba38a25226148b7a, type: 3}
+  - BurnDebuffSprite: {fileID: 21300000, guid: 7140c686292792a4abfe218b90b2ae90, type: 3}
+  - ConsealBuffSprite: {fileID: 21300000, guid: 248e7692e419dc2419e077782dc7b21d,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -6,7 +6,7 @@ public abstract class TimedBuff : Buff, ICloneable
 	protected float duration;
 	private float lagTime;
 
-	public TimedBuff(float duration)  
+	public TimedBuff(BuffType TypeValue, float duration) : base(TypeValue)
 	{
 		this.duration = duration;
 	}

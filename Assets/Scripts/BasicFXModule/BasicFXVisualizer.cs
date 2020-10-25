@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicFXVixualizer : MonoBehaviour
+public class BasicFXVisualizer : MonoBehaviour
 {
 	private Unit unit;
 	private Transform modelTransform;
@@ -14,13 +14,8 @@ public class BasicFXVixualizer : MonoBehaviour
 		FindSpriteRenderer(modelTransform);
 		SetMaterial(new Material(GameAssets.GetInstance().GetUnitMaterial()));        
 		unit = GetComponent<Unit>();
-        unit.OnDead += Unit_OnDead;
 	}
 
-    private void Unit_OnDead(object sender, System.EventArgs e)
-    {
-		FlickFadeaway(5, 12);
-    }
 
     private SpriteRenderer FindSpriteRenderer(Transform rootTransform)
 	{
@@ -102,22 +97,6 @@ public class BasicFXVixualizer : MonoBehaviour
 		}
 	}
 
-	public void FlickFadeaway(float duration, int count)
-    {
-		StartCoroutine(FlickFadeawayCoroutine(duration, count));
-    }
-
-	private IEnumerator FlickFadeawayCoroutine(float duration, int count)
-	{
-		float deltaDuration = duration / count;
-		bool isVisible = false;
-		for (int i = 0; i < count; i++)
-		{
-			SetSpritesVisible(isVisible);
-			isVisible = isVisible ^ true; // toggle the isVisible variable
-			yield return new WaitForSeconds(deltaDuration);
-		}
-	}
 	public void SetSpritesVisible(bool value)
 	{
 		foreach (SpriteRenderer spriteRenderer in spriteRenderers)

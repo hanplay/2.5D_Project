@@ -2,7 +2,7 @@
 
 public class TestBuff : TimedBuff
 {
-	public TestBuff(float duration) : base(duration) 
+	public TestBuff(BuffType TypeValue, float duration) : base(TypeValue, duration) 
     {
         this.duration = duration;
     }
@@ -21,7 +21,7 @@ public class TestBuff : TimedBuff
 
     public override object Clone()
     {
-		return new TestBuff(duration);
+		return new TestBuff(TypeValue, duration);
     }
 
     public override int IndexNumber()

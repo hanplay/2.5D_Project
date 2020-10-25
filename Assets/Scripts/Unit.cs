@@ -5,6 +5,11 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
+	public event EventHandler OnAttackBegin;
+	public event EventHandler OnAttackEnd;
+	public event EventHandler OnSkillBegin;
+	public event EventHandler OnSkillEnd;
+
 	public event EventHandler OnDead;
 
 	private List<Buff> buffs = new List<Buff>();
@@ -48,6 +53,10 @@ public abstract class Unit : MonoBehaviour
 	public void Die()
 	{				
 		OnDead?.Invoke(this, EventArgs.Empty);
+		for(int i = 0; i < buffs.Count; i++)
+        {
+			buffs[i].End();
+        }
 		Destroy(gameObject);
 	}
 
@@ -99,11 +108,36 @@ public abstract class Unit : MonoBehaviour
 		healthPointsSystem.SubtractHealthPoints(calculatedDamage);
 	}
 
+	public void BeTrueDamaged(int trueDamage)
+    {
+		healthPointsSystem.SubtractHealthPoints(trueDamage);
+    }
+
 	public void Heal(int healingHealthPoints)
     {
 		healthPointsSystem.AddHealthPoints(healingHealthPoints);
     }
 
 	public abstract bool IsTargetable(Unit unit);
+
+	public void OnAttackBeginNotify()
+    {
+		OnAttackBegin?.Invoke(this, EventArgs.Empty);
+    }
+
+	public void OnAttackEndNotify()
+    {
+		OnAttackEnd?.Invoke(this, EventArgs.Empty);
+    }
+
+	public void OnSkillBeginNotify()
+	{
+		OnSkillBegin?.Invoke(this, EventArgs.Empty);
+	}
+
+	public void OnSkillEndNotify()
+	{
+		OnSkillEnd?.Invoke(this, EventArgs.Empty);
+	}
 
 }

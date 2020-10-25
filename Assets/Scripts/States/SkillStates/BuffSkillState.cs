@@ -9,6 +9,11 @@ public class BuffSkillState : SkillState
         this.buff = buff;
         this.buffVisualEffect = buffVisualEffect;
     }
+    public BuffSkillState(Player player, Skill skill, Buff buff) : base(player, skill)
+    {
+        this.buff = buff;
+        buffVisualEffect = null;
+    }
 
     public override void Begin()
     {
@@ -21,8 +26,8 @@ public class BuffSkillState : SkillState
 
     private void Work()
     {
-        Debug.Log("Buff!!");       
-        GameObject.Instantiate(buffVisualEffect, player.GetPosition(), Quaternion.Euler(90, 0f, 0), player.transform);        
+        if(null != buffVisualEffect)
+            GameObject.Instantiate(buffVisualEffect, player.GetPosition(), Quaternion.Euler(90f, 0f, 0), player.transform);        
 
         Buff newBuff = buff.Clone() as Buff;
         player.AddBuff(newBuff);

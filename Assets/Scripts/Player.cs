@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Player : Unit
 {
+
 	public const int SkillCount = 4;
 	public const int SkillActionCount = 4;
 
@@ -40,11 +41,13 @@ public abstract class Player : Unit
 	private MoveState moveState;
 	private ChaseState chaseState;
 	private AttackState attackState;
+	private DieState dieState;
 
 
 	public IdleState GetIdleState()
 	{
 		return idleState;
+		
 	}
 	public MoveState GetMoveState()
     {
@@ -59,6 +62,11 @@ public abstract class Player : Unit
     {
 		attackState.SetTargetUnit(targetUnit);
 		return attackState;
+    }
+
+	public DieState GetDieState()
+    {
+		return dieState;
     }
 	public State GetState()
 	{
@@ -86,6 +94,8 @@ public abstract class Player : Unit
 		moveState = new MoveState(this);
 		chaseState = new ChaseState(this);
 		attackState = new AttackState(this);
+		dieState = new DieState(this, 5f);
+		state.Begin();
         #endregion
 
         RuntimeAnimatorController runtimeAnimatorController = transform.Find("model").GetComponent<Animator>().runtimeAnimatorController;

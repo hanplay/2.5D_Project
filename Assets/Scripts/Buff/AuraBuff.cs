@@ -5,6 +5,9 @@ using UnityEngine;
 
 public abstract class AuraBuff : Buff
 {
+	public AuraBuff(BuffType TypeValue) : base(TypeValue) { }
+
+
     public override void ApplyEffects()
 	{
 		

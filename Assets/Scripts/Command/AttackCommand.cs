@@ -22,6 +22,7 @@ public class AttackCommand : Command
         }
         else
         {
+            
             idleState.ChangeToAttackState(targetUnit);
         }
     }
@@ -55,7 +56,6 @@ public class AttackCommand : Command
 
         if (false == attackState.IsInDelayTime())
         {
-            attackState.InitializeLagTime();
             attackState.Begin();
         }
     }

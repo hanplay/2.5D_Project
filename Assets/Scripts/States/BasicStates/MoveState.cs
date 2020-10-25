@@ -11,10 +11,7 @@ public class MoveState : BasicState
         statsSystem = player.GetStatsSystem();
     }
 
-    public override void Begin()
-    {
-        Debug.Log("Speed: " + statsSystem.GetTotalMoveSpeed());
-    }
+    public override void Begin() { }
 
     public override void TickAccept(float deltaTime, Command command)
     {
@@ -28,5 +25,7 @@ public class MoveState : BasicState
         direction.y = 0f;
         direction.Normalize();
         rigidbody.velocity = direction * statsSystem.GetTotalMoveSpeed();
-    }  
+    }
+
+ 
 }

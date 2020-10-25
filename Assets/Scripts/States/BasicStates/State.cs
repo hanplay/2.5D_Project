@@ -18,12 +18,12 @@ public abstract class State
  
 
     public void ChangeToIdleState()
-    {
+    {        
         player.SetState(player.GetIdleState());
         player.GetState().Begin();
     }
     public void ChangeToMoveState()
-    {
+    {    
         player.SetState(player.GetMoveState());
         player.GetState().Begin();
     }
@@ -58,5 +58,6 @@ public abstract class State
     {
         return targetUnit;
     }
+
 
 }

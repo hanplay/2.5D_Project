@@ -17,13 +17,16 @@
     }
 
     public override void Visit(AttackState attackState)
-    {
+    {       
         attackState.ChageToSkillState(skill.GetSkillState());
     }
 
     public override void Visit(SkillState skillState)
     {
-        return;
+        //if(skillState.IsEnd())
+        //{
+        //    skillState
+        //}
     }
 
 }

@@ -27,7 +27,6 @@ public class MoveCommand : Command
 
     public override void Visit(AttackState attackState)
     {
-        attackState.InitializeLagTime();
         player.SetState(player.GetMoveState());
     }
 

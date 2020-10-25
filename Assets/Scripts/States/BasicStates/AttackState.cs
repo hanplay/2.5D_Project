@@ -1,14 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class AttackState : BasicState, ITargetExistsState
 {
     private float duration;
     private float lagTime;
 
+
     public AttackState(Player player) : base(player) { }
 
     public override void Begin()
     {
+        lagTime = 0f;
+        player.OnAttackBeginNotify();
         player.BaseAttackAction = Work;
         animator.Play("Attack");
         if(0 == duration)
@@ -29,18 +33,15 @@ public class AttackState : BasicState, ITargetExistsState
             return false;
     }
 
-    public void InitializeLagTime()
-    {
-        lagTime = 0f;
-    }
-
     private void Work()
     {
         Debug.Log("Damage!");
+        player.OnAttackEndNotify();
     }
 
     public void SetTargetUnit(Unit targetUnit)
     {
         this.targetUnit = targetUnit;
     }
+    
 }

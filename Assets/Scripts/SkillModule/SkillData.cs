@@ -12,7 +12,9 @@ public enum SkillType
     PoisonedArrow,
     IceAge,
     TestBuff,
+    FireAura,
     HasteBuff,
+    ConcealBuff,
     Buff,
     COUNT,
 }
@@ -27,7 +29,8 @@ public class SkillData : ScriptableObject
     [SerializeField] private Sprite loopingTornadoSprite;
     [SerializeField] private Sprite testBuffSprite;
     [SerializeField] private Sprite hasteBuffSprite;
-
+    [SerializeField] private Sprite fireAuraSprite;
+    [SerializeField] private Sprite concealBuffSprite;
 
 
     [SerializeField] private GameObject loopingTornado;
@@ -35,6 +38,7 @@ public class SkillData : ScriptableObject
     [SerializeField] private GameObject smokeExplosion;
     [SerializeField] private GameObject deathSkullExplosion;
     [SerializeField] private GameObject hasteVisualEffect;
+    [SerializeField] private GameObject burnExplosionEffect;
 
 
     public Skill CreateSkill(Player player, SkillType skillType)
@@ -55,22 +59,28 @@ public class SkillData : ScriptableObject
             skill.SetCooldownTime(10f);
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(testBuffSprite);
-            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(null, BuffType.Test), deathSkullExplosion));
-            if(null == skill.GetSkillState())
-            {
-                Debug.Log("Test Buff State null");
-            }
+            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(BuffType.Test), deathSkullExplosion));
             return skill;
         case SkillType.HasteBuff:
             skill.SetCanCancel(false);
             skill.SetCooldownTime(15f);
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(hasteBuffSprite);
-            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(null, BuffType.Haste), hasteVisualEffect));
-            if (null == skill.GetSkillState())
-            {
-                Debug.Log("Haste Buff State null");
-            }
+            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(BuffType.Haste), hasteVisualEffect));
+            return skill;
+        case SkillType.FireAura:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(20f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(fireAuraSprite);
+            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(BuffType.FireAura), null));
+            return skill;
+        case SkillType.ConcealBuff:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(15f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(concealBuffSprite);
+            skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(BuffType.Conceal), null));
             return skill;
         default:
             Assert.IsTrue(true);

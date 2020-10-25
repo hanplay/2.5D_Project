@@ -19,7 +19,6 @@ public class NullCommand : Command
 
     public override void Visit(AttackState attackState)
     {
-        attackState.InitializeLagTime();
         attackState.ChangeToIdleState();
     }
 

@@ -2,7 +2,7 @@
 
 public class HasteBuff : TimedBuff
 {
-    public HasteBuff(float duration) : base(duration) 
+    public HasteBuff(BuffType TypeValue, float duration) : base(TypeValue, duration) 
     {
         this.duration = duration;
     }
@@ -15,7 +15,7 @@ public class HasteBuff : TimedBuff
 
     public override object Clone()
     {
-        return new HasteBuff(duration);
+        return new HasteBuff(TypeValue, duration);
     }
 
     public override void EraseEffects()

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class Buff : ICloneable
 {
+	public readonly BuffType TypeValue;
 	protected Unit targetUnit;
 	private Sprite buffSprite;
 	
@@ -15,7 +16,12 @@ public abstract class Buff : ICloneable
 
 	public const int DoNotShow = -1;
 
-	public void SetBuffSprite(Sprite buffSprite)
+    protected Buff(BuffType TypeValue)
+    {
+		this.TypeValue = TypeValue;
+    }
+
+    public void SetBuffSprite(Sprite buffSprite)
     {
 		this.buffSprite = buffSprite;
     }
@@ -33,7 +39,7 @@ public abstract class Buff : ICloneable
 		ApplyEffects();
 	}
 
-	protected void End()
+	public void End()
 	{
 		isEnded = true;
 		EraseEffects();

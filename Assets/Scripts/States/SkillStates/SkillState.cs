@@ -16,6 +16,7 @@ public abstract class SkillState : State
     }
     public override void Begin()
     {
+        player.OnSkillBeginNotify();
         skill.StartCooldownTime();
         if(null == targetUnit)
         {
