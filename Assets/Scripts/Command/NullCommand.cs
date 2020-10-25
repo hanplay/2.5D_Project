@@ -21,6 +21,10 @@ public class NullCommand : Command
     {
         attackState.ChangeToIdleState();
     }
+    public override void Visit(DieState dieState)
+    {
+        return;
+    }
 
     public override void Visit(SkillState skillState)
     {

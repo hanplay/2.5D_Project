@@ -6,4 +6,9 @@
     {
         this.skill = skill;
     }
+
+    public override void Visit(DieState dieState)
+    {
+        return;
+    }
 }

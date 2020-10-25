@@ -46,6 +46,10 @@ public class AttackCommand : Command
         chaseState.SetTargetUnit(targetUnit);
         chaseState.MoveToTargetUnit();
     }
+    public override void Visit(DieState dieState)
+    {
+        return;
+    }
 
     public override void Visit(AttackState attackState)
     {

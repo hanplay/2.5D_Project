@@ -101,7 +101,6 @@ public abstract class Player : Unit
         RuntimeAnimatorController runtimeAnimatorController = transform.Find("model").GetComponent<Animator>().runtimeAnimatorController;
         AnimationClip[] animationClips = runtimeAnimatorController.animationClips;
 		
-		
         for (int i = 0; i < animationClips.Length; i++)
         {
             clipLengths.Add(animationClips[i].name, animationClips[i].length);

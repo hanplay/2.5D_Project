@@ -8,6 +8,7 @@ public interface IVisitor
     void Visit(MoveState moveState);
     void Visit(ChaseState chaseState);
     void Visit(AttackState attackState);
+    void Visit(DieState dieState);
     void Visit(SkillState skillState);
 }
 
@@ -24,7 +25,8 @@ public abstract class Command : IVisitor
     public abstract void Visit(MoveState moveState);
     public abstract void Visit(ChaseState chaseState);
     public abstract void Visit(AttackState attackState);
+    public abstract void Visit(DieState dieState);
     public abstract void Visit(SkillState skillState);
 
- 
+
 }

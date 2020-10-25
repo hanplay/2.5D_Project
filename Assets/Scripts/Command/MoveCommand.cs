@@ -29,6 +29,10 @@ public class MoveCommand : Command
     {
         player.SetState(player.GetMoveState());
     }
+    public override void Visit(DieState dieState)
+    {
+        return;
+    }
 
     public override void Visit(SkillState skillState)
     {
