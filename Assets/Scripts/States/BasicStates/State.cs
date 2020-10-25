@@ -40,6 +40,12 @@ public abstract class State
         player.GetState().Begin();
     }
 
+    public void ChangeToDieState()
+    {
+        player.SetState(player.GetDieState());
+        player.GetState().Begin();
+    }
+
     public void ChageToSkillState(SkillState skillState)
     {
         player.SetState(skillState);
