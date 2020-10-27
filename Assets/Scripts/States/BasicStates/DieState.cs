@@ -22,6 +22,7 @@ public class DieState : BasicState
         blinkTime = 2.5f;
         lagTime = 0f;
         animator.Play("Die");
+        player.OnDie();
     }
 
     public override void TickAccept(float deltaTime, Command command)

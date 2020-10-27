@@ -23,6 +23,7 @@ public class BuffData : ScriptableObject
     [SerializeField] Sprite burnDebuffSprite;
     [SerializeField] Sprite concealBuffSprite;
 
+    [SerializeField] GameObject burnExplosion;
 
     public Buff CreateBuff(BuffType TypeValue)
     {
@@ -38,7 +39,7 @@ public class BuffData : ScriptableObject
             buff.SetBuffSprite(hasteBuffSprite);
             return buff;
         case BuffType.Burn:
-            buff = new BurnDebuff(TypeValue, 3f);
+            buff = new BurnDebuff(TypeValue, 3f, burnExplosion);
             buff.SetBuffSprite(burnDebuffSprite);
             return buff;
 

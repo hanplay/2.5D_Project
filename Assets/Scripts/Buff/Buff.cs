@@ -12,8 +12,9 @@ public abstract class Buff : ICloneable
 	//만약에 isEnded가 true면 tick함수를 호출하는 Unit에서 이 buff를 제거한다.
 	protected bool isEnded;
 	protected int maxStack = 1;
-	protected int currentStack;
+	protected int currentStack = 1;
 
+	//
 	public const int DoNotShow = -1;
 
     protected Buff(BuffType TypeValue)
@@ -34,8 +35,7 @@ public abstract class Buff : ICloneable
 	public abstract void Tick(float deltaTime);
 
 	virtual public void Begin()
-	{
-		isEnded = false;
+	{ 
 		ApplyEffects();
 	}
 
@@ -67,4 +67,12 @@ public abstract class Buff : ICloneable
     }
     public abstract object Clone();
 	public abstract int IndexNumber();
+
+	public void Stack()
+    {
+		if(CanBeStacked())
+        {
+			currentStack++;
+        }
+    }
 }

@@ -106,11 +106,11 @@ public class Skill
         if (true == isCooldownTime)
             return;
 
-        if (null == player.GetState().GetTargetUnit())
+        if (false == player.GetState().IsTargetIngState())
         {
             return;
         }
-        player.SetCommand(new TargetSkillCommmand(player, this, player.GetState().GetTargetUnit()));
+        player.SetCommand(new TargetSkillCommmand(player, this));
     }
 
     public void OrderPlayerBasicSkillCommand()

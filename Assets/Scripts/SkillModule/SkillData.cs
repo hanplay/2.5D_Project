@@ -31,6 +31,7 @@ public class SkillData : ScriptableObject
     [SerializeField] private Sprite hasteBuffSprite;
     [SerializeField] private Sprite fireAuraSprite;
     [SerializeField] private Sprite concealBuffSprite;
+    [SerializeField] private Sprite chargeSkillSprite;
 
 
     [SerializeField] private GameObject loopingTornado;
@@ -81,6 +82,13 @@ public class SkillData : ScriptableObject
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(concealBuffSprite);
             skill.SetSkillState(new BuffSkillState(player, skill, buffData.CreateBuff(BuffType.Conceal), null));
+            return skill;
+        case SkillType.Charge:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(15f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(chargeSkillSprite);
+            skill.SetSkillState(new ChargeSkillState(player, skill, 4f, burnExplosionEffect));
             return skill;
         default:
             Assert.IsTrue(true);

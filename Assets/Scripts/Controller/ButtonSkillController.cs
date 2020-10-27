@@ -11,6 +11,7 @@ public class ButtonSkillController : MonoBehaviour
     }
 
     private Player player;
+    private BuffShower buffShower;
     private List<UI_SkillButton> uI_SkillButtonList = new List<UI_SkillButton>();
 
     private void Awake()
@@ -21,7 +22,7 @@ public class ButtonSkillController : MonoBehaviour
             uI_SkillButtonList.Add(childTransform.GetComponent<UI_SkillButton>());
         }
         uI_SkillButtonList.TrimExcess();
-
+        buffShower = GetComponent<BuffShower>();
     }
 
 
@@ -55,11 +56,12 @@ public class ButtonSkillController : MonoBehaviour
     {
         if(null != this.player)
         {
-            this.player.OnDead -= Player_OnDead;
+            this.player.OnDieEvent -= Player_OnDead;
         }
-        player.OnDead += Player_OnDead;
+        player.OnDieEvent += Player_OnDead;
 
         this.player = player;
+        buffShower.SetPlayer(player);
         BindPlayerSkillsToUI_SkillButtonsAndShow();
     }
 }

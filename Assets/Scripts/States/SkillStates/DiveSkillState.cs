@@ -17,8 +17,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
     public override void Begin()
     {
         base.Begin();
-        Debug.Log("Dive Skill Begin");
-        //unit.GetComponent<Rigidbody>().useGravity = false;
+
         animator.Play("Jump");
         totalTime = duration;
         originPosition = player.GetPosition();
@@ -53,6 +52,10 @@ public class DiveSkillState : SkillState, ITargetExistsState
     {
         base.End();
         GameObject smoke = GameObject.Instantiate(smokeExplosion, player.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
+    }
+    public override bool IsTargetIngState()
+    {
+        return true;
     }
 
 }

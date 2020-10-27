@@ -3,6 +3,9 @@ using UnityEngine;
 
 public abstract class TimedBuff : Buff, ICloneable
 {
+	public delegate void EventLagTimeChange(float proportion);
+	public event EventLagTimeChange OnLagTimeChange;
+
 	protected float duration;
 	private float lagTime;
 
@@ -14,6 +17,7 @@ public abstract class TimedBuff : Buff, ICloneable
 
     public override void Tick(float deltaTime)
 	{
+		OnLagTimeChange?.Invoke(GetRemainingTimeProportion());
 		lagTime += deltaTime;
 		if(lagTime >= duration)
 		{
@@ -21,7 +25,8 @@ public abstract class TimedBuff : Buff, ICloneable
 			lagTime = 0f;
 		}
 	}
-	public float GetRemainingTimeProportion()
+
+	private float GetRemainingTimeProportion()
 	{
 		return 1f - (lagTime / duration);
 	}

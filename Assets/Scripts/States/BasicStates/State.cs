@@ -17,29 +17,6 @@ public abstract class State
     public abstract void TickAccept(float deltaTime, Command command);
  
 
-    public void ChangeToIdleState()
-    {        
-        player.SetState(player.GetIdleState());
-        player.GetState().Begin();
-    }
-    public void ChangeToMoveState()
-    {    
-        player.SetState(player.GetMoveState());
-        player.GetState().Begin();
-    }
-
-    public void ChanegeToChaseState(Unit targetUnit)
-    {
-        player.SetState(player.GetChaseState(targetUnit));
-        player.GetState().Begin();
-    }
-
-    public void ChangeToAttackState(Unit targetUnit)
-    {
-        player.SetState(player.GetAttackState(targetUnit));
-        player.GetState().Begin();
-    }
-
     public void ChangeToDieState()
     {
         player.SetState(player.GetDieState());
@@ -52,13 +29,9 @@ public abstract class State
         player.GetState().Begin();
     }
 
-    public bool IsTargetUnit()
-    {
-        if (null == targetUnit)
-            return false;
-        else
-            return true;
-    }
+
+    public abstract bool IsTargetIngState();
+
 
     public Unit GetTargetUnit()
     {

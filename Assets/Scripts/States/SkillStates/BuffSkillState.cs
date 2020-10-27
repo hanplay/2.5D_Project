@@ -30,8 +30,11 @@ public class BuffSkillState : SkillState
             GameObject.Instantiate(buffVisualEffect, player.GetPosition(), Quaternion.Euler(90f, 0f, 0), player.transform);        
 
         Buff newBuff = buff.Clone() as Buff;
-        player.AddBuff(newBuff);
-        newBuff.Begin();
+        player.GetBuffSystem().AddBuff(newBuff);
     }
 
+    public override bool IsTargetIngState()
+    {
+        return false;
+    }
 }

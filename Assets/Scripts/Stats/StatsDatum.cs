@@ -14,6 +14,9 @@ public class StatsDatum : ScriptableObject
 	[SerializeField]
 	private float baseMoveSpeed;
 
+	[SerializeField]
+	private float baseRange;
+
 	public int GetBaseAttackPower()
 	{
 		return baseAttackPower;
@@ -32,5 +35,10 @@ public class StatsDatum : ScriptableObject
 	public float GetBaseMoveSpeed()
     {
 		return baseMoveSpeed;
+    }
+
+	public float GetBaseRange()
+    {
+		return baseRange;
     }
 }

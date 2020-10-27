@@ -10,15 +10,16 @@ public abstract class Unit : MonoBehaviour
 	public event EventHandler OnSkillBegin;
 	public event EventHandler OnSkillEnd;
 
-	public event EventHandler OnDead;
+	public event EventHandler OnDieEvent;
 
-	private List<Buff> buffs = new List<Buff>();
+	
 
 	public Action BaseAttackAction;
 
 	private BaseAttackStrategy baseAttackStrategy = new BaseAttackStrategy();
 
 	protected StatsSystem statsSystem;
+	protected BuffSystem buffSystem;
 	protected HealthPointsSystem healthPointsSystem;
 
 	public BaseAttackStrategy GetBaseAttackStrategy() 
@@ -26,17 +27,14 @@ public abstract class Unit : MonoBehaviour
 		return baseAttackStrategy;
 	}
 
+	protected void Awake()
+    {
+		buffSystem = new BuffSystem(this);
+    }
 
-    protected void Update()
+    protected virtual void Update()
 	{
-		for(int i = 0; i < buffs.Count; i++)
-        {
-			buffs[i].Tick(Time.deltaTime);
-			if(buffs[i].IsEnded())
-            {
-				buffs.RemoveAt(i);
-            }
-        }
+		buffSystem.Tick(Time.deltaTime);
 	}
 	
 	public Vector3 GetPosition()
@@ -49,17 +47,6 @@ public abstract class Unit : MonoBehaviour
 	{
 		transform.position = position;
 	}
-
-	public void Die()
-	{				
-		OnDead?.Invoke(this, EventArgs.Empty);
-		for(int i = 0; i < buffs.Count; i++)
-        {
-			buffs[i].End();
-        }
-		Destroy(gameObject);
-	}
-
 
 	public void FlipLeft()
 	{
@@ -85,15 +72,16 @@ public abstract class Unit : MonoBehaviour
 		return direction;
 	}
 
-	public void AddBuff(Buff buff)
-    {
-		buff.SetTargetUnit(this);
-		buffs.Add(buff);
-    }
+
 
 	public StatsSystem GetStatsSystem()
     {
 		return statsSystem;
+    }
+
+	public BuffSystem GetBuffSystem()
+    {
+		return buffSystem;
     }
 
 	public HealthPointsSystem GetHealthPointsSystem()
@@ -140,4 +128,8 @@ public abstract class Unit : MonoBehaviour
 		OnSkillEnd?.Invoke(this, EventArgs.Empty);
 	}
 
+	public void OnDie()
+    {
+		OnDieEvent.Invoke(this, EventArgs.Empty);
+    }
 }

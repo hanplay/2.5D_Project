@@ -14,6 +14,8 @@ MonoImporter:
   - fireAuraSprite: {fileID: 21300000, guid: 0c136515f7aa49e43ba0840df48c1f4d, type: 3}
   - concealBuffSprite: {fileID: 21300000, guid: 248e7692e419dc2419e077782dc7b21d,
       type: 3}
+  - chargeSkillSprite: {fileID: 21300000, guid: d0ede9f0d5392aa4a881d4b95ec7514f,
+      type: 3}
   - loopingTornado: {fileID: 5765895818725834987, guid: 9d2003ab0d43aa244b9eda0af9df0ea3,
       type: 3}
   - hitSmoke: {fileID: 2044047436482808057, guid: 5d183909a44df394aba9330fadf7bd44,
@@ -26,7 +28,6 @@ MonoImporter:
       type: 3}
   - burnExplosionEffect: {fileID: 6513522117976866406, guid: 8ef5807b23b9799439a926a9b8ca2ff5,
       type: 3}
-  - concealBuffEffect: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -40,7 +40,7 @@ public class AreaOfEffectModule : MonoBehaviour
 
         if(null != buff)
         {
-            unit.AddBuff(buff);
+            unit.GetBuffSystem().AddBuff(buff);
         }
     }
 }

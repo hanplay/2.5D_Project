@@ -37,31 +37,12 @@ public abstract class Player : Unit
     #endregion
     private State state;
 	#region State 
-	private IdleState idleState;
-	private MoveState moveState;
-	private ChaseState chaseState;
-	private AttackState attackState;
+	private BasicState basicState;
 	private DieState dieState;
 
-
-	public IdleState GetIdleState()
-	{
-		return idleState;
-		
-	}
-	public MoveState GetMoveState()
+	public BasicState GetBasicState()
     {
-		return moveState;
-    }
-	public ChaseState GetChaseState(Unit targetUnit)
-    {
-		chaseState.SetTargetUnit(targetUnit);
-		return chaseState;
-    }
-	public AttackState GetAttackState(Unit targetUnit)
-    {
-		attackState.SetTargetUnit(targetUnit);
-		return attackState;
+		return basicState;
     }
 
 	public DieState GetDieState()
@@ -82,7 +63,8 @@ public abstract class Player : Unit
 
 	#endregion
 	protected virtual void Awake()
-    {	
+    {
+		base.Awake();
 		levelSystem = new LevelSystem();
 		statsSystem = new StatsSystem(playerStatsDatum, levelSystem.GetLevel());
 		healthPointsSystem = new HealthPointsSystem(statsSystem.GetTotalMaxHealthPoints());
@@ -90,10 +72,7 @@ public abstract class Player : Unit
 		command = new NullCommand(this);
 
 		#region State 
-		state = idleState = new IdleState(this);
-		moveState = new MoveState(this);
-		chaseState = new ChaseState(this);
-		attackState = new AttackState(this);
+		state = basicState = new BasicState(this);
 		dieState = new DieState(this, 5f);
 		state.Begin();
         #endregion
@@ -110,7 +89,7 @@ public abstract class Player : Unit
 
 	private Command commandBuffer;
 	private State stateBuffer;
-	protected void Update()
+	protected override void Update()
     {
 		//if(command != commandBuffer)
   //      {
