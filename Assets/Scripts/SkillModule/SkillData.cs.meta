@@ -28,7 +28,7 @@ MonoImporter:
       type: 3}
   - burnExplosionEffect: {fileID: 6513522117976866406, guid: 8ef5807b23b9799439a926a9b8ca2ff5,
       type: 3}
-  executionOrder: 0
+  executionOrder: 200
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

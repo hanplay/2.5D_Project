@@ -1,24 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BuffSystem 
 {
+    public event EventHandler OnBuffsChanged;
+
     private Unit unit;
     public BuffSystem(Unit unit)
     {
         this.unit = unit;
     }
 
-    private List<Buff> buffs = new List<Buff>();
+    private List<Buff> buffList = new List<Buff>();
     public void Tick(float deltaTime)
     {
-        for (int i = 0; i < buffs.Count; i++)
+        for (int i = 0; i < buffList.Count; i++)
         {
-            buffs[i].Tick(Time.deltaTime);
-            if (buffs[i].IsEnded())
+            buffList[i].Tick(Time.deltaTime);
+            if (buffList[i].IsEnded())
             {
-                buffs.RemoveAt(i);
+                buffList.RemoveAt(i);
+                OnBuffsChanged?.Invoke(this, EventArgs.Empty);
                 return;
             }
         }
@@ -26,16 +30,22 @@ public class BuffSystem
 
     public void AddBuff(Buff buff)
     {
-        for (int i = 0; i < buffs.Count; i++)
+        for (int i = 0; i < buffList.Count; i++)
         {
-            if (buffs[i].TypeValue == buff.TypeValue)
+            if (buffList[i].TypeValue == buff.TypeValue)
             {
-                buffs[i].Stack();
+                buffList[i].Stack();
                 return;
             }
         }
         buff.SetTargetUnit(unit);
-        buffs.Add(buff);
+        buffList.Add(buff);
         buff.Begin();
+        OnBuffsChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public List<Buff> GetBuffList()
+    {
+        return buffList;
     }
 }

@@ -18,12 +18,12 @@ public enum BuffType
 [CreateAssetMenu(fileName = "New Buff Data", menuName = "Buff Data")]
 public class BuffData : ScriptableObject
 {
-    [SerializeField] Sprite testBuffSprite;
-    [SerializeField] Sprite hasteBuffSprite;
-    [SerializeField] Sprite burnDebuffSprite;
-    [SerializeField] Sprite concealBuffSprite;
-
-    [SerializeField] GameObject burnExplosion;
+    [SerializeField] private Sprite testBuffSprite;
+    [SerializeField] private Sprite hasteBuffSprite;
+    [SerializeField] private Sprite burnDebuffSprite;
+    [SerializeField] private Sprite concealBuffSprite;
+                     
+    [SerializeField] private GameObject burnExplosion;
 
     public Buff CreateBuff(BuffType TypeValue)
     {

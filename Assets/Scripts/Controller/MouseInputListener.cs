@@ -43,7 +43,7 @@ public class MouseInputListener : MonoBehaviour, IPointerDownHandler, IDragHandl
 
         if(player == unit as Player)
         {
-            ButtonSkillController.GetInstance().SetPlayer(player);
+            PlayerSelector.GetInstance().SetPlayer(player);
             return;
         }
         if (player.IsTargetable(unit))

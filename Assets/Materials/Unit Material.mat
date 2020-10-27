@@ -12,7 +12,7 @@ Material:
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -26,5 +26,5 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
-    - _Color: {r: 0.3773585, g: 0.22770125, b: 0, a: 1}
+    - _Color: {r: 0.2487095, g: 0.764151, b: 0.3093497, a: 0.8078431}
   m_BuildTextureStacks: []

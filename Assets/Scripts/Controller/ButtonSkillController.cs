@@ -3,39 +3,19 @@ using UnityEngine;
 
 public class ButtonSkillController : MonoBehaviour
 {
-    //Singleton
-    private static ButtonSkillController instance;
-    public static ButtonSkillController GetInstance()
-    {
-        return instance;
-    }
-
-    private Player player;
-    private BuffShower buffShower;
+    
     private List<UI_SkillButton> uI_SkillButtonList = new List<UI_SkillButton>();
 
     private void Awake()
     {
-        instance = this;
         foreach (Transform childTransform in transform)
         {
             uI_SkillButtonList.Add(childTransform.GetComponent<UI_SkillButton>());
         }
         uI_SkillButtonList.TrimExcess();
-        buffShower = GetComponent<BuffShower>();
     }
 
-
-    private void Player_OnDead(object sender, System.EventArgs e)
-    {
-        player = null;
-        for(int i = 0; i < uI_SkillButtonList.Count; i++)
-        {
-            uI_SkillButtonList[i].Hide();
-        }
-    }
-
-    private void BindPlayerSkillsToUI_SkillButtonsAndShow()
+    public void BindPlayerSkillsToUI_SkillButtonsAndShow(Player player)
     {
         for(int i = 0; i < player.GetSkillCount(); i++)
         {
@@ -49,19 +29,15 @@ public class ButtonSkillController : MonoBehaviour
                 uI_SkillButtonList[i].Show();
             }
         }
-
     }
 
-    public void SetPlayer(Player player)
+    public void HideAllUI_SkillButtons()
     {
-        if(null != this.player)
+        foreach(UI_SkillButton uI_SkillButton in uI_SkillButtonList)
         {
-            this.player.OnDieEvent -= Player_OnDead;
+            uI_SkillButton.Hide();
         }
-        player.OnDieEvent += Player_OnDead;
-
-        this.player = player;
-        buffShower.SetPlayer(player);
-        BindPlayerSkillsToUI_SkillButtonsAndShow();
     }
+
+
 }

@@ -3,16 +3,12 @@ using UnityEngine.UI;
 
 public class UI_Buff : MonoBehaviour
 {
-    private Buff buff;
+    private Image buffImage;
     private Image uI_Blocker;
     private void Awake()
     {
+        buffImage = GetComponent<Image>();
         uI_Blocker = transform.Find("UI_Blocker").GetComponent<Image>();
-        TimedBuff timedBuff = buff as TimedBuff;
-        if (null != timedBuff)
-        {
-            timedBuff.OnLagTimeChange += TimedBuff_OnLagTimeChange;
-        }
     }
 
     private void TimedBuff_OnLagTimeChange(float proportion)
@@ -30,5 +26,15 @@ public class UI_Buff : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public void SetBuff(Buff buff)
+    {
+        buffImage.sprite = buff.GetBuffSprite();
+        
+        TimedBuff timedBuff = buff as TimedBuff;
+        if (null != timedBuff)
+        {
+            timedBuff.OnLagTimeChange += TimedBuff_OnLagTimeChange;
+        }
+    }
 
 }
