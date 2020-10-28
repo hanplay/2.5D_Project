@@ -21,8 +21,13 @@ public class BuffShower : MonoBehaviour
 
     public void SetBuffSystem(BuffSystem buffSystem)
     {
+        if(null != buffSystem)
+        {
+            buffSystem.OnBuffsChanged -= BuffSystem_OnBuffsChanged;
+        }
         this.buffSystem = buffSystem;
         buffSystem.OnBuffsChanged += BuffSystem_OnBuffsChanged;
+        BuffSystem_OnBuffsChanged(this, EventArgs.Empty);
     }
 
     private void BuffSystem_OnBuffsChanged(object sender, EventArgs e)

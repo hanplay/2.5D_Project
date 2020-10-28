@@ -26,6 +26,7 @@ public class ButtonSkillController : MonoBehaviour
             else
             {
                 uI_SkillButtonList[i].SetSkill(player.GetSkill(i));
+                uI_SkillButtonList[i].UpdateSkillImageRemainingProportion();
                 uI_SkillButtonList[i].Show();
             }
         }

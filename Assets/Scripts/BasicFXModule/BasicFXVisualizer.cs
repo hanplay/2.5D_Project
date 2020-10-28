@@ -5,6 +5,7 @@ using UnityEngine;
 public class BasicFXVisualizer : MonoBehaviour
 {
 	private Unit unit;
+	private Material material;
 	private Transform modelTransform;
 	private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
@@ -12,11 +13,15 @@ public class BasicFXVisualizer : MonoBehaviour
 	{
 		modelTransform = transform.Find("model");
 		FindSpriteRenderer(modelTransform);
-		SetMaterial(new Material(GameAssets.GetInstance().GetUnitMaterial()));        
 		unit = GetComponent<Unit>();
 	}
 
-
+	private void Start()
+    {
+		material = new Material(GameAssets.GetInstance().GetUnitMaterial());
+		SetMaterial(material);        
+    }
+	
     private SpriteRenderer FindSpriteRenderer(Transform rootTransform)
 	{
 		foreach (Transform childTransform in rootTransform)
@@ -40,10 +45,7 @@ public class BasicFXVisualizer : MonoBehaviour
 
 	public void Glow(Color color)
 	{
-		foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-		{
-			spriteRenderer.material.SetColor("_Color", color);
-		}
+		material.SetColor("_Color", color);
 	}
 
 	public void GlowOff()
@@ -106,6 +108,10 @@ public class BasicFXVisualizer : MonoBehaviour
 	}
 	private void SetMaterial(Material material)
 	{
+		if(null == material)
+        {
+			Debug.Log("Material is null");
+        }
 		foreach (SpriteRenderer spriteRenderer in spriteRenderers)
 		{
 			spriteRenderer.material = material;

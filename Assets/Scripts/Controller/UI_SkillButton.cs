@@ -18,6 +18,11 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
         //skillImage.material = new Material(GameAssets.GetInstance().GetUnitMaterial());
     }
 
+    void Start()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -30,7 +35,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
 
         if(skill.IsCoolDownTime())
         {
-            skillBlockerImage.fillAmount = skill.GetRemainingCoolDownTimeProportion();
+            UpdateSkillImageRemainingProportion();
         }
    
         
@@ -68,4 +73,8 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
         skillImage.material.color = color;
     }
 
+    public void UpdateSkillImageRemainingProportion()
+    {
+        skillBlockerImage.fillAmount = skill.GetRemainingCoolDownTimeProportion();
+    }
 }

@@ -89,17 +89,19 @@ public class BasicState : State
         if (prevFsmState != fsmState)
         {
             prevFsmState = fsmState;
-            animator.Play("Idle");
         }
+        animator.Play("Idle");
     }
 
     private void MoveStarightLine(Vector3 destination)
     {
         Vector3 direction = destination - player.GetPosition();
+        if (direction.x < 0f)
+            player.FlipLeft();
+        else
+            player.FlipRight();
         direction.y = 0f;
         direction.Normalize();
         rigidbody.velocity = statsSystem.GetTotalMoveSpeed() * direction;
     }
-
-
 }

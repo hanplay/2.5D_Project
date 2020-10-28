@@ -71,7 +71,10 @@ public class Skill
 
 	public float GetRemainingCoolDownTimeProportion()
     {
-        return 1f - (lagTime / cooldownTime);
+        if (IsCoolDownTime())
+            return 1f - (lagTime / cooldownTime);
+        else
+            return 0f;
     }
 
     public SkillState GetSkillState()
