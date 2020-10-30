@@ -3,9 +3,10 @@
 public class Knight : Player
 {
 	//private Transform 
-	protected void Awake()
+	protected override void Awake()
 	{
 		base.Awake();
+		attackStrategy = new MeleeAttackStrategy(this);
 	}
 	
 	protected void Start()

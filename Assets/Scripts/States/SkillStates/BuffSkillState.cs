@@ -33,7 +33,7 @@ public class BuffSkillState : SkillState
         player.GetBuffSystem().AddBuff(newBuff);
     }
 
-    public override bool IsTargetIngState()
+    public override bool IsTargetingState()
     {
         return false;
     }

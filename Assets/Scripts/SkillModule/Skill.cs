@@ -109,7 +109,7 @@ public class Skill
         if (true == isCooldownTime)
             return;
 
-        if (false == player.GetState().IsTargetIngState())
+        if (false == player.GetState().IsTargetingState())
         {
             return;
         }

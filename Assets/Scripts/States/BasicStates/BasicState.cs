@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 public class BasicState : State
-{
-    
+{     
     private Rigidbody rigidbody;
     private Vector3 destination;
     private StatsSystem statsSystem;
@@ -31,7 +30,7 @@ public class BasicState : State
 
     }
 
-    public override bool IsTargetIngState()
+    public override bool IsTargetingState()
     {
         if (null == targetUnit)
             return false;
@@ -49,7 +48,7 @@ public class BasicState : State
             prevFsmState = fsmState;
         }
         animator.Play("Run");
-        MoveStarightLine(destination);
+        MoveStraightLine(destination);
     }
 
     public void ChaseTarget(Unit targetUnit)
@@ -61,7 +60,7 @@ public class BasicState : State
             prevFsmState = fsmState;
         }   
         animator.Play("Run");
-        MoveStarightLine(targetUnit.GetPosition());
+        MoveStraightLine(targetUnit.GetPosition());
     }
 
     public void AttackTarget(Unit targetUnit)
@@ -70,16 +69,9 @@ public class BasicState : State
         this.targetUnit = targetUnit;
         if (prevFsmState != fsmState)
         {
-            player.BaseAttackAction = BaseAttackDamage;
             prevFsmState = fsmState;
-            animator.Play("Attack");
+            player.GetAttackStrategy().Attack(targetUnit);
         }
-    }
-
-    private void BaseAttackDamage()
-    {
-        Debug.Log("Damage");
-        //argetUnit.BeDamaged(statsSystem.GetTotalAttackPower());
     }
 
     public void Stop()
@@ -93,7 +85,7 @@ public class BasicState : State
         animator.Play("Idle");
     }
 
-    private void MoveStarightLine(Vector3 destination)
+    private void MoveStraightLine(Vector3 destination)
     {
         Vector3 direction = destination - player.GetPosition();
         if (direction.x < 0f)

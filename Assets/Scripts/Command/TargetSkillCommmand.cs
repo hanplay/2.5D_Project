@@ -24,7 +24,7 @@ public class TargetSkillCommmand : SkillCommand
 
     public override void Visit(BasicState basicState)
     {   
-        if(false == basicState.IsTargetIngState())
+        if(false == basicState.IsTargetingState())
         {
             BasicState idleState = player.GetBasicState();
             idleState.Stop();

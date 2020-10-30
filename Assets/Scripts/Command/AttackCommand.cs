@@ -5,12 +5,12 @@ using UnityEngine;
 public class AttackCommand : Command
 {
     private Unit targetUnit;
-    private BaseAttackStrategy baseAttackStrategy;
+    private IAttackStrategy attackStrategy;
 
     public AttackCommand(Player player, Unit targetUnit) : base(player)
     {
         this.targetUnit = targetUnit;
-        baseAttackStrategy = player.GetBaseAttackStrategy();
+        attackStrategy = player.GetAttackStrategy();
 
     }
     public override void Visit(DieState dieState) { }
@@ -19,7 +19,7 @@ public class AttackCommand : Command
 
     public override void Visit(BasicState basicState)
     {
-        if(baseAttackStrategy.GetRange() < player.DistanceToUnit(targetUnit))
+        if(attackStrategy.GetRange() < player.DistanceToUnit(targetUnit))
         {
             basicState.ChaseTarget(targetUnit);
         }

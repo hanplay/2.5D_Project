@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BasicFXVisualizer : MonoBehaviour
 {
-	private Unit unit;
 	private Material material;
 	private Transform modelTransform;
 	private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
@@ -13,7 +12,6 @@ public class BasicFXVisualizer : MonoBehaviour
 	{
 		modelTransform = transform.Find("model");
 		FindSpriteRenderer(modelTransform);
-		unit = GetComponent<Unit>();
 	}
 
 	private void Start()

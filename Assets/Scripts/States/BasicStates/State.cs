@@ -30,7 +30,7 @@ public abstract class State
     }
 
 
-    public abstract bool IsTargetIngState();
+    public abstract bool IsTargetingState();
 
 
     public Unit GetTargetUnit()

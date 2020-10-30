@@ -1,21 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BurnDebuff : TimedBuff
-{ 
-    private float damagePeriod = 0.5f;
+public class PoisonDebuff : TimedBuff
+{
+    private float damagePeriod = 0.1f;
     private int trueDamage = 1;
     private float lagTime;
     private BasicFXVisualizer basicFXVisualizer;
 
-    private GameObject burnExplosion;
-
-
-
-    public BurnDebuff(BuffType TypeValue, float duration, GameObject burnExplosion) : base(TypeValue, duration)
+    public PoisonDebuff(BuffType TypeValue, float duration) : base(TypeValue, duration)
     {
-        this.burnExplosion = burnExplosion;
         basicFXVisualizer = targetUnit.GetComponent<BasicFXVisualizer>();
     }
 
@@ -28,17 +24,16 @@ public class BurnDebuff : TimedBuff
     {
         this.trueDamage = trueDamage;
     }
-
+    
 
     public override void ApplyEffects()
     {
-        basicFXVisualizer.Paint(Color.red);        
+        basicFXVisualizer.Paint(Color.green);
     }
 
     public override object Clone()
     {
-        return new BurnDebuff(TypeValue, duration, burnExplosion);
-        
+        return new PoisonDebuff(TypeValue, duration);
     }
 
     public override void EraseEffects()
@@ -48,25 +43,19 @@ public class BurnDebuff : TimedBuff
 
     public override int IndexNumber()
     {
-        return currentStack;
+        return DoNotShow;
     }
 
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-
-        if(5 == currentStack )
-        {
-            End();
-            GameObject.Instantiate(burnExplosion, targetUnit.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
-        }
-
         lagTime += deltaTime;
-        while (lagTime > damagePeriod)
+        while(lagTime > damagePeriod)
         {
             lagTime -= damagePeriod;
-            basicFXVisualizer.Paint(Color.red);
-            targetUnit.BeTrueDamaged(trueDamage * currentStack);
+            basicFXVisualizer.Paint(Color.green);
+            targetUnit.BeTrueDamaged(trueDamage);
         }
+
     }
 }

@@ -44,7 +44,7 @@ public class ChargeSkillState : SkillState
         chargeTime = 0f;
     }
 
-    public override bool IsTargetIngState()
+    public override bool IsTargetingState()
     {
         return false;
     }

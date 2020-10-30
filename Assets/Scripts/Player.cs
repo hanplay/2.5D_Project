@@ -62,6 +62,8 @@ public abstract class Player : Unit
 
 
 	#endregion
+
+	private Transform selectCircle;
 	protected virtual void Awake()
     {
 		base.Awake();
@@ -70,6 +72,9 @@ public abstract class Player : Unit
 		healthPointsSystem = new HealthPointsSystem(statsSystem.GetTotalMaxHealthPoints());
 
 		command = new NullCommand(this);
+
+		selectCircle = transform.Find("SelectCircle");
+		HideSelectCircle();
 
 		#region State 
 		state = basicState = new BasicState(this);
@@ -118,8 +123,6 @@ public abstract class Player : Unit
 		return characterName;
 	}
 
-
-
 	public LevelSystem GetLevelSystem()
 	{
 		return levelSystem;
@@ -139,4 +142,14 @@ public abstract class Player : Unit
     {
 		return clipLengths[name];
     }
+
+	public void ShowSelectCircle()
+    {
+		selectCircle.gameObject.SetActive(true);
+    }
+
+	public void HideSelectCircle()
+    {
+		selectCircle.gameObject.SetActive(false);
+	}
 }

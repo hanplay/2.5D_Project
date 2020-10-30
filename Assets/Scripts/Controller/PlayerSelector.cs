@@ -27,16 +27,19 @@ public class PlayerSelector : MonoBehaviour
         if (null != this.player)
         {
             this.player.OnDieEvent -= Player_OnDieEvent;
+            this.player.HideSelectCircle();
         }
-        player.OnDieEvent += Player_OnDieEvent;
 
         this.player = player;
+        player.OnDieEvent += Player_OnDieEvent;
+        player.ShowSelectCircle();
         buttonSkillController.BindPlayerSkillsToUI_SkillButtonsAndShow(player);
         buffShower.SetBuffSystem(player.GetBuffSystem());
     }
 
     private void Player_OnDieEvent(object sender, System.EventArgs e)
     {
+        player.HideSelectCircle();
         player = null;
         buttonSkillController.HideAllUI_SkillButtons();
         buffShower.UnBindBuffSystem();

@@ -53,7 +53,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
         base.End();
         GameObject smoke = GameObject.Instantiate(smokeExplosion, player.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
     }
-    public override bool IsTargetIngState()
+    public override bool IsTargetingState()
     {
         return true;
     }

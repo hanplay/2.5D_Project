@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,15 +15,15 @@ public abstract class Unit : MonoBehaviour
 
 	public Action BaseAttackAction;
 
-	private BaseAttackStrategy baseAttackStrategy = new BaseAttackStrategy();
+	protected IAttackStrategy attackStrategy;
 
 	protected StatsSystem statsSystem;
 	protected BuffSystem buffSystem;
 	protected HealthPointsSystem healthPointsSystem;
 
-	public BaseAttackStrategy GetBaseAttackStrategy() 
+	public IAttackStrategy GetAttackStrategy() 
 	{
-		return baseAttackStrategy;
+		return attackStrategy;
 	}
 
 	protected void Awake()
