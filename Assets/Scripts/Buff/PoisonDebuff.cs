@@ -31,10 +31,6 @@ public class PoisonDebuff : TimedBuff
         basicFXVisualizer.Paint(Color.green);
     }
 
-    public override object Clone()
-    {
-        return new PoisonDebuff(TypeValue, duration);
-    }
 
     public override void EraseEffects()
     {

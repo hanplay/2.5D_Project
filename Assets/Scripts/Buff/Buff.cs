@@ -7,7 +7,7 @@ public abstract class Buff : ICloneable
 {
 	public readonly BuffType TypeValue;
 	protected Unit targetUnit;
-	private Sprite buffSprite;
+	protected Sprite buffSprite;
 	
 	//만약에 isEnded가 true면 tick함수를 호출하는 Unit에서 이 buff를 제거한다.
 	protected bool isEnded;
@@ -65,7 +65,10 @@ public abstract class Buff : ICloneable
     {
 		return buffSprite;
     }
-    public abstract object Clone();
+    public  object Clone()
+    {
+		return GameAssets.Instance.CreateBuff(TypeValue);
+    }
 	public abstract int IndexNumber();
 
 	public void Stack()

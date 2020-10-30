@@ -13,10 +13,6 @@ public class HasteBuff : TimedBuff
         Debug.Log("Total Speed plus!");
     }
 
-    public override object Clone()
-    {
-        return new HasteBuff(TypeValue, duration);
-    }
 
     public override void EraseEffects()
     {

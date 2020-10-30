@@ -32,11 +32,6 @@ public class ConcealBuff : Buff
         targetUnit.GetStatsSystem().AddAttackPower(- (multiple  - 1) * baseAttackPower);
         targetUnit.GetComponent<BasicFXVisualizer>().Paint(Color.white);
     }
-    public override object Clone()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override int IndexNumber()
     {
         return DoNotShow;

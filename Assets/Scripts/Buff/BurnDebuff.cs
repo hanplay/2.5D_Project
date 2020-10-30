@@ -35,11 +35,6 @@ public class BurnDebuff : TimedBuff
         basicFXVisualizer.Paint(Color.red);        
     }
 
-    public override object Clone()
-    {
-        return new BurnDebuff(TypeValue, duration, burnExplosion);
-        
-    }
 
     public override void EraseEffects()
     {

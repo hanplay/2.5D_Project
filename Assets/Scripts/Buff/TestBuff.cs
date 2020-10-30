@@ -19,10 +19,6 @@ public class TestBuff : TimedBuff
 		Debug.Log("Test erase Effects");
 	}
 
-    public override object Clone()
-    {
-		return new TestBuff(TypeValue, duration);
-    }
 
     public override int IndexNumber()
     {

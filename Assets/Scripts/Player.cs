@@ -8,8 +8,6 @@ public abstract class Player : Unit
 	public const int SkillCount = 4;
 	public const int SkillActionCount = 4;
 
-	[SerializeField]
-	protected SkillData skillData;
 
 	[SerializeField]
 	protected string characterName;

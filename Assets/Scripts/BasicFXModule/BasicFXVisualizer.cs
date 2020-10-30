@@ -16,7 +16,7 @@ public class BasicFXVisualizer : MonoBehaviour
 
 	private void Start()
     {
-		material = new Material(GameAssets.GetInstance().GetUnitMaterial());
+		material = new Material(GameAssets.Instance.UnitMaterial);
 		SetMaterial(material);        
     }
 	
