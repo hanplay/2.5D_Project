@@ -25,6 +25,8 @@ public class StatsSystem
 	private float totalMoveSpeed;
 	private float totalRange;
 
+	private int currentHealthPoints;
+
 	public StatsSystem(StatsDatum statsDatum)
 	{
 		baseAttackPower = statsDatum.GetBaseAttackPower();
@@ -33,6 +35,7 @@ public class StatsSystem
 		baseMoveSpeed = statsDatum.GetBaseMoveSpeed();
 		baseRange = statsDatum.GetBaseRange();
 		Calculate();
+
 	}
 
 	public StatsSystem(PlayerStatsDatum playerStatsDatum, int level)
@@ -154,6 +157,8 @@ public class StatsSystem
     {
 		return totalMoveSpeed;
     }
+
+
 
 	public void CalculateDamage(int damage, out int calculatedDamage)
 	{

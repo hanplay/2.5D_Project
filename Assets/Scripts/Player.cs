@@ -112,9 +112,6 @@ public abstract class Player : Unit
         }
 		base.Update();
     }
-	protected void FixedUpdate()
-    {
-	}
 
 	public string GetCharacterName()
 	{

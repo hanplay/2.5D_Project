@@ -6,7 +6,7 @@ public class Knight : Player
 	protected override void Awake()
 	{
 		base.Awake();
-		attackStrategy = new MeleeAttackStrategy(this);
+		attackStrategy = new InstantAttackStrategy(this, new CommonDamageStrategy(), 1.5f);
 	}
 	
 	protected void Start()
@@ -21,24 +21,9 @@ public class Knight : Player
 	protected void Update()
     {
 		base.Update();
-		if(Input.GetKeyDown(KeyCode.A))
-        {
-			transform.Find("model").GetComponent<Animator>().Play("Attack");
-        }
 
-		if (Input.GetKeyDown(KeyCode.S))
-		{
-			transform.Find("model").GetComponent<Animator>().Play("Pierce");
-		}
-		if (Input.GetKeyDown(KeyCode.D))
-		{
-			transform.Find("model").GetComponent<Animator>().Play("Run");
-		}
 	}
 
-
-
-	
 	public override bool IsTargetable(Unit unit)
 	{
 		if (null == unit)
@@ -53,6 +38,5 @@ public class Knight : Player
 			return false;
 		}
 	}
-
-
 }
+

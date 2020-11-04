@@ -12,7 +12,7 @@ public class PlayerAnimationEventHandler : MonoBehaviour
 
     private void BaseAttackAnimationEvent()
     {
-        player.BaseAttackAction();
+        player.GetAttackStrategy().AnimationEventOccur();
     }
 
     private void Skill0AnimationEvent()

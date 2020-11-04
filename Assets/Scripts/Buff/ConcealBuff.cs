@@ -12,7 +12,8 @@ public class ConcealBuff : Buff
 
     public override void ApplyEffects()
     {
-        targetUnit.OnAttackEnd += TargetUnit_OnAttackEndOrSkillBegin;
+        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(targetUnit.GetAttackStrategy().GetDamageStrategy());
+        targetUnit.GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
         
         int baseAttackPower = targetUnit.GetStatsSystem().GetBaseAttackPower();
         targetUnit.GetStatsSystem().AddAttackPower((multiple - 1) * baseAttackPower);
@@ -27,7 +28,9 @@ public class ConcealBuff : Buff
 
     public override void EraseEffects()
     {
-        targetUnit.OnAttackEnd -= TargetUnit_OnAttackEndOrSkillBegin;
+        DamageStrategyDecorator damageStrategyDecorator = targetUnit.GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
+        targetUnit.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
+
         int baseAttackPower = targetUnit.GetStatsSystem().GetBaseAttackPower();
         targetUnit.GetStatsSystem().AddAttackPower(- (multiple  - 1) * baseAttackPower);
         targetUnit.GetComponent<BasicFXVisualizer>().Paint(Color.white);

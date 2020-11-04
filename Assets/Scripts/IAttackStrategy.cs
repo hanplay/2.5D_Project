@@ -4,8 +4,11 @@ using UnityEngine;
 
 public interface IAttackStrategy 
 {
-    float GetRange();
     void Attack(Unit targetUnit);
-    void Damage(Unit targetUnit);   
-    void ActivateVisualEffect(Unit targetUnit);
+    void AnimationEventOccur();
+    void SetDamageStrategy(IDamageStrategy damageStrategy);
+    IDamageStrategy GetDamageStrategy();
+    void SetRange(float range);
+    float GetRange();
 }
+

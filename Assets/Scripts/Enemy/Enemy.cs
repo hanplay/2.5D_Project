@@ -19,6 +19,7 @@ public class Enemy : Unit
 
     protected void Awake()
 	{
+		base.Awake();
 		statsSystem = new StatsSystem(statsDatum);
 		healthPointsSystem = new HealthPointsSystem(statsSystem.GetTotalMaxHealthPoints());
 	}

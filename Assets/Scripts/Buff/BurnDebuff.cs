@@ -8,7 +8,7 @@ public class BurnDebuff : TimedBuff
     private int trueDamage = 1;
     private float lagTime;
     private BasicFXVisualizer basicFXVisualizer;
-
+    private IDamageStrategy trueDamageStrategy = new TrueDamageStrategy();
     private GameObject burnExplosion;
 
 
@@ -61,7 +61,8 @@ public class BurnDebuff : TimedBuff
         {
             lagTime -= damagePeriod;
             basicFXVisualizer.Paint(Color.red);
-            targetUnit.BeTrueDamaged(trueDamage * currentStack);
+
+            trueDamageStrategy.Do(targetUnit, trueDamage * currentStack);
         }
     }
 }

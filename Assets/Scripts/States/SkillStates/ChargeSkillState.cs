@@ -9,9 +9,10 @@ public class ChargeSkillState : SkillState
 
     private float speed;
     private GameObject explosion;
-    public ChargeSkillState(Player player, Skill skill, float chargeTime, GameObject Explosion) : base(player, skill)
+    public ChargeSkillState(Player player, Skill skill, float chargeTime, GameObject explosion) : base(player, skill)
     {
         this.chargeTime = chargeTime;
+        this.explosion = explosion;
     }
 
     public override void Begin()

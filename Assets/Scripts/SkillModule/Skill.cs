@@ -15,6 +15,7 @@ public class Skill
     private float lagTime = 0f;
     private bool isCooldownTime;
 
+
     public Skill(Player player) 
     {
         this.player = player;

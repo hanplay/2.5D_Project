@@ -27,7 +27,6 @@ public class BasicState : State
     public override void TickAccept(float deltaTime, Command command)
     {
         command.Visit(this);
-
     }
 
     public override bool IsTargetingState()
