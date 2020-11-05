@@ -6,7 +6,7 @@ public class AttackModule : MonoBehaviour
 {
     private Projectile projectile;
     private List<Projectile> projectileList;
-    private IDamageStrategy damageStrategy;
+    private DamageStrategy damageStrategy;
 
     void Awake()
     {

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.Assertions;
 
 public enum BuffType
@@ -12,6 +11,9 @@ public enum BuffType
     FireAura,
     Conceal,
     Enchant,
+    Poisoned,
+    DeadlyPoison,
+    None
 
 }
 
@@ -23,7 +25,7 @@ public enum SkillType
     Dive,
     Charge,
     RapidFire,
-    PoisonedArrow,
+    DeadlyPoisonBuff,
     IceAge,
     TestBuff,
     FireAura,
@@ -33,7 +35,7 @@ public enum SkillType
     COUNT,
 }
 
-
+//잠시 물점
 
 public class GameAssets : MonoBehaviour
 {
@@ -43,7 +45,8 @@ public class GameAssets : MonoBehaviour
     [SerializeField] private Sprite hasteBuffSprite;
     [SerializeField] private Sprite burnDebuffSprite;
     [SerializeField] private Sprite concealBuffSprite;
-
+    [SerializeField] private Sprite poisonDebuffSprite;
+    [SerializeField] private Sprite deadlyPoisonBuffSprite;
     [SerializeField] private Sprite diveSkillSprite;
     [SerializeField] private Sprite healSkillSprite;
     [SerializeField] private Sprite loopingTornadoSprite;
@@ -51,6 +54,7 @@ public class GameAssets : MonoBehaviour
     [SerializeField] private Sprite chargeSkillSprite;
 
 
+    [SerializeField] private GameObject deadlyPoisonBuffEffect;
     [SerializeField] private GameObject loopingTornado;
     [SerializeField] private GameObject hitSmoke;
     [SerializeField] private GameObject smokeExplosion;
@@ -89,7 +93,14 @@ public class GameAssets : MonoBehaviour
             buff = new BurnDebuff(TypeValue, 3f, burnExplosionEffect);
             buff.SetBuffSprite(burnDebuffSprite);
             return buff;
-
+        case BuffType.Poisoned:
+            buff = new PoisonDebuff(TypeValue, 5f);
+            buff.SetBuffSprite(poisonDebuffSprite);
+            return buff;
+        case BuffType.DeadlyPoison:
+            buff = new DeadlyPoisonBuff(TypeValue, 15f, CreateBuff(BuffType.Poisoned));
+            buff.SetBuffSprite(deadlyPoisonBuffSprite);
+            return buff;
         case BuffType.Conceal:
             buff = new ConcealBuff(TypeValue, 3);
             buff.SetBuffSprite(concealBuffSprite);
@@ -149,6 +160,14 @@ public class GameAssets : MonoBehaviour
             skill.SetSkillSprite(chargeSkillSprite);
             skill.SetSkillState(new ChargeSkillState(player, skill, 4f, burnExplosionEffect));
             return skill;
+        case SkillType.DeadlyPoisonBuff:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(20f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(deadlyPoisonBuffSprite);
+            skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.DeadlyPoison), deadlyPoisonBuffEffect));
+            return skill;
+
         default:
             Assert.IsTrue(true);
             Debug.LogError("Skill Type does not Exist!!!!");

@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DamageStrategyDecorator : IDamageStrategy
+public abstract class DamageStrategyDecorator : DamageStrategy
 {
-    protected IDamageStrategy damageStrategy;
+    protected DamageStrategy damageStrategy;
+    public readonly BuffType DecoratingBuffType;
+    public DamageStrategyDecorator(DamageStrategy damageStrategy, BuffType DecoratingBuffType)
+    {
+        this.damageStrategy = damageStrategy;
+        this.DecoratingBuffType = DecoratingBuffType;
+    }
 
-    public DamageStrategyDecorator(IDamageStrategy damageStrategy)
+    public void SetDamageStrategy(DamageStrategy damageStrategy)
     {
         this.damageStrategy = damageStrategy;
     }
 
-    public abstract void Do(Unit targetUnit, int damage);
-
-    public IDamageStrategy GetDamageStrategy()
+    public DamageStrategy GetDamageStrategy()
     {
         return damageStrategy;
-    }
- 
+    } 
 }

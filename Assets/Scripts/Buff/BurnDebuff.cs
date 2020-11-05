@@ -8,7 +8,7 @@ public class BurnDebuff : TimedBuff
     private int trueDamage = 1;
     private float lagTime;
     private BasicFXVisualizer basicFXVisualizer;
-    private IDamageStrategy trueDamageStrategy = new TrueDamageStrategy();
+    private DamageStrategy trueDamageStrategy = new TrueDamageStrategy();
     private GameObject burnExplosion;
 
 

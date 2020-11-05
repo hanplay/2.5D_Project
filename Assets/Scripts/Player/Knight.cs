@@ -12,7 +12,7 @@ public class Knight : Player
 	protected void Start()
     {
 		skillList[0] = GameAssets.Instance.CreateSkill(this, SkillType.Dive);
-		skillList[1] = GameAssets.Instance.CreateSkill(this, SkillType.TestBuff);
+		skillList[1] = GameAssets.Instance.CreateSkill(this, SkillType.DeadlyPoisonBuff);
 		skillList[2] = GameAssets.Instance.CreateSkill(this, SkillType.HasteBuff);
 		skillList[3] = GameAssets.Instance.CreateSkill(this, SkillType.Charge);
 	}

@@ -6,8 +6,8 @@ public interface IAttackStrategy
 {
     void Attack(Unit targetUnit);
     void AnimationEventOccur();
-    void SetDamageStrategy(IDamageStrategy damageStrategy);
-    IDamageStrategy GetDamageStrategy();
+    void SetDamageStrategy(DamageStrategy damageStrategy);
+    DamageStrategy GetDamageStrategy();
     void SetRange(float range);
     float GetRange();
 }

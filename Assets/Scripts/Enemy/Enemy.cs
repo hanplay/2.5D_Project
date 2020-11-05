@@ -5,8 +5,14 @@ public class Enemy : Unit
 	[SerializeField]
 	StatsDatum statsDatum;
 
-	private float range;
+	private Animator animator;
+	private Unit targetUnit;
+
+
+
 	private FSMState state = FSMState.Idle;
+
+
 	#region FSM
 	private enum FSMState
 	{
@@ -15,12 +21,15 @@ public class Enemy : Unit
 		Attack
 	}
 
-    #endregion
+	//음...프로토타입 패턴 써야하나..... 빌더 패턴 
+	//프로토타임은 Clone()이라는 함수 만들어서  
 
-    protected void Awake()
+    #endregion
+    protected override void Awake()
 	{
 		base.Awake();
 		statsSystem = new StatsSystem(statsDatum);
+		animator = transform.Find("model").GetComponent<Animator>();
 		healthPointsSystem = new HealthPointsSystem(statsSystem.GetTotalMaxHealthPoints());
 	}
 
@@ -30,10 +39,22 @@ public class Enemy : Unit
 		switch(state)
         {
 		case FSMState.Idle:
+			animator.Play("Idle");
 			break;
 		case FSMState.ChaseTarget:
+			animator.Play("Run");
+			if(attackStrategy.GetRange() > DistanceToUnit(targetUnit))
+            {
+				state = FSMState.Attack;
+            }
 			break;
 		case FSMState.Attack:
+			if(attackStrategy.GetRange() <= DistanceToUnit(targetUnit))
+            {
+				state = FSMState.ChaseTarget;
+				break;
+            }
+			attackStrategy.Attack(targetUnit);
 			break;
         }
         #endregion

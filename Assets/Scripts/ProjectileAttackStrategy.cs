@@ -8,7 +8,7 @@ public class ProjectileAttackStrategy : IAttackStrategy
     private Unit owner;
     private Unit targetUnit;
     private Animator animator;
-    private IDamageStrategy damageStrategy;
+    private DamageStrategy damageStrategy;
     private float range;
     private Projectile projectile;
     private List<Projectile> projectileList = new List<Projectile>();
@@ -56,7 +56,7 @@ public class ProjectileAttackStrategy : IAttackStrategy
         index = GetNextIndex(index);
     }
 
-    public IDamageStrategy GetDamageStrategy()
+    public DamageStrategy GetDamageStrategy()
     {
         return damageStrategy;
     }
@@ -69,7 +69,7 @@ public class ProjectileAttackStrategy : IAttackStrategy
             return index + 1;
     }
 
-    public void SetDamageStrategy(IDamageStrategy damageStrategy)
+    public void SetDamageStrategy(DamageStrategy damageStrategy)
     {
         this.damageStrategy = damageStrategy;
     }

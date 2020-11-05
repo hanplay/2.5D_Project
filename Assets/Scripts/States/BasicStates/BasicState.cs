@@ -69,8 +69,8 @@ public class BasicState : State
         if (prevFsmState != fsmState)
         {
             prevFsmState = fsmState;
-            player.GetAttackStrategy().Attack(targetUnit);
         }
+        player.GetAttackStrategy().Attack(targetUnit);
     }
 
     public void Stop()

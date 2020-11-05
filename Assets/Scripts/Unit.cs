@@ -14,7 +14,7 @@ public abstract class Unit : MonoBehaviour
 
 	protected IAttackStrategy attackStrategy;
 
-	protected void Awake()
+	protected virtual void Awake()
     {
 		buffSystem = new BuffSystem(this);
     }

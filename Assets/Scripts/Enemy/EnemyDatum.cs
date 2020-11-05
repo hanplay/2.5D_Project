@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDamageStrategy 
+public class EnemyDatum : ScriptableObject
 {
-    void Do(Unit targetUnit, int damage);
+    
 }

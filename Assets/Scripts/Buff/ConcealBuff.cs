@@ -12,7 +12,7 @@ public class ConcealBuff : Buff
 
     public override void ApplyEffects()
     {
-        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(targetUnit.GetAttackStrategy().GetDamageStrategy());
+        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(targetUnit.GetAttackStrategy().GetDamageStrategy(), TypeValue);
         targetUnit.GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
         
         int baseAttackPower = targetUnit.GetStatsSystem().GetBaseAttackPower();
@@ -28,9 +28,24 @@ public class ConcealBuff : Buff
 
     public override void EraseEffects()
     {
+        
         DamageStrategyDecorator damageStrategyDecorator = targetUnit.GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
-        targetUnit.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
+        if(damageStrategyDecorator.DecoratingBuffType == TypeValue)
+        {
+            targetUnit.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
+        }
+        else
+        {
 
+            DamageStrategyDecorator nextDamageStrategyDecorator = damageStrategyDecorator.GetDamageStrategy() as DamageStrategyDecorator;
+            while(TypeValue != nextDamageStrategyDecorator.DecoratingBuffType)
+            {
+                damageStrategyDecorator = nextDamageStrategyDecorator;
+                nextDamageStrategyDecorator = damageStrategyDecorator.GetDamageStrategy() as DamageStrategyDecorator;                
+            }
+            damageStrategyDecorator.SetDamageStrategy(nextDamageStrategyDecorator.GetDamageStrategy());
+        }
+        
         int baseAttackPower = targetUnit.GetStatsSystem().GetBaseAttackPower();
         targetUnit.GetStatsSystem().AddAttackPower(- (multiple  - 1) * baseAttackPower);
         targetUnit.GetComponent<BasicFXVisualizer>().Paint(Color.white);
@@ -40,8 +55,5 @@ public class ConcealBuff : Buff
         return DoNotShow;
     }
 
-    public override void Tick(float deltaTime)
-    {
-        
-    }
+    public override void Tick(float deltaTime) { }
 }

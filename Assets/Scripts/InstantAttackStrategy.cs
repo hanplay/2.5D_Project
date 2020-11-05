@@ -9,9 +9,9 @@ public class InstantAttackStrategy : IAttackStrategy
     private Unit targetUnit;
     private Animator animator;
     private float range;
-    private IDamageStrategy damageStrategy;
+    private DamageStrategy damageStrategy;
     
-    public InstantAttackStrategy(Unit owner, IDamageStrategy damageStrategy, float range)
+    public InstantAttackStrategy(Unit owner, DamageStrategy damageStrategy, float range)
     {
         this.owner = owner;
         this.damageStrategy = damageStrategy;
@@ -20,7 +20,7 @@ public class InstantAttackStrategy : IAttackStrategy
         this.range = range;
     }
 
-    public InstantAttackStrategy(Unit owner, IDamageStrategy damageStrategy, string attackName, float range)
+    public InstantAttackStrategy(Unit owner, DamageStrategy damageStrategy, string attackName, float range)
     {
         this.owner = owner;
         this.damageStrategy = damageStrategy;
@@ -38,16 +38,17 @@ public class InstantAttackStrategy : IAttackStrategy
     public void AnimationEventOccur()
     {
         int damage = owner.GetStatsSystem().GetTotalAttackPower();
+        Debug.Log("TargetUnit: " + targetUnit);
         damageStrategy.Do(targetUnit, damage);
         targetUnit = null;        
     }
     
-    public void SetDamageStrategy(IDamageStrategy damageStrategy)
+    public void SetDamageStrategy(DamageStrategy damageStrategy)
     {
         this.damageStrategy = damageStrategy;
     }
 
-    public IDamageStrategy GetDamageStrategy()
+    public DamageStrategy GetDamageStrategy()
     {
         return damageStrategy;
     }

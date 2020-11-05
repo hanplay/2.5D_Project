@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealStrategy : IDamageStrategy
+public class HealStrategy : DamageStrategy
 {
-    public void Do(Unit targetUnit, int healthPoints)
+    public override void Do(Unit targetUnit, int healthPoints)
     {
         targetUnit.GetHealthPointsSystem().AddHealthPoints(healthPoints);
     }

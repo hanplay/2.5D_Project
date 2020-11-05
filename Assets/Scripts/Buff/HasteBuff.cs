@@ -2,15 +2,12 @@
 
 public class HasteBuff : TimedBuff
 {
-    public HasteBuff(BuffType TypeValue, float duration) : base(TypeValue, duration) 
-    {
-        this.duration = duration;
-    }
+    public HasteBuff(BuffType TypeValue, float duration) : base(TypeValue, duration) { }
+
 
     public override void ApplyEffects()
     {
         targetUnit.GetStatsSystem().AddMoveSpeed(2f);
-        Debug.Log("Total Speed plus!");
     }
 
 

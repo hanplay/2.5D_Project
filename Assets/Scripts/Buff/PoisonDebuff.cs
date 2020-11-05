@@ -9,16 +9,13 @@ public class PoisonDebuff : TimedBuff
     private int trueDamage = 1;
     private float lagTime;
     private BasicFXVisualizer basicFXVisualizer;
-    private IDamageStrategy trueDamageStrategy = new TrueDamageStrategy();
+    private DamageStrategy trueDamageStrategy = new TrueDamageStrategy();
 
-    public PoisonDebuff(BuffType TypeValue, float duration) : base(TypeValue, duration)
-    {
-        basicFXVisualizer = targetUnit.GetComponent<BasicFXVisualizer>();
-    }
-
+    public PoisonDebuff(BuffType TypeValue, float duration) : base(TypeValue, duration) { }
+    
     public void SetDamagePeriod(float period)
     {
-        damagePeriod = period;
+        damagePeriod = period;        
     }
 
     public void SetTrueDamagePerPeriod(int trueDamage)
@@ -35,6 +32,7 @@ public class PoisonDebuff : TimedBuff
 
     public override void EraseEffects()
     {
+        Debug.Log("PoisonDebuff Erase!");
         basicFXVisualizer.Paint(Color.white);
     }
 
@@ -45,14 +43,21 @@ public class PoisonDebuff : TimedBuff
 
     public override void Tick(float deltaTime)
     {
-        base.Tick(deltaTime);
         lagTime += deltaTime;
         while(lagTime > damagePeriod)
         {
             lagTime -= damagePeriod;
             basicFXVisualizer.Paint(Color.green);
-            trueDamageStrategy.Do(targetUnit, trueDamage);            
+            trueDamageStrategy.Do(targetUnit, trueDamage);
+            Debug.Log("true Damage: " + trueDamage);
         }
+        base.Tick(deltaTime);
 
+    }
+
+    public override void SetTargetUnit(Unit targetUnit)
+    {
+        base.SetTargetUnit(targetUnit);
+        basicFXVisualizer = targetUnit.GetComponent<BasicFXVisualizer>();
     }
 }

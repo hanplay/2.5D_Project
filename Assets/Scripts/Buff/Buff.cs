@@ -27,7 +27,7 @@ public abstract class Buff : ICloneable
 		this.buffSprite = buffSprite;
     }
 
-	public void SetTargetUnit(Unit targetUnit)
+	public virtual void SetTargetUnit(Unit targetUnit)
     {
 		this.targetUnit = targetUnit;
     }
