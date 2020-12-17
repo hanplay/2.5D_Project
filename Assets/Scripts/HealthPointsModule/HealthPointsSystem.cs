@@ -5,12 +5,15 @@ public class HealthPointsSystem
     public event EventHandler OnHealthPointChanged;
     public event EventHandler OnDead;
 
-    private int maxHealthPoints = 100;
-    private int healthPoints = 50;
+    protected int baseMaxHealthPoints;
+    protected int addedMaxHealthPoints;
+    protected int totalMaxHealthPoints;
+    protected int healthPoints;
 
-    public HealthPointsSystem(int maxHealthPoints) 
+    protected HealthPointsSystem() { }
+    public HealthPointsSystem(int baseMaxHealthPoints) 
     {
-        this.maxHealthPoints = maxHealthPoints;
+        this.baseMaxHealthPoints = baseMaxHealthPoints;
         FillHealthPointsFull();
     }
 
@@ -18,9 +21,9 @@ public class HealthPointsSystem
     public void AddHealthPoints(int points)
     {
         healthPoints += points;
-        if(maxHealthPoints < healthPoints)
+        if(totalMaxHealthPoints < healthPoints)
         {
-            healthPoints = maxHealthPoints;
+            healthPoints = totalMaxHealthPoints;
 		}
 	}
     public void SubtractHealthPoints(int points)
@@ -34,26 +37,26 @@ public class HealthPointsSystem
 
     public int GetMaxHealthPoints()
     {
-        return maxHealthPoints;
+        return totalMaxHealthPoints;
 	}
     public int GetHealthPoints()
     {
         return healthPoints;
 	}
 
-    public void SetMaxHealthPoints(int maxHealthPoints)
-    {
-        this.maxHealthPoints = maxHealthPoints;
-	}
-
 	public float GetProportion()
     {
-        return (float)healthPoints / (float)maxHealthPoints;
+        return (float)healthPoints / (float)totalMaxHealthPoints;
 	}
 
     public void FillHealthPointsFull()
     {
-        healthPoints = maxHealthPoints;
+        healthPoints = totalMaxHealthPoints;
 	}
+
+    public void CalculateMaxHealthPoints()
+    {
+        totalMaxHealthPoints = baseMaxHealthPoints + addedMaxHealthPoints;
+    }
 
 }

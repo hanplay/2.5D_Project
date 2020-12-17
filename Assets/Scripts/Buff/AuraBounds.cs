@@ -37,7 +37,6 @@ public abstract class AuraBounds : MonoBehaviour
             Buff newBuff = buff.Clone() as Buff;
             targetUnitList.Add(targetUnit);
             targetUnit.GetBuffSystem().AddBuff(newBuff);
-            targetUnit.OnDieEvent += TargetUnit_OnDieEvent;
         }       
     }
 
@@ -67,7 +66,6 @@ public abstract class AuraBounds : MonoBehaviour
             {
                 targetUnitList.RemoveAt(i);
                 targetUnitTimerList.RemoveAt(i);
-                targetUnit.OnDieEvent -= TargetUnit_OnDieEvent;
                 return;
             }
         }

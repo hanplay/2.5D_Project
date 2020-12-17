@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PoisonDebuff : TimedBuff
 {
@@ -32,7 +29,6 @@ public class PoisonDebuff : TimedBuff
 
     public override void EraseEffects()
     {
-        Debug.Log("PoisonDebuff Erase!");
         basicFXVisualizer.Paint(Color.white);
     }
 
@@ -49,7 +45,6 @@ public class PoisonDebuff : TimedBuff
             lagTime -= damagePeriod;
             basicFXVisualizer.Paint(Color.green);
             trueDamageStrategy.Do(targetUnit, trueDamage);
-            Debug.Log("true Damage: " + trueDamage);
         }
         base.Tick(deltaTime);
 

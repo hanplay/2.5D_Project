@@ -9,26 +9,18 @@ public abstract class SkillState : State
 
 
 
-    public SkillState(Player player, Skill skill) : base(player) 
+    public SkillState(Unit player, StateSystem stateSystem, Skill skill) : base(player, stateSystem, Skill) 
     {
-        this.player = player;
+        this.owner = player;
         this.skill = skill;
     }
     public override void Begin()
     {
         skill.StartCooldownTime();
-        if(null == targetUnit)
-        {
-            player.SetCommand(new NullCommand(player));
-        }
-        else
-        {
-            player.SetCommand(new AttackCommand(player, targetUnit));
-        }
+
     }
-    public override void TickAccept(float deltaTime, Command command)
-    {
-        command.Visit(this);
+    public override void Tick(float deltaTime)
+    {       
         if (true == isEnd)
             return;
         lagTime += deltaTime;
@@ -38,20 +30,14 @@ public abstract class SkillState : State
         }
     }
 
-    protected virtual void End()
+    public override void End()
     {
         isEnd = true;
     }
 
-    public bool IsEnd()
-    {
-        return isEnd;
-    }
-
-
     public void SetTargetUnit(Unit targetUnit)
     {
-        this.targetUnit = targetUnit;
+        this.targetedUnit = targetUnit;
     }
 
     public virtual void Initialize()

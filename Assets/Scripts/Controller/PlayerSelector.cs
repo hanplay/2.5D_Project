@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,12 +26,10 @@ public class PlayerSelector : MonoBehaviour
     {
         if (null != this.player)
         {
-            this.player.OnDieEvent -= Player_OnDieEvent;
             this.player.HideSelectCircle();
         }
 
         this.player = player;
-        player.OnDieEvent += Player_OnDieEvent;
         player.ShowSelectCircle();
         buttonSkillController.BindPlayerSkillsToUI_SkillButtonsAndShow(player);
         buffShower.SetBuffSystem(player.GetBuffSystem());

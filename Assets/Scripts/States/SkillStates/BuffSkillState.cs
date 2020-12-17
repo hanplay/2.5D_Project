@@ -4,12 +4,12 @@ public class BuffSkillState : SkillState
 {
     private Buff buff;
     private GameObject buffVisualEffect;
-    public BuffSkillState(Player player, Skill skill, Buff buff, GameObject buffVisualEffect) : base(player, skill)
+    public BuffSkillState(Unit player, Skill skill, Buff buff, GameObject buffVisualEffect) : base(player, player.GetStateSystem(), skill)
     {
         this.buff = buff;
         this.buffVisualEffect = buffVisualEffect;
     }
-    public BuffSkillState(Player player, Skill skill, Buff buff) : base(player, skill)
+    public BuffSkillState(Unit player, Skill skill, Buff buff) : base(player, player.GetStateSystem(), skill)
     {
         this.buff = buff;
         buffVisualEffect = null;
@@ -18,6 +18,7 @@ public class BuffSkillState : SkillState
     public override void Begin()
     {
         base.Begin();
+        Player player = owner as Player;
         player.SkillAction[0] = Work;
         animator.Play("Spell");
         if (0 == duration)
@@ -27,10 +28,10 @@ public class BuffSkillState : SkillState
     private void Work()
     {
         if(null != buffVisualEffect)
-            GameObject.Instantiate(buffVisualEffect, player.GetPosition(), Quaternion.Euler(90f, 0f, 0), player.transform);        
+            GameObject.Instantiate(buffVisualEffect, owner.GetPosition(), Quaternion.Euler(90f, 0f, 0), owner.transform);        
 
         Buff newBuff = buff.Clone() as Buff;
-        player.GetBuffSystem().AddBuff(newBuff);
+        owner.GetBuffSystem().AddBuff(newBuff);
     }
 
     public override bool IsTargetingState()

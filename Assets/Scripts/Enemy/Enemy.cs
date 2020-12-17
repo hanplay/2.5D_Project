@@ -5,6 +5,9 @@ public class Enemy : Unit
 	[SerializeField]
 	StatsDatum statsDatum;
 
+	[SerializeField]
+	private float range;
+
 	private Animator animator;
 	private Unit targetUnit;
 
@@ -30,7 +33,7 @@ public class Enemy : Unit
 		base.Awake();
 		statsSystem = new StatsSystem(statsDatum);
 		animator = transform.Find("model").GetComponent<Animator>();
-		healthPointsSystem = new HealthPointsSystem(statsSystem.GetTotalMaxHealthPoints());
+		healthPointsSystem = new HealthPointsSystem(statsDatum.GetBaseMaxHealthPoints());
 	}
 
 	private void FixedUpdate()
@@ -43,18 +46,18 @@ public class Enemy : Unit
 			break;
 		case FSMState.ChaseTarget:
 			animator.Play("Run");
-			if(attackStrategy.GetRange() > DistanceToUnit(targetUnit))
+			if(range > DistanceToUnit(targetUnit))
             {
 				state = FSMState.Attack;
             }
 			break;
 		case FSMState.Attack:
-			if(attackStrategy.GetRange() <= DistanceToUnit(targetUnit))
+			if(range <= DistanceToUnit(targetUnit))
             {
 				state = FSMState.ChaseTarget;
 				break;
             }
-			attackStrategy.Attack(targetUnit);
+			attackSystem.GetAttackStrategy().Attack(targetUnit);
 			break;
         }
         #endregion
@@ -65,7 +68,7 @@ public class Enemy : Unit
 		if (null == unit)
 			return false;
 
-		if (null != unit.GetComponent<Player>())
+		if (null != unit.GetComponent<Unit>())
 		{
 			return true;
 		}

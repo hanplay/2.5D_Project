@@ -23,7 +23,7 @@ public class AuraBuffModule : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Player player = other.GetComponent<Player>();
+		Unit player = other.GetComponent<Unit>();
 		if(null != player)
 		{
 										
@@ -32,7 +32,7 @@ public class AuraBuffModule : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		Player player = other.GetComponent<Player>();
+		Unit player = other.GetComponent<Unit>();
 		if(null != player)
 		{
 			

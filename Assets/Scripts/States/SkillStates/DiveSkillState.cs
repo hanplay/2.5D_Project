@@ -8,7 +8,7 @@ public class DiveSkillState : SkillState, ITargetExistsState
     private Vector3 targetPosition;
     private float totalTime;
     private float constant = -20f;
-    public DiveSkillState(Player player, Skill skill, GameObject hitSmoke, GameObject smokeExplosion) : base(player, skill) 
+    public DiveSkillState(Unit player, Skill skill, GameObject hitSmoke, GameObject smokeExplosion) : base(player, player.GetStateSystem(), skill) 
     {
         this.hitSmoke = hitSmoke;
         this.smokeExplosion = smokeExplosion;
@@ -20,38 +20,38 @@ public class DiveSkillState : SkillState, ITargetExistsState
 
         animator.Play("Jump");
         totalTime = duration;
-        originPosition = player.GetPosition();
+        originPosition = owner.GetPosition();
 
-        targetPosition = targetUnit.GetPosition();
+        targetPosition = targetedUnit.GetPosition();
         Vector3 direction = (targetPosition - originPosition).normalized;
         targetPosition = targetPosition - 1 * direction;
-        GameObject.Instantiate(hitSmoke, player.GetPosition(), Quaternion.Euler(90f, 0f,0f));
+        GameObject.Instantiate(hitSmoke, owner.GetPosition(), Quaternion.Euler(90f, 0f,0f));
     }
 
 
     public void OnTargetDead()
     {
-        targetUnit = null;
+        targetedUnit = null;
     }
 
-    public override void TickAccept(float deltaTime, Command command)
+    public override void Tick(float deltaTime)
     {
-        base.TickAccept(deltaTime, command);
+        base.Tick(deltaTime);
 
         /*
          * Tick 함수는 player.SetPosition() 함수로 deltaTime 마다 
          * player를 포물선 운동시킨다
          */
-        player.SetPosition(new Vector3(originPosition.x + (targetPosition.x - originPosition.x) * lagTime / totalTime,
+        owner.SetPosition(new Vector3(originPosition.x + (targetPosition.x - originPosition.x) * lagTime / totalTime,
                                     -constant * totalTime * lagTime + constant * (lagTime * lagTime) + originPosition.y,
                                     originPosition.z + (targetPosition.z - originPosition.z) * lagTime / totalTime));
 
     }
 
-    protected override void End()
+    public override void End()
     {
         base.End();
-        GameObject smoke = GameObject.Instantiate(smokeExplosion, player.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
+        GameObject smoke = GameObject.Instantiate(smokeExplosion, owner.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
     }
     public override bool IsTargetingState()
     {

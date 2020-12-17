@@ -20,7 +20,7 @@ public class SaveAndLoadManager : MonoBehaviour
         
     }
 
-    public void Save(Player player)
+    public void Save(Unit player)
     {        
         if(false == File.Exists(saveFolderPath))
         {
@@ -31,7 +31,7 @@ public class SaveAndLoadManager : MonoBehaviour
         File.WriteAllText(saveFilePath, json);        
 	}
 
-    public void Load(Player player)
+    public void Load(Unit player)
     {
         string saveFilePath = SaveFilePath(player);
         if(File.Exists(saveFilePath))
@@ -71,9 +71,9 @@ public class SaveAndLoadManager : MonoBehaviour
         }
     }
 
-    private string SaveFilePath(Player player)
+    private string SaveFilePath(Unit player)
     {
-        return string.Concat(saveFolderPath, "/", player.GetCharacterName(), ".txt");
+        return string.Concat(saveFolderPath, "/", "dd", ".txt");
     }
 	
     private string SaveFilePath(Inventory inventory)

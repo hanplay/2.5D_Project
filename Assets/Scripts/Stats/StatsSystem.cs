@@ -5,37 +5,20 @@ using UnityEngine;
 
 public class StatsSystem 
 {
-
 	private int baseAttackPower;
 	private int baseArmor;
-	private int baseMaxHealthPoints;
-	private float baseMoveSpeed;
-	private float baseRange;
 
 	private int addedAttackPower;
 	private int addedArmor;
-	private int addedMaxHeatlhPoints;
-	private float addedMoveSpeed;
-	private float addedRange;
-
 
 	private int totalAttackPower;
-	private int totalMaxHealthPoints;
 	private int totalArmor;
-	private float totalMoveSpeed;
-	private float totalRange;
-
-	private int currentHealthPoints;
 
 	public StatsSystem(StatsDatum statsDatum)
 	{
 		baseAttackPower = statsDatum.GetBaseAttackPower();
 		baseArmor = statsDatum.GetBaseArmor();
-		baseMaxHealthPoints = statsDatum.GetBaseMaxHealthPoints();
-		baseMoveSpeed = statsDatum.GetBaseMoveSpeed();
-		baseRange = statsDatum.GetBaseRange();
 		Calculate();
-
 	}
 
 	public StatsSystem(PlayerStatsDatum playerStatsDatum, int level)
@@ -43,9 +26,6 @@ public class StatsSystem
 		int levelMinusOne = level - 1;
 		baseAttackPower = playerStatsDatum.GetBaseAttackPower() + levelMinusOne * playerStatsDatum.GetAddedAttackPowerPerLevelUp();
 		baseArmor = playerStatsDatum.GetBaseArmor();
-		baseMaxHealthPoints = playerStatsDatum.GetBaseMaxHealthPoints() + levelMinusOne * playerStatsDatum.GetAddedMaxHealthPointsPerLevelUp();
-		baseMoveSpeed = playerStatsDatum.GetBaseMoveSpeed();
-		baseRange = playerStatsDatum.GetBaseRange();
 		Calculate();
     }
 
@@ -53,8 +33,6 @@ public class StatsSystem
 	{
 		CalculateAttackPower();
 		CalculateArmor();
-		CalculateMaxHealthPoints();
-		CalculateMoveSpeed();
 	}
 
 	public void AddAttackPower(int attackPower)
@@ -67,24 +45,6 @@ public class StatsSystem
     {
 		addedArmor += armor;
 		CalculateArmor();
-    }
-
-	public void AddMaxHealthPoints(int maxHealthPoints)
-    {
-		addedMaxHeatlhPoints += maxHealthPoints;
-		CalculateMaxHealthPoints();
-    }
-
-	public void AddMoveSpeed(float moveSpeed)
-    {
-		addedMoveSpeed += moveSpeed;
-		CalculateMoveSpeed();
-    }
-
-	public void AddRange(float range)
-    {
-		addedRange += range;
-		CalculateRange();
     }
 
 	private void CalculateAttackPower()
@@ -102,24 +62,6 @@ public class StatsSystem
 			totalArmor = 0;
 	}
 
-	private void CalculateMaxHealthPoints()
-    {
-		totalMaxHealthPoints = baseMaxHealthPoints + addedMaxHeatlhPoints;
-		if (totalMaxHealthPoints < 1)
-			totalMaxHealthPoints = 1;
-	}
-	private void CalculateMoveSpeed()
-	{
-		totalMoveSpeed = baseMoveSpeed + addedMoveSpeed;
-		if (totalMoveSpeed < 1f)
-			totalMoveSpeed = 1f;
-	}
-
-	private void CalculateRange()
-    {
-		totalRange = baseRange + addedRange;
-    }
-
 	public int GetBaseAttackPower()
     {
 		return baseAttackPower;
@@ -130,35 +72,15 @@ public class StatsSystem
 		return baseArmor;
     }
 	
-	public int GetBaseMaxHealthPoints()
-    {
-		return baseMaxHealthPoints;
-    }
-
-	public float GetBaseMoveSpeed()
-    {
-		return baseMoveSpeed;
-    }
-
 	public int GetTotalAttackPower()
 	{
 		return totalAttackPower;
 	}
-	public int GetTotalMaxHealthPoints()
-    {
-		return totalMaxHealthPoints;
-    }
+
 	public int GetTotalArmor()
 	{
 		return totalArmor;
 	}	
-
-	public float GetTotalMoveSpeed()
-    {
-		return totalMoveSpeed;
-    }
-
-
 
 	public void CalculateDamage(int damage, out int calculatedDamage)
 	{
@@ -166,5 +88,4 @@ public class StatsSystem
 		if (calculatedDamage < 1)
 			calculatedDamage = 1;
 	}
-
 }

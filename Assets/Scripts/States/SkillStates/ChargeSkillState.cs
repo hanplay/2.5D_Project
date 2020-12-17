@@ -9,7 +9,7 @@ public class ChargeSkillState : SkillState
 
     private float speed;
     private GameObject explosion;
-    public ChargeSkillState(Player player, Skill skill, float chargeTime, GameObject explosion) : base(player, skill)
+    public ChargeSkillState(Unit player, Skill skill, float chargeTime, GameObject explosion) : base(player, player.GetStateSystem(), skill)
     {
         this.chargeTime = chargeTime;
         this.explosion = explosion;
@@ -19,6 +19,7 @@ public class ChargeSkillState : SkillState
     {
         base.Begin();
         speed = 4f;
+        Player player = owner as Player;
         player.SkillAction[0] = Work;
         animator.Play("Sit");
         if(0 == duration)
@@ -26,16 +27,16 @@ public class ChargeSkillState : SkillState
 
 
     }
-    public override void TickAccept(float deltaTime, Command command)
+    public override void Tick(float deltaTime)
     {
-        base.TickAccept(deltaTime, command);
+        base.Tick(deltaTime);
         if (chargeTime < lagTime)
             animator.Play("Spell");
     }
 
     private void Work()
     {
-        GameObject smoke = GameObject.Instantiate(explosion, player.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
+        GameObject smoke = GameObject.Instantiate(explosion, owner.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
         speed = 0f;
     }
 
@@ -50,21 +51,21 @@ public class ChargeSkillState : SkillState
         return false;
     }
 
-    protected override void End()
+    public override void End()
     {
         base.End();
     }
 
     public void MoveTo(Vector3 destination)
     {
-        Vector3 direction = destination - player.GetPosition();
+        Vector3 direction = destination - owner.GetPosition();
         direction.y = 0f;
 
     }
 
     public void MoveTo(Unit targetUnit)
     {
-        this.targetUnit = targetUnit;
+        this.targetedUnit = targetUnit;
     }
 
 }

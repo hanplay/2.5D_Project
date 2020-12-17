@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ButtonSkillController : MonoBehaviour
 {
-    
     private List<UI_SkillButton> uI_SkillButtonList = new List<UI_SkillButton>();
 
     private void Awake()
@@ -40,5 +39,8 @@ public class ButtonSkillController : MonoBehaviour
         }
     }
 
+    public void SkillCommand(Player player, int i)
+    {
 
+    }
 }

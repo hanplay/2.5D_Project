@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileAttackStrategy : IAttackStrategy
+public class ProjectileAttackStrategy : AttackStrategy
 {
     private int attackNameHash;
     private Unit owner;
     private Unit targetUnit;
     private Animator animator;
-    private DamageStrategy damageStrategy;
     private float range;
     private Projectile projectile;
     private List<Projectile> projectileList = new List<Projectile>();
@@ -29,12 +28,12 @@ public class ProjectileAttackStrategy : IAttackStrategy
         attackNameHash = Animator.StringToHash(attackName);
         this.projectile = projectile;
     }
-    public void Attack(Unit targetUnit)
+    public override void Attack(Unit targetUnit)
     {
         animator.Play(attackNameHash);
     }
 
-    public void AnimationEventOccur()
+    public override void AnimationEventOccur()
     {
         while(true == projectileList[index].IsActive())
         {
@@ -56,10 +55,6 @@ public class ProjectileAttackStrategy : IAttackStrategy
         index = GetNextIndex(index);
     }
 
-    public DamageStrategy GetDamageStrategy()
-    {
-        return damageStrategy;
-    }
 
     private int GetNextIndex(int index)
     {
@@ -68,12 +63,6 @@ public class ProjectileAttackStrategy : IAttackStrategy
         else
             return index + 1;
     }
-
-    public void SetDamageStrategy(DamageStrategy damageStrategy)
-    {
-        this.damageStrategy = damageStrategy;
-    }
-
     public float GetRange()
     {
         return range;

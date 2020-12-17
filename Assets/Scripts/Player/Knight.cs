@@ -5,8 +5,9 @@ public class Knight : Player
 	//private Transform 
 	protected override void Awake()
 	{
+		//attackStrategy = new InstantAttackStrategy(this, new CommonDamageStrategy());
+		attackSystem = new AttackSystem(this, new InstantAttackStrategy(this, new CommonDamageStrategy()), 2f);
 		base.Awake();
-		attackStrategy = new InstantAttackStrategy(this, new CommonDamageStrategy(), 1.5f);
 	}
 	
 	protected void Start()
@@ -18,7 +19,7 @@ public class Knight : Player
 	}
 
 
-	protected void Update()
+	protected override void Update()
     {
 		base.Update();
 

@@ -12,8 +12,8 @@ public class ConcealBuff : Buff
 
     public override void ApplyEffects()
     {
-        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(targetUnit.GetAttackStrategy().GetDamageStrategy(), TypeValue);
-        targetUnit.GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
+        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(targetUnit.GetAttackSystem().GetAttackStrategy().GetDamageStrategy(), TypeValue);
+        targetUnit.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
         
         int baseAttackPower = targetUnit.GetStatsSystem().GetBaseAttackPower();
         targetUnit.GetStatsSystem().AddAttackPower((multiple - 1) * baseAttackPower);
@@ -29,10 +29,10 @@ public class ConcealBuff : Buff
     public override void EraseEffects()
     {
         
-        DamageStrategyDecorator damageStrategyDecorator = targetUnit.GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
+        DamageStrategyDecorator damageStrategyDecorator = targetUnit.GetAttackSystem().GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
         if(damageStrategyDecorator.DecoratingBuffType == TypeValue)
         {
-            targetUnit.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
+            targetUnit.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
         }
         else
         {

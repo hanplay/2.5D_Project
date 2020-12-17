@@ -2215,14 +2215,17 @@ MonoBehaviour:
   hasteBuffSprite: {fileID: 21300000, guid: bd342816b57b5e84ba38a25226148b7a, type: 3}
   burnDebuffSprite: {fileID: 21300000, guid: 7140c686292792a4abfe218b90b2ae90, type: 3}
   concealBuffSprite: {fileID: 21300000, guid: 248e7692e419dc2419e077782dc7b21d, type: 3}
-  deadlyPoisonBuffSprite: {fileID: 0}
+  poisonDebuffSprite: {fileID: 21300000, guid: 2531e15fe967a354d9d28c9cfc1d71ca, type: 3}
+  deadlyPoisonBuffSprite: {fileID: 21300000, guid: 43932b67c71640244a46b122a525ad3a,
+    type: 3}
   diveSkillSprite: {fileID: 21300000, guid: 4b5c3887b0bad8548a4414947f05a7ba, type: 3}
   healSkillSprite: {fileID: 21300000, guid: 2e350bcef09f70943ba03de78d8c063a, type: 3}
   loopingTornadoSprite: {fileID: 21300000, guid: eced15bb959edc54c8457ab75f9a45b5,
     type: 3}
   fireAuraSprite: {fileID: 21300000, guid: 0c136515f7aa49e43ba0840df48c1f4d, type: 3}
   chargeSkillSprite: {fileID: 21300000, guid: 8b03ad0628d8cec43a17e35fbc3086e4, type: 3}
-  deadlyPoisonBuffEffect: {fileID: 0}
+  deadlyPoisonBuffEffect: {fileID: 7624427047103384004, guid: d0bd0e1872e2a874c9eb17593a638468,
+    type: 3}
   loopingTornado: {fileID: 5765895818725834987, guid: 9d2003ab0d43aa244b9eda0af9df0ea3,
     type: 3}
   hitSmoke: {fileID: 2044047436482808057, guid: 5d183909a44df394aba9330fadf7bd44,
@@ -12753,6 +12756,7 @@ GameObject:
   - component: {fileID: 8628502660033032169}
   - component: {fileID: 8628502660033032168}
   - component: {fileID: 8628502660033032170}
+  - component: {fileID: 8628502660033032171}
   m_Layer: 9
   m_Name: Monster_A
   m_TagString: Untagged
@@ -12802,6 +12806,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statsDatum: {fileID: 11400000, guid: f48f8d626f0ceda42bd4f53c7b2f571b, type: 2}
+--- !u!114 &8628502660033032171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628502660033032167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edaf3a0601d010b41864c070e963d545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8628576790048101755
 GameObject:
   m_ObjectHideFlags: 0

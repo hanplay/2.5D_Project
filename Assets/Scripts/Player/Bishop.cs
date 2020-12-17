@@ -3,7 +3,6 @@
 	protected override void Awake()
 	{
 		base.Awake();
-		attackStrategy = new InstantAttackStrategy(this, new HealStrategy(), "Spell", 6f);
 	}
 
 	protected void Start()

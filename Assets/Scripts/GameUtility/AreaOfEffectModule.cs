@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AreaOfEffectModule : MonoBehaviour
 {
-    private Player owner;
+    private Unit owner;
     [SerializeField]
     private float lifeTime;
 
@@ -14,7 +14,7 @@ public class AreaOfEffectModule : MonoBehaviour
     private Buff buff;
 
 
-    public AreaOfEffectModule(Player owner, float lifeTime)
+    public AreaOfEffectModule(Unit owner, float lifeTime)
     {
         this.owner = owner;
         this.lifeTime = lifeTime;

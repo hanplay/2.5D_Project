@@ -15,6 +15,7 @@ public class Skill
     private float lagTime = 0f;
     private bool isCooldownTime;
 
+    private float range;
 
     public Skill(Player player) 
     {
@@ -105,23 +106,8 @@ public class Skill
         return skillSprite;
     }
 
-    public void OrderPlayerTargetSkillCommand()
+    public float GetRange()
     {
-        if (true == isCooldownTime)
-            return;
-
-        if (false == player.GetState().IsTargetingState())
-        {
-            return;
-        }
-        player.SetCommand(new TargetSkillCommmand(player, this));
+        return range;
     }
-
-    public void OrderPlayerBasicSkillCommand()
-    {
-        if (true == isCooldownTime)
-            return;
-        player.SetCommand(new BasicSkillCommand(player, this));        
-    }
-
 }

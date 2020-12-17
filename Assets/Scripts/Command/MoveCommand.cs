@@ -1,35 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class MoveCommand : Command
+public class MoveCommand : ICommand
 {
     private Vector3 destination;
-    public MoveCommand(Player player, Vector3 destination) : base(player)
+
+    public void SetDestination(Vector3 destination)
     {
         this.destination = destination;
     }
 
-    public override void Visit(DieState dieState)
+    public void Execute(Unit unit)
     {
-        return;
-    }
-
-    public override void Visit(SkillState skillState)
-    {
-        if(skillState.IsEnd())
-        {
-            BasicState basicState = player.GetBasicState();
-            basicState.MoveTo(destination);
-            player.SetState(basicState);
-        }
-    }
-
-    public override void Visit(BasicState basicState)
-    {
-        if(0.8f > Vector3.Distance(player.GetPosition(), destination))
-        {
-            basicState.Stop();
+        IMoveableState moveableState = unit.GetStateSystem().GetCurrentState() as IMoveableState;
+        if (null == moveableState)
             return;
-        }
-        basicState.MoveTo(destination);
+        moveableState.MoveTo(destination);
+    }
+    public void Execute(Unit unit, Vector3 destination)
+    {
+        SetDestination(destination);
+        Execute(unit);
     }
 }

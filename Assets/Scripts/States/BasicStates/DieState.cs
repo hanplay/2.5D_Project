@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DieState : BasicState
+public class DieState : State
 {
     private float duration;
     private float blinkCycle = 0.1f;
@@ -11,7 +11,7 @@ public class DieState : BasicState
     private bool isVisible = false;
     private BasicFXVisualizer basicFXVisualizer;
 
-    public DieState(Player player, float duration) : base(player)
+    public DieState(Unit player, StateSystem stateSystem, float duration) : base(player, stateSystem, Die)
     {
         this.duration = duration;
         basicFXVisualizer = player.GetComponent<BasicFXVisualizer>();
@@ -22,10 +22,10 @@ public class DieState : BasicState
         blinkTime = 2.5f;
         lagTime = 0f;
         animator.Play("Die");
-        player.OnDie();
     }
 
-    public override void TickAccept(float deltaTime, Command command)
+
+    public override void Tick(float deltaTime)
     {
         lagTime += deltaTime;
         if(lagTime > blinkTime)
@@ -37,7 +37,7 @@ public class DieState : BasicState
         }
         if(lagTime > duration)
         {
-            GameObject.Destroy(player.gameObject);
+            GameObject.Destroy(owner.gameObject);
         }
     }
 
@@ -48,5 +48,8 @@ public class DieState : BasicState
         else
             return false;
     }
-
+    public override bool IsTargetingState()
+    {
+        return false;
+    }
 }
