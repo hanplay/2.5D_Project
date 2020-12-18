@@ -5,41 +5,26 @@ using UnityEngine;
 
 public abstract class Player : Unit
 {
-
-	public const int SkillCount = 4;
-	public const int SkillActionCount = 4;
-
+	[SerializeField]
+	StatsDatum statsDatum;
 
 	[SerializeField]
 	protected string characterName;
 
 	private Dictionary<string, float> clipLengths = new Dictionary<string, float>();
 
-	[SerializeField]
-	protected SkillSystem skillSystem;
-	[SerializeField]
-	protected EquipmentSystem equipmentSystem;
-	[SerializeField]
-	protected LevelSystem levelSystem;
-	[SerializeField]
-	protected PlayerStatsDatum playerStatsDatum;
-
-	[SerializeField]
-	protected Skill[] skillList = new Skill[SkillCount];
-	public Action[] SkillAction = new Action[SkillActionCount];
+	//public Action[] SkillAction = new Action[SkillActionCount];
 
 
 	private Transform selectCircle;
 	protected override void Awake()
 	{
-		skillSystem = new SkillSystem(this);
-		levelSystem = new LevelSystem();
-		statsSystem = new StatsSystem(playerStatsDatum, levelSystem.GetLevel());
-		moveSystem = new MoveSystem(this, playerStatsDatum.GetBaseMoveSpeed());
-		healthPointsSystem = new PlayerHealthPointsSystem(playerStatsDatum.GetBaseMaxHealthPoints(),
-		playerStatsDatum.GetAddedMaxHealthPointsPerLevelUp(), levelSystem);
 		base.Awake();
-
+		statsSystem.Init(5, 1);
+		moveSystem.Init(new StraightMoveStrategy(this), 4f);
+		healthPointsSystem.Init(300);
+		skillSystem = new SkillSystem(this);
+		
 		selectCircle = transform.Find("SelectCircle");
 		HideSelectCircle();
 
@@ -54,33 +39,16 @@ public abstract class Player : Unit
 		}
 	}
 
+
 	protected override void Update()
 	{
-		for (int i = 0; i < skillList.Length; i++)
-		{
-			skillList[i]?.Tick(Time.deltaTime);
-		}
+
 		base.Update();
 	}
 
 	public string GetCharacterName()
 	{
 		return characterName;
-	}
-
-	public LevelSystem GetLevelSystem()
-	{
-		return levelSystem;
-	}
-
-	public Skill GetSkill(int i)
-	{
-		return skillList[i];
-	}
-
-	public int GetSkillCount()
-	{
-		return skillList.Length;
 	}
 
 	public float GetClipLength(string name)

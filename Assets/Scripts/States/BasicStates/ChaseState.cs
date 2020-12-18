@@ -7,9 +7,12 @@ public class ChaseState : BasicState, IMoveableState
     public event StateSystem.MoveEventHandler OnMove;
     public event StateSystem.TargetUnitEventHandler OnChase;
     public event StateSystem.TargetUnitEventHandler OnAttack;
+    public event StateSystem.TargetUnitEventHandler OnSkill;
 
     private MoveSystem moveSystem;
     private AttackSystem attackSystem;
+    
+
     public ChaseState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem) 
     {
         moveSystem = owner.GetMoveSystem();
@@ -27,6 +30,20 @@ public class ChaseState : BasicState, IMoveableState
     {
         if(null == targetedUnit)
             owner.GetStateSystem().PopState();
+       
+        if(null != skillSystem)
+        {
+            if (false == skillSystem.IsTargetingSkillReserved())
+            {
+                return;
+            }
+            else if(skillSystem.InRange(targetedUnit))
+            {
+                
+                return;
+            }
+        }
+        
 
         if(true == attackSystem.InRange(targetedUnit))
         {

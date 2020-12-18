@@ -5,6 +5,7 @@ public class UI_HealthPointsModule : MonoBehaviour
 {
 	[SerializeField]
 	private Unit unit;
+	private HealthPointsSystem healthPointsSystem;
 	private Image healthPointsBar;
 
 	private float lagTime;
@@ -20,13 +21,22 @@ public class UI_HealthPointsModule : MonoBehaviour
 	private void Awake()
 	{
 		healthPointsBar = GetComponentInChildren<Image>();
+		healthPointsSystem = unit.GetHealthPointsSystem();
 	}
 	private void Start()
 	{
-		unit.GetHealthPointsSystem().OnHealthPointChanged += HealthPointModule_OnHealthPointChanged;
+		if(null == unit.GetHealthPointsSystem())
+        {
+			print("healthPointsSystem is null");
+        }
+		else
+        {
+			print("healthPointsSystem is not null");
+		}
+		healthPointsSystem.OnHealthPointsChanged += HealthPointsModule_OnHealthPointsChanged;
 	}
 
-	private void HealthPointModule_OnHealthPointChanged(object sender, System.EventArgs e)
+	private void HealthPointsModule_OnHealthPointsChanged(float proportion)
 	{
 		if (healthPointsProportion < unit.GetHealthPointsSystem().GetProportion())
 		{

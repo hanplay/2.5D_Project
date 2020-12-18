@@ -4,12 +4,16 @@ using System;
 using UnityEngine;
 
 
-public class IdleState : State, IMoveableState
+public class IdleState : BasicState, IMoveableState
 {
     public event StateSystem.MoveEventHandler OnMove;
     public event StateSystem.TargetUnitEventHandler OnChase;
 
-    public IdleState(Unit player, StateSystem stateSystem) : base(player, stateSystem, Idle) { }
+    //public IdleState(Unit player, StateSystem stateSystem) : base(player, stateSystem, Idle) { }
+
+    public IdleState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem)
+    {
+    }
 
     public override void Begin()
     {
@@ -19,12 +23,12 @@ public class IdleState : State, IMoveableState
     public override void Tick(float deltaTime) 
     { animator.Play("Idle"); }
 
-    public void MoveTo(Vector3 destination)
+    public override void MoveTo(Vector3 destination)
     {
         OnMove.Invoke(this, destination);
     }
 
-    public void ChaseTarget(Unit targetUnit)
+    public override void ChaseTarget(Unit targetUnit)
     {
         OnChase.Invoke(this, targetUnit);
     }
@@ -34,5 +38,4 @@ public class IdleState : State, IMoveableState
         return false;
     }
 
-    
 }

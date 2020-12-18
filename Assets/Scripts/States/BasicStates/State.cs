@@ -5,6 +5,7 @@ public abstract class State
     protected Unit owner;
     protected Animator animator;
     protected StateSystem stateSystem;
+    protected SkillSystem skillSystem; // Unit에 따라서 null 값일 수 있음
     protected Unit targetedUnit;
 
 
@@ -28,7 +29,7 @@ public abstract class State
 
     public virtual void Begin()
     {
-        Debug.Log("Begin State: " + this.ToString());
+        Debug.Log("Begin State: " + ToString());
         isEnded = false;
         isBegun = true;
     }

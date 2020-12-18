@@ -5,62 +5,22 @@ public class Enemy : Unit
 	[SerializeField]
 	StatsDatum statsDatum;
 
-	[SerializeField]
-	private float range;
-
-	private Animator animator;
-	private Unit targetUnit;
-
-
-
-	private FSMState state = FSMState.Idle;
-
-
-	#region FSM
-	private enum FSMState
-	{
-		Idle,
-		ChaseTarget,
-		Attack
-	}
 
 	//음...프로토타입 패턴 써야하나..... 빌더 패턴 
 	//프로토타임은 Clone()이라는 함수 만들어서  
 
-    #endregion
     protected override void Awake()
 	{
 		base.Awake();
-		statsSystem = new StatsSystem(statsDatum);
-		animator = transform.Find("model").GetComponent<Animator>();
-		healthPointsSystem = new HealthPointsSystem(statsDatum.GetBaseMaxHealthPoints());
+		statsSystem.Init(4, 0);
+		healthPointsSystem.Init(200);
+		moveSystem.Init(new StraightMoveStrategy(this), 3f);
+		attackSystem.Init(new InstantAttackStrategy(this, new CommonDamageStrategy()), 1.5f);
 	}
 
-	private void FixedUpdate()
+    private void FixedUpdate()
     {
-        #region FSM
-		switch(state)
-        {
-		case FSMState.Idle:
-			animator.Play("Idle");
-			break;
-		case FSMState.ChaseTarget:
-			animator.Play("Run");
-			if(range > DistanceToUnit(targetUnit))
-            {
-				state = FSMState.Attack;
-            }
-			break;
-		case FSMState.Attack:
-			if(range <= DistanceToUnit(targetUnit))
-            {
-				state = FSMState.ChaseTarget;
-				break;
-            }
-			attackSystem.GetAttackStrategy().Attack(targetUnit);
-			break;
-        }
-        #endregion
+	
     }
 
     public override bool IsTargetable(Unit unit)

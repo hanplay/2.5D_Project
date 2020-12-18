@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerAnimationEventHandler : MonoBehaviour
 {
-    private Unit player;
+    private SkillSystem skillSystem;
     private void Awake()
     {
-        player = transform.parent.GetComponent<Unit>();
+        skillSystem = transform.parent.GetComponent<Unit>().GetSkillSystem();
     }
 
     private void BaseAttackAnimationEvent()

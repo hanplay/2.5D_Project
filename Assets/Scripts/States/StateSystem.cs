@@ -5,7 +5,9 @@ using UnityEngine;
 public class StateSystem 
 {
     public delegate void MoveEventHandler(State senderState, Vector3 destination);
-    public delegate void TargetUnitEventHandler(State senderState, Unit targetUnit);
+    public delegate void TargetUnitEventHandler(State senderState, Unit targetedUnit);
+    public delegate void SkillEventHandler(State senderState, Skill skill);
+    public delegate void TargetSkillEventHandler(State senderState, Skill skill, Unit targetedUnit);
 
     private Unit owner;
 

@@ -11,18 +11,11 @@ public class MoveSystem
     private IMoveStrategy baseMoveStrategy;
     private IMoveStrategy usingMoveStrategy;
 
+    public MoveSystem() { }
 
-    public MoveSystem(IMoveStrategy moveStrategy, float speed)
+    public void Init(IMoveStrategy moveStrategy, float speed)
     {
         baseMoveStrategy = moveStrategy;
-        usingMoveStrategy = baseMoveStrategy;
-        baseSpeed = speed;
-        CalculateSpeed();
-    }
-
-    public MoveSystem(Unit unit, float speed)
-    {
-        baseMoveStrategy = new StraightMoveStrategy(unit, this);
         usingMoveStrategy = baseMoveStrategy;
         baseSpeed = speed;
         CalculateSpeed();

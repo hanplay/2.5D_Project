@@ -13,14 +13,19 @@ public class AttackSystem
 
     private AttackStrategy attackStrategy;
 
-    public AttackSystem(Unit owner, AttackStrategy attackStrategy, float range)
+    public AttackSystem(Unit owner)
     {
         this.owner = owner;
-        this.attackStrategy = attackStrategy;
+    }
 
+    public void Init(AttackStrategy attackStrategy, float range)
+    {
+        this.attackStrategy = attackStrategy;
         baseRange = range;
         CalculateRange();
     }
+
+
     
     public void AddRange(float value)
     {

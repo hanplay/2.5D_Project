@@ -5,17 +5,16 @@ public class Knight : Player
 	//private Transform 
 	protected override void Awake()
 	{
-		//attackStrategy = new InstantAttackStrategy(this, new CommonDamageStrategy());
-		attackSystem = new AttackSystem(this, new InstantAttackStrategy(this, new CommonDamageStrategy()), 2f);
-		base.Awake();
+		base.Awake();		
+		attackSystem.Init(new InstantAttackStrategy(this, new CommonDamageStrategy()), 2f);
 	}
 	
-	protected void Start()
+	private void Start()
     {
-		skillList[0] = GameAssets.Instance.CreateSkill(this, SkillType.Dive);
-		skillList[1] = GameAssets.Instance.CreateSkill(this, SkillType.DeadlyPoisonBuff);
-		skillList[2] = GameAssets.Instance.CreateSkill(this, SkillType.HasteBuff);
-		skillList[3] = GameAssets.Instance.CreateSkill(this, SkillType.Charge);
+		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.Dive));
+		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.DeadlyPoisonBuff));
+		skillSystem.SetSkill(2, GameAssets.Instance.CreateSkill(this, SkillType.HasteBuff));
+		skillSystem.SetSkill(3, GameAssets.Instance.CreateSkill(this, SkillType.Charge));
 	}
 
 

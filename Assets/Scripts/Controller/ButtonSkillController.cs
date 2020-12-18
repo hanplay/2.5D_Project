@@ -16,15 +16,16 @@ public class ButtonSkillController : MonoBehaviour
 
     public void BindPlayerSkillsToUI_SkillButtonsAndShow(Player player)
     {
-        for(int i = 0; i < player.GetSkillCount(); i++)
+        int count = SkillSystem.SkillCount;
+        for(int i = 0; i < count; i++)
         {
-            if(null == player.GetSkill(i))
+            if(null == player.GetSkillSystem().GetSkill(i))
             {
                 uI_SkillButtonList[i].Hide();
             }
             else
             {
-                uI_SkillButtonList[i].SetSkill(player.GetSkill(i));
+                uI_SkillButtonList[i].SetSkill(player.GetSkillSystem().GetSkill(i));
                 uI_SkillButtonList[i].UpdateSkillImageRemainingProportion();
                 uI_SkillButtonList[i].Show();
             }

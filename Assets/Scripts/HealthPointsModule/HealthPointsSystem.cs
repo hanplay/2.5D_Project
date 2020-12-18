@@ -2,8 +2,9 @@
 
 public class HealthPointsSystem 
 {
-    public event EventHandler OnHealthPointChanged;
-    public event EventHandler OnDead;
+    public delegate void HealthPointsChangeEventHandler(float proportion);
+    public event HealthPointsChangeEventHandler OnHealthPointsChanged;
+    //public event EventHandler OnHealthPointsChanged;
 
     protected int baseMaxHealthPoints;
     protected int addedMaxHealthPoints;
@@ -11,11 +12,17 @@ public class HealthPointsSystem
     protected int healthPoints;
 
     protected HealthPointsSystem() { }
-    public HealthPointsSystem(int baseMaxHealthPoints) 
+    public HealthPointsSystem(Unit unit) 
+    {
+
+    }
+
+    public void Init(int baseMaxHealthPoints)
     {
         this.baseMaxHealthPoints = baseMaxHealthPoints;
-        FillHealthPointsFull();
     }
+
+
 
 
     public void AddHealthPoints(int points)
@@ -25,6 +32,7 @@ public class HealthPointsSystem
         {
             healthPoints = totalMaxHealthPoints;
 		}
+        OnHealthPointsChanged.Invoke(GetProportion());
 	}
     public void SubtractHealthPoints(int points)
     {
@@ -33,7 +41,8 @@ public class HealthPointsSystem
         {
             healthPoints = 0;
 		}
-	}
+        OnHealthPointsChanged.Invoke(GetProportion());
+    }
 
     public int GetMaxHealthPoints()
     {
@@ -52,11 +61,13 @@ public class HealthPointsSystem
     public void FillHealthPointsFull()
     {
         healthPoints = totalMaxHealthPoints;
-	}
+        OnHealthPointsChanged.Invoke(GetProportion());
+    }
 
     public void CalculateMaxHealthPoints()
     {
         totalMaxHealthPoints = baseMaxHealthPoints + addedMaxHealthPoints;
+        OnHealthPointsChanged.Invoke(GetProportion());
     }
 
 }

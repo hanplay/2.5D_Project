@@ -14,20 +14,21 @@ public class StatsSystem
 	private int totalAttackPower;
 	private int totalArmor;
 
-	public StatsSystem(StatsDatum statsDatum)
-	{
+	public StatsSystem() { }
+
+	public void Init(StatsDatum statsDatum)
+    {
 		baseAttackPower = statsDatum.GetBaseAttackPower();
 		baseArmor = statsDatum.GetBaseArmor();
 		Calculate();
-	}
-
-	public StatsSystem(PlayerStatsDatum playerStatsDatum, int level)
-    {
-		int levelMinusOne = level - 1;
-		baseAttackPower = playerStatsDatum.GetBaseAttackPower() + levelMinusOne * playerStatsDatum.GetAddedAttackPowerPerLevelUp();
-		baseArmor = playerStatsDatum.GetBaseArmor();
-		Calculate();
     }
+
+	public void Init(int attackPower, int armor)
+    {
+		baseAttackPower = attackPower;
+		baseArmor = armor;
+    }
+
 
 	private void Calculate()
 	{

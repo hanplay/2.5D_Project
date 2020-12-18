@@ -9,11 +9,11 @@ public class StraightMoveStrategy : IMoveStrategy
     private MoveSystem moveSystem;
 
 
-    public StraightMoveStrategy(Unit mover, MoveSystem moveSystem)
+    public StraightMoveStrategy(Unit mover)
     {
         this.mover = mover;
         rigidbody = mover.GetComponent<Rigidbody>();
-        this.moveSystem = moveSystem;      
+        moveSystem = mover.GetMoveSystem();     
     }
     
     public void ChaseTarget(Unit targetUnit)
