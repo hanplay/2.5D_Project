@@ -27,16 +27,16 @@ public class InstantAttackStrategy : AttackStrategy
     public override void Attack(Unit targetUnit)
     {
         animator.Play(attackNameHash);
-
         this.targetUnit = targetUnit;
     }
 
     public override void AnimationEventOccur()
     {
         int damage = owner.GetStatsSystem().GetTotalAttackPower();
-        Debug.Log("TargetUnit: " + targetUnit);
+        Debug.Log(string.Concat("TargetUnit: ", targetUnit, ", ",  damage));
         damageStrategy.Do(targetUnit, damage);
         targetUnit = null;
     }
+
 }
 

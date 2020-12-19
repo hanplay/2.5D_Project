@@ -19,7 +19,7 @@ public class BuffSkillState : SkillState
     {
         base.Begin();
         Player player = owner as Player;
-        player.GetSkillSystem().SkillAction[0] = Work;
+        player.GetSkillSystem().SkillAction = Work;
         animator.Play("Spell");
         if (0 == duration)
             duration = player.GetClipLength("Spell");

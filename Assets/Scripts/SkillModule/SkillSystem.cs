@@ -10,7 +10,7 @@ public class SkillSystem
     private Skill reservedTargetingSkill;
 
     private Skill[] skillList = new Skill[SkillCount];
-    public Action[] SkillAction = new Action[SkillCount];
+    public Action SkillAction;
     public SkillSystem(Player player)
     {
         this.player = player;

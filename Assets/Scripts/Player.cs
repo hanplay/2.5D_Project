@@ -13,8 +13,6 @@ public abstract class Player : Unit
 
 	private Dictionary<string, float> clipLengths = new Dictionary<string, float>();
 
-	//public Action[] SkillAction = new Action[SkillActionCount];
-
 
 	private Transform selectCircle;
 	protected override void Awake()

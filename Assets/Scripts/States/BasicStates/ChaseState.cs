@@ -5,7 +5,6 @@ using UnityEngine;
 public class ChaseState : BasicState, IMoveableState
 {
     public event StateSystem.MoveEventHandler OnMove;
-    public event StateSystem.TargetUnitEventHandler OnChase;
     public event StateSystem.TargetUnitEventHandler OnAttack;
     public event StateSystem.TargetUnitEventHandler OnSkill;
 

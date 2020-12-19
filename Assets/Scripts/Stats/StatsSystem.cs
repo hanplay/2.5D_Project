@@ -27,7 +27,8 @@ public class StatsSystem
     {
 		baseAttackPower = attackPower;
 		baseArmor = armor;
-    }
+		Calculate();
+	}
 
 
 	private void Calculate()

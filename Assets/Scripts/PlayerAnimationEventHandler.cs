@@ -5,30 +5,22 @@ using UnityEngine;
 public class PlayerAnimationEventHandler : MonoBehaviour
 {
     private SkillSystem skillSystem;
+    private AttackSystem attackSystem;
     private void Awake()
     {
-        skillSystem = transform.parent.GetComponent<Unit>().GetSkillSystem();
+        Unit owner = transform.parent.GetComponent<Unit>();
+        skillSystem = owner.GetSkillSystem();
+        attackSystem = owner.GetAttackSystem();
     }
 
     private void BaseAttackAnimationEvent()
     {
-        
+        attackSystem.GetAttackStrategy().AnimationEventOccur();
     }
 
-    private void Skill0AnimationEvent()
+    private void SkillAnimationEvent()
     {
-        //player.SkillAction[0]?.Invoke();
+        skillSystem.SkillAction?.Invoke();
     }
-    private void Skill1AnimationEvent()
-    {
-       // player.SkillAction[1]?.Invoke();
-    }
-    private void Skill2AnimationEvent()
-    {
-        //player.SkillAction[2]?.Invoke();
-    }
-    private void Skill3AnimationEvent()
-    {
-        //player.SkillAction[3]?.Invoke();
-    }
+
 }

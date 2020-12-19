@@ -11,16 +11,17 @@ public abstract class Unit : MonoBehaviour
 	protected MoveSystem moveSystem;
 	protected AttackSystem attackSystem;
 	protected HealthPointsSystem healthPointsSystem;	
+	//하위 클래스가 쓸지 안쓸지 생성자 생성으로 결정
 	protected SkillSystem skillSystem;
 
 
 	protected virtual void Awake()
     {
 		healthPointsSystem = new HealthPointsSystem(this);
-		moveSystem = new MoveSystem();
-		buffSystem = new BuffSystem(this);
-		attackSystem = new AttackSystem(this);
 		statsSystem = new StatsSystem();
+		moveSystem = new MoveSystem();
+		attackSystem = new AttackSystem(this);
+		buffSystem = new BuffSystem(this);
 		stateSystem = new StateSystem(this);	
 
 		skillSystem = null;

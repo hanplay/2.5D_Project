@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class UI_HealthPointsModule : MonoBehaviour
 {
@@ -7,97 +8,108 @@ public class UI_HealthPointsModule : MonoBehaviour
 	private Unit unit;
 	private HealthPointsSystem healthPointsSystem;
 	private Image healthPointsBar;
+    private Animator animator;
+    private CanvasRenderer canvasRenderer;
+
+	private enum State
+    {
+		Increasing,
+		Decreasing,
+		Default
+    }
+    private State state;
 
 	private float lagTime;
 	private float secondPerFrame;
-	private const float TOTAL_ANIMATING_TIME = 0.3f;
-	private const float DELTA_HEALTH_POINTS_PROPORTION = 0.005f;
+    private const float TOTAL_ANIMATING_TIME = 0.3f;
+    private const float DELTA_HEALTH_POINTS_PROPORTION = 0.005f;
 
-	private bool isAnimating;
-	private bool isIncreasing;
-	
-	private float healthPointsProportion;
+
+    private float healthPointsProportion;
 	
 	private void Awake()
 	{
-		healthPointsBar = GetComponentInChildren<Image>();
+		healthPointsBar = transform.Find("HealthPointsBar").GetComponent<Image>();
+        animator = GetComponent<Animator>();
+        canvasRenderer = GetComponent<CanvasRenderer>();
 		healthPointsSystem = unit.GetHealthPointsSystem();
+        healthPointsSystem.OnHealthPointsChanged += HealthPointsSystem_OnHealthPointsChanged;
 	}
-	private void Start()
-	{
-		if(null == unit.GetHealthPointsSystem())
+
+    private void HealthPointsSystem_OnHealthPointsChanged()
+    {
+        if (false == gameObject.activeSelf)
         {
-			print("healthPointsSystem is null");
+            gameObject.SetActive(true);
+            animator.Play("Appear");
         }
-		else
+        /*한 프레임당 시간 = 에니메이션하는 시간 / 체력의 변화량  / 한 프레임당 체력의 변화량  */
+        secondPerFrame = TOTAL_ANIMATING_TIME / (Mathf.Abs(healthPointsProportion - unit.GetHealthPointsSystem().GetProportion()) / DELTA_HEALTH_POINTS_PROPORTION);        
+        healthPointsProportion = healthPointsSystem.GetProportion();
+        lagTime = 0f;
+        if(healthPointsProportion > healthPointsBar.fillAmount)
         {
-			print("healthPointsSystem is not null");
-		}
-		healthPointsSystem.OnHealthPointsChanged += HealthPointsModule_OnHealthPointsChanged;
-	}
+            state = State.Increasing;
+        }
+        else
+        {
+            state = State.Decreasing;
+        }
+    }
 
-	private void HealthPointsModule_OnHealthPointsChanged(float proportion)
-	{
-		if (healthPointsProportion < unit.GetHealthPointsSystem().GetProportion())
-		{
-			isIncreasing = true;
-		}
-		else
-		{
-			isIncreasing = false;
-		}
+    private void Update()
+    {
+        lagTime += Time.deltaTime;
+        switch(state)
+        {
+        case State.Default:
+            if (3f < lagTime)
+            {
+                lagTime = 0f;                
+                animator.Play("Disappear");
+            }
+            break;                 
+        case State.Increasing:
+            if (healthPointsBar.fillAmount <= healthPointsProportion)
+            {
+                while(lagTime >= secondPerFrame)
+                {
+                    IncreaseHealthPoints();
+                    lagTime -= secondPerFrame;
+                }
+            }
+            else            
+                state = State.Default;            
+            break;
+        case State.Decreasing:
+            if (healthPointsBar.fillAmount >= healthPointsProportion)
+            {
+                while (lagTime >= secondPerFrame)
+                {
+                    DecreaseHealthPoints();
+                    lagTime -= secondPerFrame;
+                }
+            }                
+            else
+                state = State.Default;
+            break;
+        }
+    }
 
-		secondPerFrame = TOTAL_ANIMATING_TIME / (Mathf.Abs(healthPointsProportion - unit.GetHealthPointsSystem().GetProportion()) / DELTA_HEALTH_POINTS_PROPORTION);
-		healthPointsProportion = unit.GetHealthPointsSystem().GetProportion();
+    private void ConcealAnimationEnd()
+    {
+        gameObject.SetActive(false);
+    }
 
-		isAnimating = true;
-	}
+    private void IncreaseHealthPoints()
+    {
+    	healthPointsBar.fillAmount += DELTA_HEALTH_POINTS_PROPORTION;
+    }
+    
+    private void DecreaseHealthPoints()
+    {
+    	healthPointsBar.fillAmount -= DELTA_HEALTH_POINTS_PROPORTION;
+    }
 
 
-
-	private void Update()
-	{
-		if (false == isAnimating)
-			return;
-
-		//handmade fixedUpdate
-		lagTime += Time.deltaTime;
-		while (secondPerFrame < lagTime)
-		{
-			lagTime -= secondPerFrame;
-
-			if (true == isIncreasing)
-			{
-				if (healthPointsBar.fillAmount <= healthPointsProportion)
-				{
-					IncreaseHealthPoints();
-				}
-				else
-				{
-					isAnimating = false;
-				}
-			}
-			else
-			{
-				if (healthPointsBar.fillAmount >= healthPointsProportion)
-				{
-					DecreaseHealthPoints();
-				}
-				else
-				{
-					isAnimating = false;
-				}
-			}
-		}
-	}
-		
-	private void IncreaseHealthPoints()
-	{
-		healthPointsBar.fillAmount += DELTA_HEALTH_POINTS_PROPORTION;
-	}
-
-	private void DecreaseHealthPoints()
-	{
-		healthPointsBar.fillAmount -= DELTA_HEALTH_POINTS_PROPORTION;
-	}
 }

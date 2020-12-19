@@ -20,7 +20,7 @@ public class ChargeSkillState : SkillState
         base.Begin();
         speed = 4f;
         Player player = owner as Player;
-        player.GetSkillSystem().SkillAction[0] = Work;
+        player.GetSkillSystem().SkillAction = Work;
         animator.Play("Sit");
         if(0 == duration)
             duration = chargeTime + player.GetClipLength("Spell");

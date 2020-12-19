@@ -17,7 +17,7 @@ public class CommonDamageStrategy : DamageStrategy
             Debug.Log("StatsSystem is Null");
         }
         targetUnit.GetStatsSystem().CalculateDamage(damage, out calculatedDamage);
-        targetUnit.GetHealthPointsSystem().SubtractHealthPoints(calculatedDamage);
+        targetUnit.GetHealthPointsSystem().SubtractHealthPoints(calculatedDamage);    
     }
 
 

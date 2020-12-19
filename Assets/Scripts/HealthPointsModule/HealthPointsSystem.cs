@@ -1,8 +1,8 @@
-﻿using System;
+﻿using UnityEngine;
 
 public class HealthPointsSystem 
 {
-    public delegate void HealthPointsChangeEventHandler(float proportion);
+    public delegate void HealthPointsChangeEventHandler();
     public event HealthPointsChangeEventHandler OnHealthPointsChanged;
     //public event EventHandler OnHealthPointsChanged;
 
@@ -20,8 +20,9 @@ public class HealthPointsSystem
     public void Init(int baseMaxHealthPoints)
     {
         this.baseMaxHealthPoints = baseMaxHealthPoints;
+        CalculateMaxHealthPoints();
+        FillHealthPointsFull();
     }
-
 
 
 
@@ -32,7 +33,7 @@ public class HealthPointsSystem
         {
             healthPoints = totalMaxHealthPoints;
 		}
-        OnHealthPointsChanged.Invoke(GetProportion());
+        OnHealthPointsChanged.Invoke();
 	}
     public void SubtractHealthPoints(int points)
     {
@@ -41,7 +42,7 @@ public class HealthPointsSystem
         {
             healthPoints = 0;
 		}
-        OnHealthPointsChanged.Invoke(GetProportion());
+        OnHealthPointsChanged.Invoke();
     }
 
     public int GetMaxHealthPoints()
@@ -61,13 +62,13 @@ public class HealthPointsSystem
     public void FillHealthPointsFull()
     {
         healthPoints = totalMaxHealthPoints;
-        OnHealthPointsChanged.Invoke(GetProportion());
+        OnHealthPointsChanged?.Invoke();
     }
 
     public void CalculateMaxHealthPoints()
     {
         totalMaxHealthPoints = baseMaxHealthPoints + addedMaxHealthPoints;
-        OnHealthPointsChanged.Invoke(GetProportion());
+        OnHealthPointsChanged?.Invoke();
     }
 
 }

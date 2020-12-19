@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9f6ca799acf2f4f9297d2641eb46a5, type: 3}
   m_Name: KnightStatDatum
   m_EditorClassIdentifier: 
-  attackPower: 0
-  percentAttackPower: 0
-  armor: 0
+  baseAttackPower: 5
+  baseMaxHealthPoints: 300
+  baseArmor: 1
+  baseMoveSpeed: 3
+  baseRange: 1.5
