@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DiveSkillState : SkillState, ITargetExistsState
+public class DiveSkillState : SkillState, ISkillTargetingState
 {
     private GameObject hitSmoke;
     private GameObject smokeExplosion;
@@ -53,9 +53,9 @@ public class DiveSkillState : SkillState, ITargetExistsState
         base.End();
         GameObject smoke = GameObject.Instantiate(smokeExplosion, owner.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
     }
-    public override bool IsTargetingState()
-    {
-        return true;
-    }
 
+    public void SetTarget(Unit targetedUnit)
+    {
+        this.targetedUnit = targetedUnit;
+    }
 }

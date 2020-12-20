@@ -22,6 +22,7 @@ public class DieState : State
         blinkTime = 2.5f;
         lagTime = 0f;
         animator.Play("Die");
+        //TODO: 타게팅이 안되도록
     }
 
 
@@ -33,23 +34,11 @@ public class DieState : State
             basicFXVisualizer.SetSpritesVisible(isVisible);
 
             blinkTime += blinkCycle;
-            isVisible = Toggle(isVisible);
+            isVisible = !isVisible;
         }
         if(lagTime > duration)
         {
             GameObject.Destroy(owner.gameObject);
         }
-    }
-
-    private bool Toggle(bool value)
-    {
-        if (false == value)
-            return true;
-        else
-            return false;
-    }
-    public override bool IsTargetingState()
-    {
-        return false;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
 {
 
+    private ButtonSkillController buttonSkillController;
     private Skill skill;
     private Image skillImage;
     private Image skillBlockerImage;
@@ -12,6 +13,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
 
     void Awake()
     {
+        buttonSkillController = transform.parent.GetComponent<ButtonSkillController>();
         skillImage = GetComponent<Image>();
         skillBlockerImage = transform.Find("UI_SkillBlocker").GetComponent<Image>();
         skillBlockerImage.color = blockColor;
@@ -20,7 +22,6 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
     void Start()
     {
         skillImage.material = new Material(GameAssets.Instance.UnitMaterial);
-
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        buttonSkillController.ActivateSkill(skill);
     }
 
     public void Hide()

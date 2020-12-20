@@ -40,7 +40,6 @@ public abstract class State
     }
 
     public abstract void Tick(float deltaTime);
-    public abstract bool IsTargetingState();
 
     public Unit GetTargetUnit()
     {

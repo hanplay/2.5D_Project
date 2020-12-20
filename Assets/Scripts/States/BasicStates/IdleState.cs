@@ -33,9 +33,4 @@ public class IdleState : BasicState, IMoveableState
         OnChase.Invoke(this, targetUnit);
     }
 
-    public override bool IsTargetingState()
-    {
-        return false;
-    }
-
 }

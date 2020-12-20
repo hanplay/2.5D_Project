@@ -69,19 +69,31 @@ public class StateSystem
 
         idleState.OnMove += IdleState_OnMove;
         idleState.OnChase += IdleState_OnChase;
+        idleState.OnSkill += BasicState_OnSkill;
 
         moveState.OnChase += MoveState_OnChase;
+        moveState.OnSkill += BasicState_OnSkill;
 
         chaseState.OnMove += ChaseState_OnMove;
         chaseState.OnAttack += ChaseState_OnAttack;
+        chaseState.OnSkill += BasicState_OnSkill;
 
         attackState.OnMove += AttackState_OnMove;
         attackState.OnChase += AttackState_OnChase;
-        
+        attackState.OnSkill += BasicState_OnSkill;
+        attackState.OnTargetingSkillReserve += AttackState_OnTargetingSkillReserve;
+
+        stateStack.Push(dieState);
         stateStack.Push(idleState);
     }
 
+
     #region State Change
+    private void BasicState_OnSkill(State senderState, Skill skill)
+    {
+        PushState(skill.GetSkillState());
+    }
+
     private void IdleState_OnMove(State senderState, Vector3 destination)
     {
         PushState(moveState);
@@ -130,13 +142,6 @@ public class StateSystem
         PopState();
         PushState(attackState);
         attackState.Attack(targetedUnit);
-      
-        //else
-        //{
-        //    SkillState skillState = reservedTargetingSkill.GetSkillState();
-        //    skillState.SetTargetUnit(targetedUnit);
-        //    PushState(skillState);            
-        //}
     }
 
     private void AttackState_OnMove(State senderState, Vector3 destination)
@@ -160,6 +165,12 @@ public class StateSystem
             attackState.Attack(targetedUnit);
         }
     }
+    private void AttackState_OnTargetingSkillReserve(State senderState, Skill skill, Unit targetedUnit)
+    {
+        ISkillTargetingState skillTargetingState = skill.GetSkillState() as ISkillTargetingState;
+        skillTargetingState.SetTarget(targetedUnit);
+        PushState(skill.GetSkillState());
+    }
 
     #endregion
 
@@ -175,6 +186,4 @@ public class StateSystem
             stateStack.Peek().Tick(deltaTime);
         }        
     }
-
-
 }

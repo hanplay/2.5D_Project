@@ -115,7 +115,7 @@ public class GameAssets : MonoBehaviour
     public Skill CreateSkill(Player player, SkillType skillType)
     {
         Skill skill;
-        skill = new Skill(player);
+        skill = new Skill();
         switch (skillType)
         {
         case SkillType.Dive:

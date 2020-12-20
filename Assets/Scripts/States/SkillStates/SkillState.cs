@@ -26,18 +26,13 @@ public abstract class SkillState : State
         lagTime += deltaTime;
         if (lagTime >= duration)
         {
-            End();
+            stateSystem.PopState();
         }
     }
 
     public override void End()
     {
         isEnd = true;
-    }
-
-    public void SetTargetUnit(Unit targetUnit)
-    {
-        this.targetedUnit = targetUnit;
     }
 
     public virtual void Initialize()

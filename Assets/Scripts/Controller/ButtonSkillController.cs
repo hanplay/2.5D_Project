@@ -4,6 +4,8 @@ using UnityEngine;
 public class ButtonSkillController : MonoBehaviour
 {
     private List<UI_SkillButton> uI_SkillButtonList = new List<UI_SkillButton>();
+    private SkillCommand skillCommand = new SkillCommand();
+    private Unit owner;
 
     private void Awake()
     {
@@ -16,6 +18,7 @@ public class ButtonSkillController : MonoBehaviour
 
     public void BindPlayerSkillsToUI_SkillButtonsAndShow(Player player)
     {
+        owner = player;
         int count = SkillSystem.SkillCount;
         for(int i = 0; i < count; i++)
         {
@@ -40,8 +43,9 @@ public class ButtonSkillController : MonoBehaviour
         }
     }
 
-    public void SkillCommand(Player player, int i)
+    public void ActivateSkill(Skill skill)
     {
-
+        skillCommand.Execute(owner, skill);            
     }
+
 }

@@ -45,12 +45,6 @@ public class ChargeSkillState : SkillState
         base.Initialize();
         chargeTime = 0f;
     }
-
-    public override bool IsTargetingState()
-    {
-        return false;
-    }
-
     public override void End()
     {
         base.End();

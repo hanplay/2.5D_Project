@@ -2,7 +2,6 @@
 
 public class Skill 
 {
-    private Player player;
     private Sprite skillSprite;
     private SkillState skillState;
 
@@ -16,11 +15,6 @@ public class Skill
     private bool isCooldownTime;
 
     private float range;
-
-    public Skill(Player player) 
-    {
-        this.player = player;
-    }
 
     public void SetCanCancel(bool canCancel)
     {

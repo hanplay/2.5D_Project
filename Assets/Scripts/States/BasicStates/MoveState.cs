@@ -27,11 +27,6 @@ public class MoveState : BasicState, IMoveableState
         moveSystem.GetUsingMoveStrategy().MoveTo(destination);
     }
 
-    public override bool IsTargetingState()
-    {
-        return false;
-    }
-
     public override void ChaseTarget(Unit targetUnit)
     {
         OnChase(this, targetUnit);

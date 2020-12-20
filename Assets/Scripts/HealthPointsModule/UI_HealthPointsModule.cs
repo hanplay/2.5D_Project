@@ -9,7 +9,6 @@ public class UI_HealthPointsModule : MonoBehaviour
 	private HealthPointsSystem healthPointsSystem;
 	private Image healthPointsBar;
     private Animator animator;
-    private CanvasRenderer canvasRenderer;
 
 	private enum State
     {
@@ -31,7 +30,6 @@ public class UI_HealthPointsModule : MonoBehaviour
 	{
 		healthPointsBar = transform.Find("HealthPointsBar").GetComponent<Image>();
         animator = GetComponent<Animator>();
-        canvasRenderer = GetComponent<CanvasRenderer>();
 		healthPointsSystem = unit.GetHealthPointsSystem();
         healthPointsSystem.OnHealthPointsChanged += HealthPointsSystem_OnHealthPointsChanged;
 	}

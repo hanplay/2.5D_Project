@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState : BasicState, IMoveableState
+public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
 {
     public event StateSystem.MoveEventHandler OnMove;
     public event StateSystem.TargetUnitEventHandler OnAttack;
-    public event StateSystem.TargetUnitEventHandler OnSkill;
+    public event StateSystem.TargetSkillEventHandler OnTargetingSkill;
 
     private MoveSystem moveSystem;
     private AttackSystem attackSystem;
+    private Skill targetingSkill;
     
 
     public ChaseState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem) 
@@ -30,19 +31,14 @@ public class ChaseState : BasicState, IMoveableState
         if(null == targetedUnit)
             owner.GetStateSystem().PopState();
        
-        if(null != skillSystem)
+        if(null != targetingSkill)
         {
-            if (false == skillSystem.IsTargetingSkillReserved())
+            Debug.Log("Chase Targeting Update: " + targetingSkill.GetRange());
+            if(owner.DistanceToUnit(targetedUnit) <= targetingSkill.GetRange())
             {
-                return;
-            }
-            else if(skillSystem.InRange(targetedUnit))
-            {
-                
-                return;
+                OnTargetingSkill.Invoke(this, targetingSkill, targetedUnit);
             }
         }
-        
 
         if(true == attackSystem.InRange(targetedUnit))
         {
@@ -53,10 +49,6 @@ public class ChaseState : BasicState, IMoveableState
             moveSystem.GetUsingMoveStrategy().MoveTo(targetedUnit.GetPosition());
         }
     }
-    public override bool IsTargetingState()
-    {
-        return true;
-    }
 
     public override void ChaseTarget(Unit targetedUnit)
     {
@@ -66,5 +58,29 @@ public class ChaseState : BasicState, IMoveableState
     public override void MoveTo(Vector3 destination)
     {
         OnMove.Invoke(this, destination);
+    }
+
+    public void ActivateTargetingSkill(Skill targetingSkill)
+    {
+        if (owner.DistanceToUnit(targetedUnit) <= targetingSkill.GetRange())
+        {
+            OnTargetingSkill.Invoke(this, targetingSkill, targetedUnit);
+        }
+        else
+        {
+            ReserveTargetingSkill(targetingSkill);
+        }
+    }
+
+    private void ReserveTargetingSkill(Skill targetingSkill)
+    {
+        this.targetingSkill = targetingSkill;        
+        //ToDo
+    }
+
+    public override void End()
+    {
+        base.End();
+        targetingSkill = null;
     }
 }

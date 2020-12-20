@@ -34,8 +34,4 @@ public class BuffSkillState : SkillState
         owner.GetBuffSystem().AddBuff(newBuff);
     }
 
-    public override bool IsTargetingState()
-    {
-        return false;
-    }
 }
