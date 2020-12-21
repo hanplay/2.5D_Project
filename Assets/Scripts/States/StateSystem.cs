@@ -77,10 +77,12 @@ public class StateSystem
         chaseState.OnMove += ChaseState_OnMove;
         chaseState.OnAttack += ChaseState_OnAttack;
         chaseState.OnSkill += BasicState_OnSkill;
+        chaseState.OnTargetingSkill += BasicState_OnTargetingSkill;
 
         attackState.OnMove += AttackState_OnMove;
         attackState.OnChase += AttackState_OnChase;
         attackState.OnSkill += BasicState_OnSkill;
+        attackState.OnTargetingSkill += BasicState_OnTargetingSkill;
         attackState.OnTargetingSkillReserve += AttackState_OnTargetingSkillReserve;
 
         stateStack.Push(dieState);
@@ -88,9 +90,16 @@ public class StateSystem
     }
 
 
+
     #region State Change
     private void BasicState_OnSkill(State senderState, Skill skill)
     {
+        PushState(skill.GetSkillState());
+    }
+    private void BasicState_OnTargetingSkill(State senderState, Skill skill, Unit targetedUnit)
+    {
+        ISkillTargetingState skillTargetingState = skill.GetSkillState() as ISkillTargetingState;
+        skillTargetingState.SetTarget(targetedUnit);
         PushState(skill.GetSkillState());
     }
 
@@ -169,7 +178,9 @@ public class StateSystem
     {
         ISkillTargetingState skillTargetingState = skill.GetSkillState() as ISkillTargetingState;
         skillTargetingState.SetTarget(targetedUnit);
-        PushState(skill.GetSkillState());
+        PopState();
+        chaseState.ReserveTargetingSkill(skill);
+        PushState(chaseState);
     }
 
     #endregion

@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 public enum BuffType
 {
-    Test,
     Haste,
     Burn,
     FireAura,
@@ -41,7 +40,6 @@ public class GameAssets : MonoBehaviour
 {
 
     
-    [SerializeField] private Sprite testBuffSprite;
     [SerializeField] private Sprite hasteBuffSprite;
     [SerializeField] private Sprite burnDebuffSprite;
     [SerializeField] private Sprite concealBuffSprite;
@@ -81,10 +79,6 @@ public class GameAssets : MonoBehaviour
         Buff buff;
         switch (TypeValue)
         {
-        case BuffType.Test:
-            buff = new TestBuff(TypeValue, 7f);
-            buff.SetBuffSprite(testBuffSprite);
-            return buff;
         case BuffType.Haste:
             buff = new HasteBuff(TypeValue, 10f);
             buff.SetBuffSprite(hasteBuffSprite);
@@ -123,14 +117,8 @@ public class GameAssets : MonoBehaviour
             skill.SetCooldownTime(5f);
             skill.SetIsTargetSkill(true);
             skill.SetSkillSprite(diveSkillSprite);
+            skill.SetRange(6f);
             skill.SetSkillState(new DiveSkillState(player, skill, hitSmoke, smokeExplosion));
-            return skill;
-        case SkillType.TestBuff:
-            skill.SetCanCancel(false);
-            skill.SetCooldownTime(10f);
-            skill.SetIsTargetSkill(false);
-            skill.SetSkillSprite(testBuffSprite);
-            skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.Test), deathSkullExplosion));
             return skill;
         case SkillType.HasteBuff:
             skill.SetCanCancel(false);

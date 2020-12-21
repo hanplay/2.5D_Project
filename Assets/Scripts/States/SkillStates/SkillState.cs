@@ -16,6 +16,7 @@ public abstract class SkillState : State
     }
     public override void Begin()
     {
+        base.Begin();
         skill.StartCooldownTime();
 
     }
@@ -32,7 +33,7 @@ public abstract class SkillState : State
 
     public override void End()
     {
-        isEnd = true;
+        base.End();
     }
 
     public virtual void Initialize()

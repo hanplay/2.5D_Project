@@ -104,4 +104,9 @@ public class Skill
     {
         return range;
     }
+
+    public void SetRange(float range)
+    {
+        this.range = range;
+    }
 }

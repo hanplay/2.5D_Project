@@ -7,6 +7,8 @@ public class SkillCommand : ICommand
     private Skill skill;
     public void Execute(Unit unit)
     {
+        if (skill.IsCoolDownTime())
+            return;
         BasicState basicState = unit.GetStateSystem().GetCurrentState() as BasicState;
         if(skill.IsTargetSkill())
         {

@@ -14,7 +14,7 @@ public class Knight : Player
 		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.Dive));
 		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.DeadlyPoisonBuff));
 		skillSystem.SetSkill(2, GameAssets.Instance.CreateSkill(this, SkillType.HasteBuff));
-		skillSystem.SetSkill(3, GameAssets.Instance.CreateSkill(this, SkillType.Charge));
+		skillSystem.SetSkill(3, GameAssets.Instance.CreateSkill(this, SkillType.Charge));		
 	}
 
 

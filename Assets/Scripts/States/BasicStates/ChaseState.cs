@@ -33,7 +33,6 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
        
         if(null != targetingSkill)
         {
-            Debug.Log("Chase Targeting Update: " + targetingSkill.GetRange());
             if(owner.DistanceToUnit(targetedUnit) <= targetingSkill.GetRange())
             {
                 OnTargetingSkill.Invoke(this, targetingSkill, targetedUnit);
@@ -72,7 +71,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         }
     }
 
-    private void ReserveTargetingSkill(Skill targetingSkill)
+    public void ReserveTargetingSkill(Skill targetingSkill)
     {
         this.targetingSkill = targetingSkill;        
         //ToDo
