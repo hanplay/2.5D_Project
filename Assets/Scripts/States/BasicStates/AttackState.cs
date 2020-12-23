@@ -29,6 +29,7 @@ public class AttackState : BasicState, IMoveableState, IAttackableState, ITarget
         }
         if(true == attackSystem.InRange(targetedUnit))
         {
+            owner.FlipToTarget(targetedUnit);
             attackSystem.GetAttackStrategy().Attack(targetedUnit);
         }
         else

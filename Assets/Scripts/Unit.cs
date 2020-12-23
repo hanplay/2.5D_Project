@@ -11,6 +11,7 @@ public abstract class Unit : MonoBehaviour
 	protected MoveSystem moveSystem;
 	protected AttackSystem attackSystem;
 	protected HealthPointsSystem healthPointsSystem;
+	//하위클래스에서 생성함
 	protected ITargetingStrategy targetingStrategy;
 	//하위 클래스가 쓸지 안쓸지 생성자 생성으로 결정
 	protected SkillSystem skillSystem;
@@ -21,11 +22,11 @@ public abstract class Unit : MonoBehaviour
 	protected virtual void Awake()
     {
 		attackSystem = new AttackSystem(this);
+		moveSystem = new MoveSystem();
+		stateSystem = new StateSystem(this);	
 		healthPointsSystem = new HealthPointsSystem(this);
 		statsSystem = new StatsSystem();
-		moveSystem = new MoveSystem();
 		buffSystem = new BuffSystem(this);
-		stateSystem = new StateSystem(this);	
 
 		skillSystem = null;
 
@@ -94,7 +95,15 @@ public abstract class Unit : MonoBehaviour
 		return healthPointsSystem;
     }
 
-	public abstract bool IsTargetable(Unit unit);
+	public bool IsTargetable(Unit unit)
+    {
+		return targetingStrategy.IsTargetable(unit);
+    }
+
+	public ITargetingStrategy GetTargetingStrategy()
+    {
+		return targetingStrategy;
+    }
 
 	public void FlipLeft()
     {
@@ -106,4 +115,29 @@ public abstract class Unit : MonoBehaviour
 		Vector3 rightScale = new Vector3(-1, 1, 1);
 		modelTranform.localScale = rightScale;
     }
+
+	public void FlipToTarget(Unit targetedUnit)
+	{
+		if (GetPosition().x < targetedUnit.GetPosition().x)
+		{
+			FlipRight();
+		}
+		else
+		{
+			FlipLeft();
+		}
+	}
+
+	public void FlipToTarget(Vector3 destination)
+	{
+		if (GetPosition().x < destination.x)
+		{
+			FlipRight();
+		}
+		else
+		{
+			FlipLeft();
+		}
+	}
+
 }

@@ -61,7 +61,7 @@ public class StateSystem
     public StateSystem(Unit owner)
     {
         this.owner = owner;
-        dieState =      new DieState    (owner, this, 6f);
+        dieState =      new DieState    (owner, this, 1f);
         idleState =     new IdleState   (owner, this);
         moveState =     new MoveState   (owner, this);
         chaseState =    new ChaseState  (owner, this);

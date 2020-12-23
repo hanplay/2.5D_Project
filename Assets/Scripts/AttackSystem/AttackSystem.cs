@@ -24,8 +24,6 @@ public class AttackSystem
         baseRange = range;
         CalculateRange();
     }
-
-
     
     public void AddRange(float value)
     {

@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using System;
 
 public class HealthPointsSystem 
 {
     public delegate void HealthPointsChangeEventHandler();
     public event HealthPointsChangeEventHandler OnHealthPointsChanged;
+    public event EventHandler OnDead;
     //public event EventHandler OnHealthPointsChanged;
 
     protected int baseMaxHealthPoints;
@@ -14,7 +16,7 @@ public class HealthPointsSystem
     protected HealthPointsSystem() { }
     public HealthPointsSystem(Unit unit) 
     {
-
+        
     }
 
     public void Init(int baseMaxHealthPoints)

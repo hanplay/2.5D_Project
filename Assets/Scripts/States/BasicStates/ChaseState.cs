@@ -34,7 +34,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         if(null != targetingSkill)
         {
             if(owner.DistanceToUnit(targetedUnit) <= targetingSkill.GetRange())
-            {
+            {                
                 OnTargetingSkill.Invoke(this, targetingSkill, targetedUnit);
             }
         }
@@ -45,6 +45,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         }
         else
         {
+            owner.FlipToTarget(targetedUnit);
             moveSystem.GetUsingMoveStrategy().MoveTo(targetedUnit.GetPosition());
         }
     }

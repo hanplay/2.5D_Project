@@ -14,6 +14,7 @@ public enum BuffType
     PrayBuffer,
     Pray,
     DeadlyPoison,
+    DivineCharge,
     None
 
 }
@@ -33,6 +34,7 @@ public enum SkillType
     Pray,
     HasteBuff,
     ConcealBuff,
+    DivineChargeBuff,
     Buff,
     COUNT,
 }
@@ -50,10 +52,12 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public Sprite deadlyPoisonBuffSprite;
     [SerializeField] public Sprite diveSkillSprite;
     [SerializeField] public Sprite PrayBuffSprite;
+    [SerializeField] public Sprite divineChargeSprite;
     [SerializeField] public Sprite healSkillSprite;
     [SerializeField] public Sprite loopingTornadoSprite;
     [SerializeField] public Sprite fireAuraSprite;    
     [SerializeField] public Sprite chargeSkillSprite;
+
 
 
     [SerializeField] public GameObject deadlyPoisonBuffEffect;
@@ -65,6 +69,8 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public GameObject burnExplosionEffect;
     [SerializeField] public GameObject healEffect;
     [SerializeField] public GameObject prayEffect;
+    [SerializeField] public GameObject divineChargeEffect;
+    [SerializeField] public GameObject divineChargeBuffEffect;
 
     public static GameAssets Instance { private set; get; }
 
@@ -112,7 +118,15 @@ public class GameAssets : MonoBehaviour
         case BuffType.PrayBuffer:
             buff = new AuraBufferBuff(TypeValue, CreateBuff(BuffType.Pray), new TargetingStrategy<Player>(), 20f, prayEffect, 4f);
             buff.SetBuffSprite(PrayBuffSprite);
-            return buff;      
+            return buff;
+        case BuffType.DivineCharge:
+            if(divineChargeEffect == null)
+            {
+                print(ToString() + ": " + "DivineCharege is null"); 
+            }
+            buff = new DivineChargeBuff(TypeValue, divineChargeEffect, 3f, 10f);
+            buff.SetBuffSprite(divineChargeSprite);
+            return buff;
         default:
             Assert.IsTrue(true);
             Debug.LogError("Buff Type does not Exist!!!!");
@@ -175,6 +189,13 @@ public class GameAssets : MonoBehaviour
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(PrayBuffSprite);
             skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.PrayBuffer), null));
+            return skill;
+        case SkillType.DivineChargeBuff:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(15f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(divineChargeSprite);
+            skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.DivineCharge), divineChargeBuffEffect));
             return skill;
         default:
             Assert.IsTrue(true);

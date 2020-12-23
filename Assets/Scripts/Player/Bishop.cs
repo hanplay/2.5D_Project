@@ -4,6 +4,7 @@
 	{
 		base.Awake();
 		attackSystem.Init(new InstantAttackStrategy(this, new HealStrategy(GameAssets.Instance.healEffect)), 4f);
+		targetingStrategy = new TargetingStrategy<Player>();
 	}
 
 	protected void Start()
@@ -19,18 +20,4 @@
 		base.Update();
 	}
 
-	public override bool IsTargetable(Unit unit)
-	{
-		if (null == unit)
-			return false;
-
-		if (null != unit.GetComponent<Player>())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 }

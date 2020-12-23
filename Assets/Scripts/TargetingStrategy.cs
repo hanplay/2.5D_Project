@@ -10,7 +10,7 @@ public class TargetingStrategy<T> : ITargetingStrategy  where T : Unit
 		if (null == unit)
 			return false;
 
-		if (null != unit.GetComponent<T>())
+		if (null != unit as T)
 		{
 			return true;
 		}

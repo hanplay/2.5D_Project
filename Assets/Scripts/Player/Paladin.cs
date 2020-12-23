@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class Paladin : Player
 {
-	public override bool IsTargetable(Unit unit)
+	protected override void Awake()
 	{
-		throw new System.NotImplementedException();
+		base.Awake();
+		attackSystem.Init(new InstantAttackStrategy(this, new CommonDamageStrategy()), 2f);
+		targetingStrategy = new TargetingStrategy<Enemy>();
+	}
+
+	private void Start()
+	{
+		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.DivineChargeBuff));
+	}
+
+
+	protected override void Update()
+	{
+		base.Update();
 	}
 }
