@@ -15,6 +15,7 @@ public enum BuffType
     Pray,
     DeadlyPoison,
     DivineCharge,
+    Teleport,
     None
 
 }
@@ -35,6 +36,7 @@ public enum SkillType
     HasteBuff,
     ConcealBuff,
     DivineChargeBuff,
+    TeleportBuff,
     Buff,
     COUNT,
 }
@@ -57,6 +59,7 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public Sprite loopingTornadoSprite;
     [SerializeField] public Sprite fireAuraSprite;    
     [SerializeField] public Sprite chargeSkillSprite;
+    [SerializeField] public Sprite teleportSprite;
 
 
 
@@ -71,6 +74,8 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public GameObject prayEffect;
     [SerializeField] public GameObject divineChargeEffect;
     [SerializeField] public GameObject divineChargeBuffEffect;
+    [SerializeField] public GameObject teleportBuffEffect;
+    [SerializeField] public GameObject teleportEffect;
 
     public static GameAssets Instance { private set; get; }
 
@@ -120,12 +125,12 @@ public class GameAssets : MonoBehaviour
             buff.SetBuffSprite(PrayBuffSprite);
             return buff;
         case BuffType.DivineCharge:
-            if(divineChargeEffect == null)
-            {
-                print(ToString() + ": " + "DivineCharege is null"); 
-            }
             buff = new DivineChargeBuff(TypeValue, divineChargeEffect, 3f, 10f);
             buff.SetBuffSprite(divineChargeSprite);
+            return buff;
+        case BuffType.Teleport:
+            buff = new TeleportBuff(TypeValue, 10f, teleportEffect);
+            buff.SetBuffSprite(teleportSprite);
             return buff;
         default:
             Assert.IsTrue(true);
@@ -196,6 +201,13 @@ public class GameAssets : MonoBehaviour
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(divineChargeSprite);
             skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.DivineCharge), divineChargeBuffEffect));
+            return skill;
+        case SkillType.TeleportBuff:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(10f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(teleportSprite);
+            skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.Teleport), teleportBuffEffect));
             return skill;
         default:
             Assert.IsTrue(true);

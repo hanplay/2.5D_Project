@@ -46,7 +46,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         else
         {
             owner.FlipToTarget(targetedUnit);
-            moveSystem.GetUsingMoveStrategy().MoveTo(targetedUnit.GetPosition());
+            moveSystem.GetUsingMoveStrategy().ChaseTarget(targetedUnit);
         }
     }
 
