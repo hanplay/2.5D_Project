@@ -21,6 +21,7 @@ public abstract class Player : Unit
 		statsSystem.Init(5, 1);
 		moveSystem.Init(new StraightMoveStrategy(this), 4f);
 		healthPointsSystem.Init(300);
+
 		skillSystem = new SkillSystem(this);
 		
 		selectCircle = transform.Find("SelectCircle");
@@ -30,17 +31,16 @@ public abstract class Player : Unit
 		RuntimeAnimatorController runtimeAnimatorController = transform.Find("model").GetComponent<Animator>().runtimeAnimatorController;
 		AnimationClip[] animationClips = runtimeAnimatorController.animationClips;
 
-		for (int i = 0; i < animationClips.Length; i++)
-		{
-			clipLengths.Add(animationClips[i].name, animationClips[i].length);
-			print(animationClips[i].name + ": " + animationClips[i].length);
-		}
-	}
+        for (int i = 0; i < animationClips.Length; i++)
+        {
+            clipLengths.Add(animationClips[i].name, animationClips[i].length);
+            print(this.name + animationClips[i].name + ": " + animationClips[i].length);
+        }
+    }
 
 
 	protected override void Update()
 	{
-
 		base.Update();
 	}
 

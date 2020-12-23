@@ -12,10 +12,6 @@ public class DiveSkillState : SkillState, ISkillTargetingState
     {
         this.hitSmoke = hitSmoke;
         this.smokeExplosion = smokeExplosion;
-        if(null != smokeExplosion)
-        {
-            Debug.Log("Smoke Explosion is not null");
-        }
         duration = 0.8f;
     }
     public override void Begin()

@@ -11,6 +11,8 @@ public enum BuffType
     Conceal,
     Enchant,
     Poisoned,
+    PrayBuffer,
+    Pray,
     DeadlyPoison,
     None
 
@@ -28,6 +30,7 @@ public enum SkillType
     IceAge,
     TestBuff,
     FireAura,
+    Pray,
     HasteBuff,
     ConcealBuff,
     Buff,
@@ -40,25 +43,28 @@ public class GameAssets : MonoBehaviour
 {
 
     
-    [SerializeField] private Sprite hasteBuffSprite;
-    [SerializeField] private Sprite burnDebuffSprite;
-    [SerializeField] private Sprite concealBuffSprite;
-    [SerializeField] private Sprite poisonDebuffSprite;
-    [SerializeField] private Sprite deadlyPoisonBuffSprite;
-    [SerializeField] private Sprite diveSkillSprite;
-    [SerializeField] private Sprite healSkillSprite;
-    [SerializeField] private Sprite loopingTornadoSprite;
-    [SerializeField] private Sprite fireAuraSprite;    
-    [SerializeField] private Sprite chargeSkillSprite;
+    [SerializeField] public Sprite hasteBuffSprite;
+    [SerializeField] public Sprite burnDebuffSprite;
+    [SerializeField] public Sprite concealBuffSprite;
+    [SerializeField] public Sprite poisonDebuffSprite;
+    [SerializeField] public Sprite deadlyPoisonBuffSprite;
+    [SerializeField] public Sprite diveSkillSprite;
+    [SerializeField] public Sprite PrayBuffSprite;
+    [SerializeField] public Sprite healSkillSprite;
+    [SerializeField] public Sprite loopingTornadoSprite;
+    [SerializeField] public Sprite fireAuraSprite;    
+    [SerializeField] public Sprite chargeSkillSprite;
 
 
-    [SerializeField] private GameObject deadlyPoisonBuffEffect;
-    [SerializeField] private GameObject loopingTornado;
-    [SerializeField] private GameObject hitSmoke;
-    [SerializeField] private GameObject smokeExplosion;
-    [SerializeField] private GameObject deathSkullExplosion;
-    [SerializeField] private GameObject hasteVisualEffect;
-    [SerializeField] private GameObject burnExplosionEffect;
+    [SerializeField] public GameObject deadlyPoisonBuffEffect;
+    [SerializeField] public GameObject loopingTornado;
+    [SerializeField] public GameObject hitSmoke;
+    [SerializeField] public GameObject smokeExplosion;
+    [SerializeField] public GameObject deathSkullExplosion;
+    [SerializeField] public GameObject hasteVisualEffect;
+    [SerializeField] public GameObject burnExplosionEffect;
+    [SerializeField] public GameObject healEffect;
+    [SerializeField] public GameObject prayEffect;
 
     public static GameAssets Instance { private set; get; }
 
@@ -80,7 +86,7 @@ public class GameAssets : MonoBehaviour
         switch (TypeValue)
         {
         case BuffType.Haste:
-            buff = new HasteBuff(TypeValue, 10f);
+            buff = new HasteBuff(TypeValue, 15f);
             buff.SetBuffSprite(hasteBuffSprite);
             return buff;
         case BuffType.Burn:
@@ -99,6 +105,14 @@ public class GameAssets : MonoBehaviour
             buff = new ConcealBuff(TypeValue, 3);
             buff.SetBuffSprite(concealBuffSprite);
             return buff;
+        case BuffType.Pray:
+            buff = new PrayBuff(TypeValue);
+            buff.SetBuffSprite(PrayBuffSprite);
+            return buff;
+        case BuffType.PrayBuffer:
+            buff = new AuraBufferBuff(TypeValue, CreateBuff(BuffType.Pray), new TargetingStrategy<Player>(), 20f, prayEffect, 4f);
+            buff.SetBuffSprite(PrayBuffSprite);
+            return buff;      
         default:
             Assert.IsTrue(true);
             Debug.LogError("Buff Type does not Exist!!!!");
@@ -122,7 +136,7 @@ public class GameAssets : MonoBehaviour
             return skill;
         case SkillType.HasteBuff:
             skill.SetCanCancel(false);
-            skill.SetCooldownTime(15f);
+            skill.SetCooldownTime(10f);
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(hasteBuffSprite);
             skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.Haste), hasteVisualEffect));
@@ -155,7 +169,13 @@ public class GameAssets : MonoBehaviour
             skill.SetSkillSprite(deadlyPoisonBuffSprite);
             skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.DeadlyPoison), deadlyPoisonBuffEffect));
             return skill;
-
+        case SkillType.Pray:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(25f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(PrayBuffSprite);
+            skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.PrayBuffer), null));
+            return skill;
         default:
             Assert.IsTrue(true);
             Debug.LogError("Skill Type does not Exist!!!!");

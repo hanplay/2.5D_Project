@@ -20,7 +20,7 @@ public class UI_HealthPointsModule : MonoBehaviour
 
 	private float lagTime;
 	private float secondPerFrame;
-    private const float TOTAL_ANIMATING_TIME = 0.3f;
+    private const float TOTAL_ANIMATING_TIME = 0.05f;
     private const float DELTA_HEALTH_POINTS_PROPORTION = 0.005f;
 
 
@@ -32,6 +32,7 @@ public class UI_HealthPointsModule : MonoBehaviour
         animator = GetComponent<Animator>();
 		healthPointsSystem = unit.GetHealthPointsSystem();
         healthPointsSystem.OnHealthPointsChanged += HealthPointsSystem_OnHealthPointsChanged;
+        healthPointsBar.fillAmount = healthPointsSystem.GetProportion();
 	}
 
     private void HealthPointsSystem_OnHealthPointsChanged()

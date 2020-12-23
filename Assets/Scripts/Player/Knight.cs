@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class Knight : Player
+﻿public class Knight : Player
 {
 	//private Transform 
 	protected override void Awake()
@@ -10,6 +8,7 @@ public class Knight : Player
 	}
 	
 	private void Start()
+
     {
 		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.Dive));
 		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.DeadlyPoisonBuff));
@@ -21,7 +20,6 @@ public class Knight : Player
 	protected override void Update()
     {
 		base.Update();
-
 	}
 
 	public override bool IsTargetable(Unit unit)

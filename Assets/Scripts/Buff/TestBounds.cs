@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TestBounds : MonoBehaviour
 {
-    DamageStrategy damageStrategy = new TrueDamageStrategy();
-    DamageStrategy healStrategy = new HealStrategy();
+    IDamageStrategy damageStrategy = new TrueDamageStrategy();
+    IDamageStrategy healStrategy = new HealStrategy();
     private void OnTriggerEnter(Collider collider)
     {
         Unit targetUnit = collider.GetComponent<Unit>();

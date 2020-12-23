@@ -29,6 +29,8 @@ public class BuffSystem
 
     public void AddBuff(Buff buff)
     {
+        buff = buff.Clone() as Buff;
+        Debug.Log(buff.ToString());
         for (int i = 0; i < buffList.Count; i++)
         {
             if (buffList[i].TypeValue == buff.TypeValue)

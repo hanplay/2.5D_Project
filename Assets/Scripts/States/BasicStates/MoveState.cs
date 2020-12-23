@@ -34,6 +34,14 @@ public class MoveState : BasicState, IMoveableState
 
     public override void MoveTo(Vector3 destination)
     {
+        if(owner.GetPosition().x < destination.x)
+        {
+            owner.FlipRight();
+        }
+        else
+        {
+            owner.FlipLeft();
+        }
         this.destination = destination;
     }
 }

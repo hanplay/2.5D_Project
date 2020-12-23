@@ -10,21 +10,26 @@ public abstract class Unit : MonoBehaviour
 	protected StatsSystem statsSystem;
 	protected MoveSystem moveSystem;
 	protected AttackSystem attackSystem;
-	protected HealthPointsSystem healthPointsSystem;	
+	protected HealthPointsSystem healthPointsSystem;
+	protected ITargetingStrategy targetingStrategy;
 	//하위 클래스가 쓸지 안쓸지 생성자 생성으로 결정
 	protected SkillSystem skillSystem;
+
+	private Transform modelTranform;
 
 
 	protected virtual void Awake()
     {
+		attackSystem = new AttackSystem(this);
 		healthPointsSystem = new HealthPointsSystem(this);
 		statsSystem = new StatsSystem();
 		moveSystem = new MoveSystem();
-		attackSystem = new AttackSystem(this);
 		buffSystem = new BuffSystem(this);
 		stateSystem = new StateSystem(this);	
 
 		skillSystem = null;
+
+		modelTranform = transform.Find("model");
     }
 
     protected virtual void Update()
@@ -91,4 +96,14 @@ public abstract class Unit : MonoBehaviour
 
 	public abstract bool IsTargetable(Unit unit);
 
+	public void FlipLeft()
+    {
+		modelTranform.localScale = Vector3.one;
+    }
+
+	public void FlipRight()
+    {
+		Vector3 rightScale = new Vector3(-1, 1, 1);
+		modelTranform.localScale = rightScale;
+    }
 }

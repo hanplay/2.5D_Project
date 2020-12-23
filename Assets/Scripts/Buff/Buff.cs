@@ -1,20 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
-
-
 public abstract class Buff : ICloneable
 {
 	public readonly BuffType TypeValue;
-	protected Unit targetUnit;
+	protected Unit owner;
 	protected Sprite buffSprite;
 	
 	//만약에 isEnded가 true면 tick함수를 호출하는 Unit에서 이 buff를 제거한다.
 	protected bool isEnded;
 	protected int maxStack = 1;
 	protected int currentStack = 1;
-
-	//
+	
 	public const int DoNotShow = -1;
 
     protected Buff(BuffType TypeValue)
@@ -29,7 +26,7 @@ public abstract class Buff : ICloneable
 
 	public virtual void SetTargetUnit(Unit targetUnit)
     {
-		this.targetUnit = targetUnit;
+		this.owner = targetUnit;
     }
 
 	public abstract void Tick(float deltaTime);
@@ -65,17 +62,10 @@ public abstract class Buff : ICloneable
     {
 		return buffSprite;
     }
-    public  object Clone()
+    public object Clone()
     {
 		return GameAssets.Instance.CreateBuff(TypeValue);
     }
 	public abstract int IndexNumber();
-
-	public void Stack()
-    {
-		if(CanBeStacked())
-        {
-			currentStack++;
-        }
-    }
+	public abstract void Stack();
 }

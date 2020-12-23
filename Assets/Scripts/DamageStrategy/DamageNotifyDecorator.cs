@@ -6,7 +6,7 @@ using UnityEngine;
 public class DamageNotifyDecorator : DamageStrategyDecorator
 {
     public event EventHandler OnDamage;
-    public DamageNotifyDecorator(DamageStrategy damageStrategy, BuffType DecoratingBuffType) : base(damageStrategy, DecoratingBuffType) { }    
+    public DamageNotifyDecorator(IDamageStrategy damageStrategy, BuffType DecoratingBuffType) : base(damageStrategy, DecoratingBuffType) { }    
   
     public override void Do(Unit targetUnit, int damage)
     {

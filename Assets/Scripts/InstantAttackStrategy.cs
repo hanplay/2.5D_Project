@@ -9,7 +9,7 @@ public class InstantAttackStrategy : AttackStrategy
     private Unit targetUnit;
     private Animator animator;
 
-    public InstantAttackStrategy(Unit owner, DamageStrategy damageStrategy)
+    public InstantAttackStrategy(Unit owner, IDamageStrategy damageStrategy)
     {
         this.owner = owner;
         this.damageStrategy = damageStrategy;
@@ -17,7 +17,7 @@ public class InstantAttackStrategy : AttackStrategy
         attackNameHash = Animator.StringToHash("Attack");
     }
 
-    public InstantAttackStrategy(Unit owner, DamageStrategy damageStrategy, string attackName)
+    public InstantAttackStrategy(Unit owner, IDamageStrategy damageStrategy, string attackName)
     {
         this.owner = owner;
         this.damageStrategy = damageStrategy;

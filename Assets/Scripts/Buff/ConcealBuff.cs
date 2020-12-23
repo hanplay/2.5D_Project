@@ -12,12 +12,12 @@ public class ConcealBuff : Buff
 
     public override void ApplyEffects()
     {
-        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(targetUnit.GetAttackSystem().GetAttackStrategy().GetDamageStrategy(), TypeValue);
-        targetUnit.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
+        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(owner.GetAttackSystem().GetAttackStrategy().GetDamageStrategy(), TypeValue);
+        owner.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
         
-        int baseAttackPower = targetUnit.GetStatsSystem().GetBaseAttackPower();
-        targetUnit.GetStatsSystem().AddAttackPower((multiple - 1) * baseAttackPower);
-        targetUnit.GetComponent<BasicFXVisualizer>().Paint(new Color(1f, 1f, 1f, 0.6f));
+        int baseAttackPower = owner.GetStatsSystem().GetBaseAttackPower();
+        owner.GetStatsSystem().AddAttackPower((multiple - 1) * baseAttackPower);
+        owner.GetComponent<BasicFXVisualizer>().Paint(new Color(1f, 1f, 1f, 0.6f));
 
     }
 
@@ -29,10 +29,10 @@ public class ConcealBuff : Buff
     public override void EraseEffects()
     {
         
-        DamageStrategyDecorator damageStrategyDecorator = targetUnit.GetAttackSystem().GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
+        DamageStrategyDecorator damageStrategyDecorator = owner.GetAttackSystem().GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
         if(damageStrategyDecorator.DecoratingBuffType == TypeValue)
         {
-            targetUnit.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
+            owner.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
         }
         else
         {
@@ -46,9 +46,9 @@ public class ConcealBuff : Buff
             damageStrategyDecorator.SetDamageStrategy(nextDamageStrategyDecorator.GetDamageStrategy());
         }
         
-        int baseAttackPower = targetUnit.GetStatsSystem().GetBaseAttackPower();
-        targetUnit.GetStatsSystem().AddAttackPower(- (multiple  - 1) * baseAttackPower);
-        targetUnit.GetComponent<BasicFXVisualizer>().Paint(Color.white);
+        int baseAttackPower = owner.GetStatsSystem().GetBaseAttackPower();
+        owner.GetStatsSystem().AddAttackPower(- (multiple  - 1) * baseAttackPower);
+        owner.GetComponent<BasicFXVisualizer>().Paint(Color.white);
     }
     public override int IndexNumber()
     {
@@ -56,4 +56,9 @@ public class ConcealBuff : Buff
     }
 
     public override void Tick(float deltaTime) { }
+
+    public override void Stack()
+    {
+        return;
+    }
 }

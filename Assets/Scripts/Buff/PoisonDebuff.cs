@@ -2,11 +2,11 @@
 
 public class PoisonDebuff : TimedBuff
 {
-    private float damagePeriod = 0.1f;
-    private int trueDamage = 1;
+    private float damagePeriod = 0.5f;
+    private int trueDamage = 3;
     private float lagTime;
     private BasicFXVisualizer basicFXVisualizer;
-    private DamageStrategy trueDamageStrategy = new TrueDamageStrategy();
+    private IDamageStrategy trueDamageStrategy = new TrueDamageStrategy();
 
     public PoisonDebuff(BuffType TypeValue, float duration) : base(TypeValue, duration) { }
     
@@ -44,7 +44,8 @@ public class PoisonDebuff : TimedBuff
         {
             lagTime -= damagePeriod;
             basicFXVisualizer.Paint(Color.green);
-            trueDamageStrategy.Do(targetUnit, trueDamage);
+            trueDamageStrategy.Do(owner, trueDamage);
+            Debug.Log("Debuff True Damage: " + trueDamage);
         }
         base.Tick(deltaTime);
 

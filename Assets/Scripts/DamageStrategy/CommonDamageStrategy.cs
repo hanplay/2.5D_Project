@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommonDamageStrategy : DamageStrategy
+public class CommonDamageStrategy : IDamageStrategy
 {
-    public override void Do(Unit targetUnit, int damage)
+    public void Do(Unit targetUnit, int damage)
     {
         int calculatedDamage;
         if(null == targetUnit)

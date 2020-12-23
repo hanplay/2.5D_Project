@@ -31,4 +31,8 @@ public abstract class TimedBuff : Buff, ICloneable
 		return 1f - (lagTime / duration);
 	}
 
+    public override void Stack()
+    {
+		lagTime = 0f;
+    }
 }

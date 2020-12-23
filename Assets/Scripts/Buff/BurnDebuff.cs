@@ -8,7 +8,7 @@ public class BurnDebuff : TimedBuff
     private int trueDamage = 1;
     private float lagTime;
     private BasicFXVisualizer basicFXVisualizer;
-    private DamageStrategy trueDamageStrategy = new TrueDamageStrategy();
+    private IDamageStrategy trueDamageStrategy = new TrueDamageStrategy();
     private GameObject burnExplosion;
 
 
@@ -16,7 +16,7 @@ public class BurnDebuff : TimedBuff
     public BurnDebuff(BuffType TypeValue, float duration, GameObject burnExplosion) : base(TypeValue, duration)
     {
         this.burnExplosion = burnExplosion;
-        basicFXVisualizer = targetUnit.GetComponent<BasicFXVisualizer>();
+        basicFXVisualizer = owner.GetComponent<BasicFXVisualizer>();
     }
 
     public void SetDamagePeriod(float period)
@@ -53,7 +53,7 @@ public class BurnDebuff : TimedBuff
         if(5 == currentStack )
         {
             End();
-            GameObject.Instantiate(burnExplosion, targetUnit.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
+            GameObject.Instantiate(burnExplosion, owner.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
         }
 
         lagTime += deltaTime;
@@ -62,7 +62,7 @@ public class BurnDebuff : TimedBuff
             lagTime -= damagePeriod;
             basicFXVisualizer.Paint(Color.red);
 
-            trueDamageStrategy.Do(targetUnit, trueDamage * currentStack);
+            trueDamageStrategy.Do(owner, trueDamage * currentStack);
         }
     }
 }

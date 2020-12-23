@@ -15,6 +15,8 @@ public class PlayerAnimationEventHandler : MonoBehaviour
 
     private void BaseAttackAnimationEvent()
     {
+        if (null == attackSystem)
+            Debug.Log("AttackSystem is null");
         attackSystem.GetAttackStrategy().AnimationEventOccur();
     }
 

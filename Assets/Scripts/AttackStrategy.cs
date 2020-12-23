@@ -4,16 +4,16 @@ using UnityEngine;
 
 public abstract class AttackStrategy 
 {
-    protected DamageStrategy damageStrategy;
+    protected IDamageStrategy damageStrategy;
 
     abstract public void Attack(Unit targetUnit);
     abstract public void AnimationEventOccur();
-    public void SetDamageStrategy(DamageStrategy damageStrategy)
+    public void SetDamageStrategy(IDamageStrategy damageStrategy)
     {
         this.damageStrategy = damageStrategy;
     } 
 
-    public DamageStrategy GetDamageStrategy()
+    public IDamageStrategy GetDamageStrategy()
     {
         return damageStrategy;
     }

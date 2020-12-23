@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrueDamageStrategy : DamageStrategy
+public class TrueDamageStrategy : IDamageStrategy
 {
-    public override void Do(Unit targetUnit, int damage)
+    public void Do(Unit targetUnit, int damage)
     {
         targetUnit.GetHealthPointsSystem().SubtractHealthPoints(damage);        
     }

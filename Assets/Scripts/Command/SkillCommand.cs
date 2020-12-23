@@ -10,6 +10,8 @@ public class SkillCommand : ICommand
         if (skill.IsCoolDownTime())
             return;
         BasicState basicState = unit.GetStateSystem().GetCurrentState() as BasicState;
+        if (null == basicState)
+            return;
         if(skill.IsTargetSkill())
         {
             ITargetingBasicState targetingBasicState = basicState as ITargetingBasicState;

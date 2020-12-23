@@ -7,13 +7,13 @@ public class HasteBuff : TimedBuff
 
     public override void ApplyEffects()
     {
-        targetUnit.GetMoveSystem().AddSpeed(2f);
+        owner.GetMoveSystem().AddSpeed(2f);
     }
 
 
     public override void EraseEffects()
     {
-        targetUnit.GetMoveSystem().AddSpeed(-2f);
+        owner.GetMoveSystem().AddSpeed(-2f);
     }
 
     public override int IndexNumber()

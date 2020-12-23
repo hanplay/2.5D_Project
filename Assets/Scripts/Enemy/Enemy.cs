@@ -1,13 +1,9 @@
 ﻿using UnityEngine;
+using System;
 
 public class Enemy : Unit
 {
-	[SerializeField]
-	StatsDatum statsDatum;
-
-
-	//음...프로토타입 패턴 써야하나..... 빌더 패턴 
-	//프로토타임은 Clone()이라는 함수 만들어서  
+	public event EventHandler OnRest;
 
     protected override void Awake()
 	{
@@ -17,10 +13,11 @@ public class Enemy : Unit
 		moveSystem.Init(new StraightMoveStrategy(this), 3f);
 		attackSystem.Init(new InstantAttackStrategy(this, new CommonDamageStrategy()), 1.5f);
 	}
-
-    private void FixedUpdate()
-    {
 	
+	protected override void Update()
+    {
+		base.Update();
+
     }
 
     public override bool IsTargetable(Unit unit)
