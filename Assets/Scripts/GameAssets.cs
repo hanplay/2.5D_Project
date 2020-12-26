@@ -151,7 +151,7 @@ public class GameAssets : MonoBehaviour
             skill.SetIsTargetSkill(true);
             skill.SetSkillSprite(diveSkillSprite);
             skill.SetRange(6f);
-            skill.SetSkillState(new DiveSkillState(player, skill, hitSmoke, smokeExplosion));
+            skill.SetSkillState(new DiveSkillState(player, skill, 15, 2.5f, hitSmoke, smokeExplosion));
             return skill;
         case SkillType.HasteBuff:
             skill.SetCanCancel(false);

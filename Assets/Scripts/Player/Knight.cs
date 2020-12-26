@@ -9,11 +9,9 @@
 	}
 	
 	private void Start()
-
-    {
-		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.Dive));
-		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.DeadlyPoisonBuff));
-		skillSystem.SetSkill(2, GameAssets.Instance.CreateSkill(this, SkillType.HasteBuff));
+    {		
+		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.DeadlyPoisonBuff));
+		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.HasteBuff));
 	}
 
 

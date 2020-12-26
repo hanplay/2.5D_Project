@@ -15,7 +15,7 @@ public class SkillCommand : ICommand
         if(skill.IsTargetSkill())
         {
             ITargetingBasicState targetingBasicState = basicState as ITargetingBasicState;
-            targetingBasicState.ActivateTargetingSkill(skill);
+            targetingBasicState?.ActivateTargetingSkill(skill);
         }
         else
         {

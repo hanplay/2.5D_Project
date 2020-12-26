@@ -14,7 +14,7 @@ public class Paladin : Player
 	private void Start()
 	{
 		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.DivineChargeBuff));
-		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.TeleportBuff));
+		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.Dive));
 	}
 
 

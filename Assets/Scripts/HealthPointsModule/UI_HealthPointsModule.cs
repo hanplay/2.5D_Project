@@ -16,7 +16,7 @@ public class UI_HealthPointsModule : MonoBehaviour
 		Decreasing,
 		Default
     }
-    private State state;
+    private State state = State.Default;
 
 	private float lagTime;
 	private float secondPerFrame;
@@ -32,8 +32,10 @@ public class UI_HealthPointsModule : MonoBehaviour
         animator = GetComponent<Animator>();
 		healthPointsSystem = unit.GetHealthPointsSystem();
         healthPointsSystem.OnHealthPointsChanged += HealthPointsSystem_OnHealthPointsChanged;
-        healthPointsBar.fillAmount = healthPointsSystem.GetProportion();
+        healthPointsBar.fillAmount = healthPointsProportion = healthPointsSystem.GetProportion();
+        
 	}
+
 
     private void HealthPointsSystem_OnHealthPointsChanged()
     {

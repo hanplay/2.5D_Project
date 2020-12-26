@@ -4,12 +4,18 @@ public class DiveSkillState : SkillState, ISkillTargetingState
 {
     private GameObject hitSmoke;
     private GameObject smokeExplosion;
+    private IDamageStrategy damageStrategy = new CommonDamageStrategy();
+    private int damage;
+    private float radius;
+
     private Vector3 originPosition;
     private Vector3 targetPosition;
     private float totalTime;
     private float constant = -20f;
-    public DiveSkillState(Unit player, Skill skill, GameObject hitSmoke, GameObject smokeExplosion) : base(player, player.GetStateSystem(), skill) 
+    public DiveSkillState(Unit player, Skill skill, int damage, float radius, GameObject hitSmoke, GameObject smokeExplosion) : base(player, player.GetStateSystem(), skill) 
     {
+        this.damage = damage;
+        this.radius = radius;
         this.hitSmoke = hitSmoke;
         this.smokeExplosion = smokeExplosion;
         duration = 0.8f;
@@ -52,6 +58,16 @@ public class DiveSkillState : SkillState, ISkillTargetingState
     {
         base.End();
         GameObject smoke = GameObject.Instantiate(smokeExplosion, owner.GetPosition(), Quaternion.Euler(90f, 0f, 0f));
+        Collider[] colliders = Physics.OverlapSphere(owner.GetPosition(), 2f);
+        for(int i = 0; i < colliders.Length; i++)
+        {
+            if(colliders[i].TryGetComponent<Unit>(out Unit targetedUnit))
+            {
+                if (false == owner.IsTargetable(targetedUnit))
+                    continue;
+                damageStrategy.Do(targetedUnit, damage);
+            }
+        }
     }
 
     public void SetTarget(Unit targetedUnit)
