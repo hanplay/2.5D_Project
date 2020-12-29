@@ -19,16 +19,22 @@ public class DieState : State
 
     public override void Begin()
     {
+        base.Begin();
         blinkTime = 2.5f;
         lagTime = 0f;
         animator.Play("Die");
-        //TODO: 타게팅이 안되도록
+
+        //타게팅이 안되도록
+        Debug.Log("Die State Begin");
+        owner.GetComponent<Rigidbody>().isKinematic = true;
+        owner.GetComponent<Collider>().enabled = false;
     }
 
 
     public override void Tick(float deltaTime)
     {
         lagTime += deltaTime;
+
         if(lagTime > blinkTime)
         {
             basicFXVisualizer.SetSpritesVisible(isVisible);
