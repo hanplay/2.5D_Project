@@ -25,4 +25,9 @@ public class PlayerAnimationEventHandler : MonoBehaviour
         skillSystem.SkillAction?.Invoke();
     }
 
+    private void DieAnimationEvent()
+    {
+        Destroy(gameObject);
+    }
+
 }

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BuffShower : MonoBehaviour
 {
     private BuffSystem buffSystem;
+
 
     private List<UI_Buff> uI_BuffList = new List<UI_Buff>();
     private void Awake()
@@ -18,6 +18,7 @@ public class BuffShower : MonoBehaviour
         }
         HideAllUI_Buffs();
     }
+
 
     public void SetBuffSystem(BuffSystem buffSystem)
     {
@@ -45,7 +46,7 @@ public class BuffShower : MonoBehaviour
 
         for(; i < uI_BuffList.Count; i++)
         {
-            uI_BuffList[i].Hide();
+            uI_BuffList[i].Hide();            
         }
         
     }

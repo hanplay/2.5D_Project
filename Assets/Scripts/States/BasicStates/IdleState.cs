@@ -11,9 +11,7 @@ public class IdleState : BasicState, IMoveableState
 
     //public IdleState(Unit player, StateSystem stateSystem) : base(player, stateSystem, Idle) { }
 
-    public IdleState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem)
-    {
-    }
+    public IdleState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem) { }
 
     public override void Begin()
     {

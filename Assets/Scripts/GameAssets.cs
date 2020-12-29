@@ -135,7 +135,7 @@ public class GameAssets : MonoBehaviour
         default:
             Assert.IsTrue(true);
             Debug.LogError("Buff Type does not Exist!!!!");
-            return new TestBuff(TypeValue, 7f);
+            return null;
         }
     }
 

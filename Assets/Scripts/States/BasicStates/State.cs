@@ -29,7 +29,7 @@ public abstract class State
 
     public virtual void Begin()
     {
-        Debug.Log("Begin State: " + ToString());
+        Debug.Log(owner.ToString() + "Begin State: " + ToString());
         isEnded = false;
         isBegun = true;
     }

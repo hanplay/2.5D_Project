@@ -1778,7 +1778,7 @@ Transform:
   m_GameObject: {fileID: 391681730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 4, y: 1, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 20
@@ -4625,6 +4625,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723933178072160053, guid: 249ccf51287b4d44e9e5daa7dbfaaad7,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 249ccf51287b4d44e9e5daa7dbfaaad7, type: 3}
@@ -13716,6 +13721,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1194634064}
     m_Modifications:
+    - target: {fileID: 1723933178002809308, guid: 249ccf51287b4d44e9e5daa7dbfaaad7,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1723933178072160049, guid: 249ccf51287b4d44e9e5daa7dbfaaad7,
         type: 3}
       propertyPath: m_Name
@@ -15337,6 +15347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8625975190286011971}
   - component: {fileID: 8568285849195466119}
+  - component: {fileID: 8628602959261555294}
   m_Layer: 9
   m_Name: model
   m_TagString: Untagged
@@ -15344,6 +15355,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8628602959261555294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628602959261555293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f46056f87e20f4499cb3e0fe997589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8628604820907221097
 GameObject:
   m_ObjectHideFlags: 0

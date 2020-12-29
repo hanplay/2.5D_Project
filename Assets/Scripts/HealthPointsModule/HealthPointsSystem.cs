@@ -45,6 +45,12 @@ public class HealthPointsSystem
             healthPoints = 0;
 		}
         OnHealthPointsChanged.Invoke();
+
+        if (0 == healthPoints)
+        {
+            OnDead?.Invoke(this, EventArgs.Empty);
+            OnDead.GetInvocationList().Initialize();
+        }
     }
 
     public int GetMaxHealthPoints()

@@ -11,7 +11,9 @@ public class StateSystem
 
     private Unit owner;
 
-    
+
+
+    private HealthPointsSystem healthPointsSystem;
     #region State
     private DieState dieState;
     private IdleState idleState;
@@ -61,11 +63,13 @@ public class StateSystem
     public StateSystem(Unit owner)
     {
         this.owner = owner;
-        dieState =      new DieState    (owner, this, 1f);
+        dieState =      new DieState    (owner, this, 5f);
         idleState =     new IdleState   (owner, this);
         moveState =     new MoveState   (owner, this);
         chaseState =    new ChaseState  (owner, this);
         attackState =   new AttackState (owner, this);
+        healthPointsSystem = owner.GetHealthPointsSystem();
+
 
         idleState.OnMove += IdleState_OnMove;
         idleState.OnChase += IdleState_OnChase;
@@ -85,9 +89,14 @@ public class StateSystem
         attackState.OnTargetingSkill += BasicState_OnTargetingSkill;
         attackState.OnTargetingSkillReserve += AttackState_OnTargetingSkillReserve;
 
+        healthPointsSystem.OnDead += HealthPointsSystem_OnDead;
+
         stateStack.Push(dieState);
         stateStack.Push(idleState);
+
+
     }
+
 
 
 
@@ -140,6 +149,7 @@ public class StateSystem
 
     private void ChaseState_OnMove(State senderState, Vector3 destination)
     {
+        chaseState.ReleaseTarget();
         PopState();
         PushState(moveState);
         moveState.MoveTo(destination);
@@ -147,7 +157,7 @@ public class StateSystem
     
     private void ChaseState_OnAttack(State senderState, Unit targetedUnit)
     {
-
+        chaseState.ReleaseTarget();
         PopState();
         PushState(attackState);
         attackState.Attack(targetedUnit);
@@ -155,24 +165,18 @@ public class StateSystem
 
     private void AttackState_OnMove(State senderState, Vector3 destination)
     {
+        attackState.ReleaseTarget();
         PopState();
         PushState(moveState);
         moveState.MoveTo(destination);
     }
     private void AttackState_OnChase(State senderState, Unit targetedUnit)
-    {
-        if (owner.GetAttackSystem().GetRange() < owner.DistanceToUnit(targetedUnit))
-        {
-            PopState();
-            PushState(chaseState);
-            chaseState.ChaseTarget(targetedUnit);
-        }
-        else
-        {
-            PopState();
-            PushState(attackState);
-            attackState.Attack(targetedUnit);
-        }
+    {        
+        attackState.ReleaseTarget();
+        PopState();
+        PushState(chaseState);
+        chaseState.ChaseTarget(targetedUnit);
+        
     }
     private void AttackState_OnTargetingSkillReserve(State senderState, Skill skill, Unit targetedUnit)
     {
@@ -181,6 +185,11 @@ public class StateSystem
         PopState();
         chaseState.ReserveTargetingSkill(skill);
         PushState(chaseState);
+    }
+    private void HealthPointsSystem_OnDead(object sender, System.EventArgs e)
+    {
+        while (1 != stateStack.Count)
+            stateStack.Pop();               
     }
 
     #endregion

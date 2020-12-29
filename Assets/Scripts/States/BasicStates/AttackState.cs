@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : BasicState, IMoveableState, IAttackableState, ITargetingBasicState
+public class AttackState : BasicState, IMoveableState, ITargetingBasicState
 {
     public event StateSystem.MoveEventHandler OnMove;
     public event StateSystem.TargetUnitEventHandler OnChase;
@@ -26,6 +26,7 @@ public class AttackState : BasicState, IMoveableState, IAttackableState, ITarget
         if(null == targetedUnit)
         {
             stateSystem.PopState();
+            return;
         }
         if(true == attackSystem.InRange(targetedUnit))
         {
@@ -40,7 +41,7 @@ public class AttackState : BasicState, IMoveableState, IAttackableState, ITarget
 
     public void Attack(Unit targetedUnit)
     {
-        this.targetedUnit = targetedUnit;        
+        SetTarget(targetedUnit);       
     }
 
     public override void ChaseTarget(Unit targetedUnit)
@@ -63,5 +64,22 @@ public class AttackState : BasicState, IMoveableState, IAttackableState, ITarget
         {
             OnTargetingSkillReserve.Invoke(this, targetingSkill, targetedUnit);
         }
+    }
+
+    public void SetTarget(Unit targetedUnit)
+    {
+        this.targetedUnit = targetedUnit;
+        targetedUnit.GetHealthPointsSystem().OnDead += AttackState_OnDead;
+    }
+
+    private void AttackState_OnDead(object sender, System.EventArgs e)
+    {
+        targetedUnit = null;
+    }
+
+    public void ReleaseTarget()
+    {
+        targetedUnit.GetHealthPointsSystem().OnDead -= AttackState_OnDead;
+        targetedUnit = null;
     }
 }

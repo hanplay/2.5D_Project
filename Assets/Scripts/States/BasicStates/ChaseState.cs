@@ -29,7 +29,10 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
     public override void Tick(float deltaTime)
     {
         if(null == targetedUnit)
+        {
             owner.GetStateSystem().PopState();
+            return;
+        }
        
         if(null != targetingSkill)
         {
@@ -52,7 +55,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
 
     public override void ChaseTarget(Unit targetedUnit)
     {
-        this.targetedUnit = targetedUnit;
+        SetTarget(targetedUnit);
     }
 
     public override void MoveTo(Vector3 destination)
@@ -82,5 +85,22 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
     {
         base.End();
         targetingSkill = null;
+    }
+
+    public void SetTarget(Unit targetedUnit)
+    {
+        this.targetedUnit = targetedUnit;
+        targetedUnit.GetHealthPointsSystem().OnDead += ChaseState_OnDead;
+    }
+
+    private void ChaseState_OnDead(object sender, System.EventArgs e)
+    {
+        targetedUnit = null;
+    }
+
+    public void ReleaseTarget()
+    {
+        targetedUnit.GetHealthPointsSystem().OnDead -= ChaseState_OnDead;
+        targetedUnit = null;
     }
 }

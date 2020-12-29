@@ -23,8 +23,8 @@ public abstract class Unit : MonoBehaviour
     {
 		attackSystem = new AttackSystem(this);
 		moveSystem = new MoveSystem();
-		stateSystem = new StateSystem(this);	
 		healthPointsSystem = new HealthPointsSystem(this);
+		stateSystem = new StateSystem(this);	
 		statsSystem = new StatsSystem();
 		buffSystem = new BuffSystem(this);
 
