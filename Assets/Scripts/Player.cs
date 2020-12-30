@@ -6,13 +6,9 @@ using UnityEngine;
 public abstract class Player : Unit
 {
 	[SerializeField]
-	StatsDatum statsDatum;
-
-	[SerializeField]
 	protected string characterName;
 
 	private Dictionary<string, float> clipLengths = new Dictionary<string, float>();
-
 
 	private Transform selectCircle;
 	protected override void Awake()

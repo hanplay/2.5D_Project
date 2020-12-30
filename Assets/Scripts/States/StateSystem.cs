@@ -11,8 +11,6 @@ public class StateSystem
 
     private Unit owner;
 
-
-
     private HealthPointsSystem healthPointsSystem;
     #region State
     private DieState dieState;
@@ -63,7 +61,7 @@ public class StateSystem
     public StateSystem(Unit owner)
     {
         this.owner = owner;
-        dieState =      new DieState    (owner, this, 5f);
+        dieState =      new DieState    (owner, this);
         idleState =     new IdleState   (owner, this);
         moveState =     new MoveState   (owner, this);
         chaseState =    new ChaseState  (owner, this);
@@ -93,11 +91,7 @@ public class StateSystem
 
         stateStack.Push(dieState);
         stateStack.Push(idleState);
-
-
     }
-
-
 
 
     #region State Change
@@ -186,7 +180,7 @@ public class StateSystem
         chaseState.ReserveTargetingSkill(skill);
         PushState(chaseState);
     }
-    private void HealthPointsSystem_OnDead(object sender, System.EventArgs e)
+    private void HealthPointsSystem_OnDead(Unit unit)
     {
         while (1 != stateStack.Count)
             stateStack.Pop();               

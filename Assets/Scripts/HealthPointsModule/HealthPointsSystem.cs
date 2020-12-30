@@ -3,20 +3,22 @@ using System;
 
 public class HealthPointsSystem 
 {
+    public delegate void UnitDeadEventHandler(Unit owner);
     public delegate void HealthPointsChangeEventHandler();
     public event HealthPointsChangeEventHandler OnHealthPointsChanged;
-    public event EventHandler OnDead;
+    public event UnitDeadEventHandler OnDead;
     //public event EventHandler OnHealthPointsChanged;
 
-    protected int baseMaxHealthPoints;
-    protected int addedMaxHealthPoints;
-    protected int totalMaxHealthPoints;
-    protected int healthPoints;
+    private Unit owner;
+    private int baseMaxHealthPoints;
+    private int addedMaxHealthPoints;
+    private int totalMaxHealthPoints;
+    private int healthPoints;
 
     protected HealthPointsSystem() { }
     public HealthPointsSystem(Unit unit) 
     {
-        
+        owner = unit;
     }
 
     public void Init(int baseMaxHealthPoints)
@@ -48,7 +50,7 @@ public class HealthPointsSystem
 
         if (0 == healthPoints)
         {
-            OnDead?.Invoke(this, EventArgs.Empty);
+            OnDead?.Invoke(owner);
             OnDead.GetInvocationList().Initialize();
         }
     }

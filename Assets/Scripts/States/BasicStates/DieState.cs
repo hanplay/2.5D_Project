@@ -11,21 +11,20 @@ public class DieState : State
     private bool isVisible = false;
     private BasicFXVisualizer basicFXVisualizer;
 
-    public DieState(Unit player, StateSystem stateSystem, float duration) : base(player, stateSystem, Die)
+    public DieState(Unit player, StateSystem stateSystem) : base(player, stateSystem, Die)
     {
-        this.duration = duration;
         basicFXVisualizer = player.GetComponent<BasicFXVisualizer>();
     }
 
     public override void Begin()
     {
         base.Begin();
-        blinkTime = 2.5f;
+        duration = 3f;
+        blinkTime = 1.5f;
         lagTime = 0f;
         animator.Play("Die");
 
         //타게팅이 안되도록
-        Debug.Log("Die State Begin");
         owner.GetComponent<Rigidbody>().isKinematic = true;
         owner.GetComponent<Collider>().enabled = false;
     }

@@ -1016,12 +1016,4 @@ AnimationClip:
     script: {fileID: 0}
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.6666667
-    functionName: DieAnimationEvent
-    data: 
-    objectReferenceParameter: {fileID: 9100000, guid: 29a49702bfbbf724dbbd0a7d9307ef03,
-      type: 2}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

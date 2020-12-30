@@ -118,26 +118,18 @@ public abstract class Unit : MonoBehaviour
 
 	public void FlipToTarget(Unit targetedUnit)
 	{
-		if (GetPosition().x < targetedUnit.GetPosition().x)
-		{
-			FlipRight();
-		}
-		else
-		{
-			FlipLeft();
-		}
+		if (GetPosition().x < targetedUnit.GetPosition().x)		
+			FlipRight();		
+		else	
+			FlipLeft();		
 	}
 
 	public void FlipToTarget(Vector3 destination)
 	{
-		if (GetPosition().x < destination.x)
-		{
-			FlipRight();
-		}
-		else
-		{
-			FlipLeft();
-		}
+		if (GetPosition().x < destination.x)		
+			FlipRight();		
+		else		
+			FlipLeft();		
 	}
 
 }

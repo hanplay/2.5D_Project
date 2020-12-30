@@ -55,6 +55,8 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
 
     public override void ChaseTarget(Unit targetedUnit)
     {
+        if (null != this.targetedUnit)
+            ReleaseTarget();
         SetTarget(targetedUnit);
     }
 
@@ -93,7 +95,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         targetedUnit.GetHealthPointsSystem().OnDead += ChaseState_OnDead;
     }
 
-    private void ChaseState_OnDead(object sender, System.EventArgs e)
+    private void ChaseState_OnDead(Unit unit)
     {
         targetedUnit = null;
     }

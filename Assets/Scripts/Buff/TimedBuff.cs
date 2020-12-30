@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public abstract class TimedBuff : Buff, ICloneable
+public abstract class TimedBuff : Buff
 {
 	protected float duration;
 	private float lagTime;

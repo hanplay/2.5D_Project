@@ -17,6 +17,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
         skillImage = GetComponent<Image>();
         skillBlockerImage = transform.Find("UI_SkillBlocker").GetComponent<Image>();
         skillBlockerImage.color = blockColor;
+        Hide();
     }
 
     void Start()

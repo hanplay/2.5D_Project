@@ -12,15 +12,14 @@ public class UI_HealthPointsModule : MonoBehaviour
 
 	private enum State
     {
+		Default,
 		Increasing,
 		Decreasing,
-		Default
     }
     private State state = State.Default;
 
 	private float lagTime;
-	private float secondPerFrame;
-    private const float TOTAL_ANIMATING_TIME = 0.05f;
+    private const float SECOND_PER_FRAME = 0.004f;
     private const float DELTA_HEALTH_POINTS_PROPORTION = 0.005f;
 
 
@@ -32,8 +31,7 @@ public class UI_HealthPointsModule : MonoBehaviour
         animator = GetComponent<Animator>();
 		healthPointsSystem = unit.GetHealthPointsSystem();
         healthPointsSystem.OnHealthPointsChanged += HealthPointsSystem_OnHealthPointsChanged;
-        healthPointsBar.fillAmount = healthPointsProportion = healthPointsSystem.GetProportion();
-        
+        healthPointsBar.fillAmount = healthPointsProportion = healthPointsSystem.GetProportion();        
 	}
 
 
@@ -43,9 +41,7 @@ public class UI_HealthPointsModule : MonoBehaviour
         {
             gameObject.SetActive(true);
             animator.Play("Appear");
-        }
-        /*한 프레임당 시간 = 에니메이션하는 시간 / 체력의 변화량  / 한 프레임당 체력의 변화량  */
-        secondPerFrame = TOTAL_ANIMATING_TIME / (Mathf.Abs(healthPointsProportion - unit.GetHealthPointsSystem().GetProportion()) / DELTA_HEALTH_POINTS_PROPORTION);        
+        }       
         healthPointsProportion = healthPointsSystem.GetProportion();
         lagTime = 0f;
         if(healthPointsProportion > healthPointsBar.fillAmount)
@@ -73,10 +69,10 @@ public class UI_HealthPointsModule : MonoBehaviour
         case State.Increasing:
             if (healthPointsBar.fillAmount <= healthPointsProportion)
             {
-                while(lagTime >= secondPerFrame)
+                while(lagTime >= SECOND_PER_FRAME)
                 {
                     IncreaseHealthPoints();
-                    lagTime -= secondPerFrame;
+                    lagTime -= SECOND_PER_FRAME;
                 }
             }
             else            
@@ -85,10 +81,10 @@ public class UI_HealthPointsModule : MonoBehaviour
         case State.Decreasing:
             if (healthPointsBar.fillAmount >= healthPointsProportion)
             {
-                while (lagTime >= secondPerFrame)
+                while (lagTime >= SECOND_PER_FRAME)
                 {
                     DecreaseHealthPoints();
-                    lagTime -= secondPerFrame;
+                    lagTime -= SECOND_PER_FRAME;
                 }
             }                
             else
@@ -97,7 +93,7 @@ public class UI_HealthPointsModule : MonoBehaviour
         }
     }
 
-    private void ConcealAnimationEnd()
+    private void ConcealWhenAnimationEnd()
     {
         gameObject.SetActive(false);
     }

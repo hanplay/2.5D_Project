@@ -41,6 +41,8 @@ public class AttackState : BasicState, IMoveableState, ITargetingBasicState
 
     public void Attack(Unit targetedUnit)
     {
+        if (null != this.targetedUnit)
+            ReleaseTarget();
         SetTarget(targetedUnit);       
     }
 
@@ -72,7 +74,7 @@ public class AttackState : BasicState, IMoveableState, ITargetingBasicState
         targetedUnit.GetHealthPointsSystem().OnDead += AttackState_OnDead;
     }
 
-    private void AttackState_OnDead(object sender, System.EventArgs e)
+    private void AttackState_OnDead(Unit unit)
     {
         targetedUnit = null;
     }
