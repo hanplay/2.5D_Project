@@ -9,15 +9,11 @@ public class PlayerSelector : MonoBehaviour
     private ButtonSkillController buttonSkillController;
     private BuffShower buffShower;
 
-    private static PlayerSelector instance;
-    public static PlayerSelector GetInstance()
-    {
-        return instance;
-    }
+    public static PlayerSelector Instance { private set; get; }
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
         buttonSkillController = transform.Find("ButtonController").GetComponent<ButtonSkillController>();
         buffShower = transform.Find("BuffShower").GetComponent<BuffShower>();
     }

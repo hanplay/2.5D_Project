@@ -5,17 +5,23 @@ public class EnemyInputListener : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     private BasicFXVisualizer basicFXVisualizer;
     private Enemy enemy;
+    private StateSystem enemyStateSystem;
     private ChaseCommand chaseCommand;
 
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
+        enemyStateSystem = enemy.GetStateSystem();
         basicFXVisualizer = GetComponent<BasicFXVisualizer>();
         chaseCommand = new ChaseCommand();
     }
     void Update()
     {
-        
+        if(enemyStateSystem.GetIdleState() == enemyStateSystem.GetCurrentState())
+        {
+            Player randomPlayer = BattleSystem.Instance.GetPlayerWave().GetRandomUnit();
+            chaseCommand.Execute(enemy, randomPlayer);
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

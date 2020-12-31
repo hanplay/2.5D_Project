@@ -59,7 +59,7 @@ public class PlayerInputListener : MonoBehaviour,
         
         if(player == unit)
         {
-            PlayerSelector.GetInstance().SetPlayer(player);
+            PlayerSelector.Instance.SetPlayer(player);
             return;
         }
         if (player.IsTargetable(unit))

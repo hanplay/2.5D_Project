@@ -8131,10 +8131,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8976794dcd24309498e8673fa7977327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyWaves:
-  - wave:
-    - {fileID: 8628502660033032170}
-  index: 0
+  playerWave:
+    waveUnitList:
+    - {fileID: 4948378008679850824}
+    - {fileID: 1783759051}
+    - {fileID: 1685139480}
+  enemyWaveContainer:
+    waveList:
+    - waveUnitList:
+      - {fileID: 8628502660033032170}
 --- !u!4 &2068346872
 Transform:
   m_ObjectHideFlags: 0

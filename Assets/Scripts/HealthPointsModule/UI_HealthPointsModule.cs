@@ -19,8 +19,8 @@ public class UI_HealthPointsModule : MonoBehaviour
     private State state = State.Default;
 
 	private float lagTime;
-    private const float SECOND_PER_FRAME = 0.004f;
-    private const float DELTA_HEALTH_POINTS_PROPORTION = 0.005f;
+    private const float SECOND_PER_FRAME = 0.002f;
+    private const float DELTA_HEALTH_POINTS_PROPORTION = 0.003f;
 
 
     private float healthPointsProportion;
@@ -67,6 +67,7 @@ public class UI_HealthPointsModule : MonoBehaviour
             }
             break;                 
         case State.Increasing:
+            //Game loop pattern 
             if (healthPointsBar.fillAmount <= healthPointsProportion)
             {
                 while(lagTime >= SECOND_PER_FRAME)
@@ -79,6 +80,7 @@ public class UI_HealthPointsModule : MonoBehaviour
                 state = State.Default;            
             break;
         case State.Decreasing:
+            //Game loop pattern
             if (healthPointsBar.fillAmount >= healthPointsProportion)
             {
                 while (lagTime >= SECOND_PER_FRAME)

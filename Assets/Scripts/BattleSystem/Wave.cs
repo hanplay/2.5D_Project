@@ -7,6 +7,7 @@ public class Wave<T> where T : Unit
 {
     [SerializeField]
     private List<T> waveUnitList = new List<T>();
+    private System.Random random = new System.Random((int)System.DateTime.Now.Ticks);
 
     public void Init()
     {
@@ -28,5 +29,16 @@ public class Wave<T> where T : Unit
             return true;
         else
             return false;
+    }
+
+    public T GetRandomUnit()
+    {
+        int randomIndex = random.Next(0, waveUnitList.Count);
+        return waveUnitList[randomIndex];
+    }
+
+    public List<T> GetAllUnit()
+    {
+        return waveUnitList;
     }
 }
