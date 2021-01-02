@@ -5,24 +5,22 @@ using UnityEngine;
 public class TeleportMoveStrategy : IMoveStrategy
 {
     private Unit mover;
-    private AttackSystem attackSystem;
     private GameObject teleportEffect;
 
     public TeleportMoveStrategy(Unit mover, GameObject teleportEffect)
     {
         this.mover = mover;
-        attackSystem = mover.GetAttackSystem();
         this.teleportEffect = teleportEffect;
     }
     public TeleportMoveStrategy(Unit mover)
     {
         this.mover = mover;
-        attackSystem = mover.GetAttackSystem();        
+
     }
 
     public void ChaseTarget(Unit targetedUnit)
     {
-        float range = attackSystem.GetRange();
+        float range = mover.GetAttackStrategy().GetRange();
         Debug.Log("Teleprot: " + range);
         float shftingDistance = mover.DistanceToUnit(targetedUnit) - range + 0.1f;
         Vector3 direction = mover.DirectionToUnit(targetedUnit);

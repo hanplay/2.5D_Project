@@ -57,9 +57,4 @@ public class ChargeSkillState : SkillState
 
     }
 
-    public void MoveTo(Unit targetUnit)
-    {
-        this.targetedUnit = targetUnit;
-    }
-
 }

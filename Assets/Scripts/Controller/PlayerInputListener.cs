@@ -14,7 +14,7 @@ public class PlayerInputListener : MonoBehaviour,
     private MoveCommand moveCommand;
     private ChaseCommand chaseCommand;
 
-    private void Awake()
+    private void Start()
     {
         player = GetComponent<Player>();
         basicFXVisualizer = GetComponent<BasicFXVisualizer>();

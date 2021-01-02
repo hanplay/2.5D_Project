@@ -28,7 +28,7 @@ public class IdleState : BasicState, IMoveableState
 
     public override void ChaseTarget(Unit targetUnit)
     {
-        OnChase.Invoke(this, targetUnit);
+        OnChase.Invoke(this);
     }
 
 }

@@ -8,7 +8,7 @@ public class EnemyInputListener : MonoBehaviour, IPointerEnterHandler, IPointerE
     private StateSystem enemyStateSystem;
     private ChaseCommand chaseCommand;
 
-    private void Awake()
+    private void Start()
     {
         enemy = GetComponent<Enemy>();
         enemyStateSystem = enemy.GetStateSystem();

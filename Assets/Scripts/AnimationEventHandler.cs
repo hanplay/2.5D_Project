@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimationEventHandler : MonoBehaviour
+public class AnimationEventHandler : MonoBehaviour
 {
     private SkillSystem skillSystem;
-    private AttackSystem attackSystem;
-    private void Awake()
+    private Unit owner;
+    private void Start()
     {
-        Unit owner = transform.parent.GetComponent<Unit>();
+        owner = transform.parent.GetComponent<Unit>();
         skillSystem = owner.GetSkillSystem();
-        attackSystem = owner.GetAttackSystem();
     }
 
     private void BaseAttackAnimationEvent()
     {
-        if (null == attackSystem)
-            Debug.Log("AttackSystem is null");
-        attackSystem.GetAttackStrategy().AnimationEventOccur();
+        owner.GetAttackStrategy().AnimationEventOccur();
     }
 
     private void SkillAnimationEvent()

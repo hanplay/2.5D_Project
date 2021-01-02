@@ -19,8 +19,8 @@ public class UI_HealthPointsModule : MonoBehaviour
     private State state = State.Default;
 
 	private float lagTime;
-    private const float SECOND_PER_FRAME = 0.002f;
-    private const float DELTA_HEALTH_POINTS_PROPORTION = 0.003f;
+    private const float SECOND_PER_FRAME = 0.0002f;
+    private const float DELTA_HEALTH_POINTS_PROPORTION = 0.0001f;
 
 
     private float healthPointsProportion;

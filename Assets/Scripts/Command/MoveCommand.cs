@@ -16,6 +16,8 @@ public class MoveCommand : ICommand
         IMoveableState moveableState = unit.GetStateSystem().GetCurrentState() as IMoveableState;
         if (null == moveableState)
             return;
+        if(unit.GetTargetedUnitHandler().TryGetTargetedUnit(out Unit targetedUnit))
+            unit.GetTargetedUnitHandler().ReleaseTarget();
         moveableState.MoveTo(destination);
     }
     public void Execute(Unit unit, Vector3 destination)

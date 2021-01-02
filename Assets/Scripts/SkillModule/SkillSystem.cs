@@ -24,8 +24,6 @@ public class SkillSystem
         }
     }
 
-
-
     public bool IsTargetingSkillReserved()
     {
         if (null == reservedTargetingSkill)

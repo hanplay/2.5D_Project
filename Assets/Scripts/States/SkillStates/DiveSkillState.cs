@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DiveSkillState : SkillState, ISkillTargetingState
+public class DiveSkillState : SkillState
 {
     private GameObject hitSmoke;
     private GameObject smokeExplosion;
@@ -28,16 +28,10 @@ public class DiveSkillState : SkillState, ISkillTargetingState
         totalTime = duration;
         originPosition = owner.GetPosition();
 
-        targetPosition = targetedUnit.GetPosition();
+        targetPosition = owner.GetTargetedUnitHandler().GetTargetedUnit().GetPosition();
         Vector3 direction = (targetPosition - originPosition).normalized;
         targetPosition = targetPosition - 1 * direction;
         GameObject.Instantiate(hitSmoke, owner.GetPosition(), Quaternion.Euler(90f, 0f,0f));
-    }
-
-
-    public void OnTargetDead()
-    {
-        targetedUnit = null;
     }
 
     public override void Tick(float deltaTime)
@@ -70,8 +64,4 @@ public class DiveSkillState : SkillState, ISkillTargetingState
         }
     }
 
-    public void SetTarget(Unit targetedUnit)
-    {
-        this.targetedUnit = targetedUnit;
-    }
 }

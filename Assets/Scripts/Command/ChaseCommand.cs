@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ChaseCommand : ICommand
 {
-    private Unit targetUnit;
+    private Unit targetedUnit;
     public void SetTargetUnit(Unit targetUnit)
     {
-        this.targetUnit = targetUnit;
+        this.targetedUnit = targetUnit;
     }
 
     public void Execute(Unit unit)
@@ -15,7 +15,16 @@ public class ChaseCommand : ICommand
         IMoveableState moveableState = unit.GetStateSystem().GetCurrentState() as IMoveableState;
         if (null == moveableState)
             return;
-        moveableState.ChaseTarget(targetUnit);
+
+        if (true == unit.GetTargetedUnitHandler().TryGetTargetedUnit(out Unit handlerUnit))
+        {
+            if (handlerUnit != targetedUnit)            
+                unit.GetTargetedUnitHandler().ReleaseTarget();            
+        }
+        else
+            unit.GetTargetedUnitHandler().SetTarget(targetedUnit);
+
+        moveableState.ChaseTarget(targetedUnit);
     }
 
     public void Execute(Unit unit, Unit targetUnit)

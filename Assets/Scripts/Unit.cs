@@ -5,13 +5,16 @@ public abstract class Unit : MonoBehaviour
 {
 	protected BuffSystem buffSystem;
 	protected StateSystem stateSystem;
+	protected ChaserContainer chaserContainer;
+	protected TargetedUnitHandler targetedUnitHandler;
 
 	//아래는 하위 클래스에서 Init으로 초기화가 필요함
 	protected StatsSystem statsSystem;
 	protected MoveSystem moveSystem;
-	protected AttackSystem attackSystem;
+	
 	protected HealthPointsSystem healthPointsSystem;
 	//하위클래스에서 생성함
+	protected AttackStrategy attackStrategy;
 	protected ITargetingStrategy targetingStrategy;
 	//하위 클래스가 쓸지 안쓸지 생성자 생성으로 결정
 	protected SkillSystem skillSystem;
@@ -21,9 +24,11 @@ public abstract class Unit : MonoBehaviour
 
 	protected virtual void Awake()
     {
-		attackSystem = new AttackSystem(this);
+		
 		moveSystem = new MoveSystem();
+		targetedUnitHandler = new TargetedUnitHandler(this);
 		healthPointsSystem = new HealthPointsSystem(this);
+		chaserContainer = new ChaserContainer(this);
 		stateSystem = new StateSystem(this);	
 		statsSystem = new StatsSystem();
 		buffSystem = new BuffSystem(this);
@@ -80,11 +85,6 @@ public abstract class Unit : MonoBehaviour
 		return moveSystem;
     }
 
-	public AttackSystem GetAttackSystem()
-    {
-		return attackSystem;
-    }
-
 	public SkillSystem GetSkillSystem()
     {
 		return skillSystem;
@@ -98,6 +98,21 @@ public abstract class Unit : MonoBehaviour
 	public bool IsTargetable(Unit unit)
     {
 		return targetingStrategy.IsTargetable(unit);
+    }
+
+	public TargetedUnitHandler GetTargetedUnitHandler()
+    {
+		return targetedUnitHandler;
+    }
+
+	public ChaserContainer GetChaserContainer()
+    {
+		return chaserContainer;
+    }
+
+	public AttackStrategy GetAttackStrategy()
+    {
+		return attackStrategy;
     }
 
 	public ITargetingStrategy GetTargetingStrategy()

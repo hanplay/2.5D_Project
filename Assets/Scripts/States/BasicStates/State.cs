@@ -6,7 +6,6 @@ public abstract class State
     protected Animator animator;
     protected StateSystem stateSystem;
     protected SkillSystem skillSystem; // Unit에 따라서 null 값일 수 있음
-    protected Unit targetedUnit;
 
 
     public const int Die = -1;
@@ -40,11 +39,6 @@ public abstract class State
     }
 
     public abstract void Tick(float deltaTime);
-
-    public Unit GetTargetUnit()
-    {
-        return targetedUnit;
-    }
 
     public bool IsEnded()
     {

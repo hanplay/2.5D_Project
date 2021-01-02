@@ -5,13 +5,14 @@ using UnityEngine;
 public class StateSystem 
 {
     public delegate void MoveEventHandler(State senderState, Vector3 destination);
-    public delegate void TargetUnitEventHandler(State senderState, Unit targetedUnit);
+    public delegate void TargetUnitEventHandler(State senderState);
     public delegate void SkillEventHandler(State senderState, Skill skill);
-    public delegate void TargetSkillEventHandler(State senderState, Skill skill, Unit targetedUnit);
+    public delegate void TargetSkillEventHandler(State senderState, Skill skill);
 
     private Unit owner;
 
     private HealthPointsSystem healthPointsSystem;
+    private TargetedUnitHandler targetedUnitHandler;
     #region State
     private DieState dieState;
     private IdleState idleState;
@@ -67,6 +68,7 @@ public class StateSystem
         chaseState =    new ChaseState  (owner, this);
         attackState =   new AttackState (owner, this);
         healthPointsSystem = owner.GetHealthPointsSystem();
+        targetedUnitHandler = owner.GetTargetedUnitHandler();
 
 
         idleState.OnMove += IdleState_OnMove;
@@ -99,10 +101,8 @@ public class StateSystem
     {
         PushState(skill.GetSkillState());
     }
-    private void BasicState_OnTargetingSkill(State senderState, Skill skill, Unit targetedUnit)
+    private void BasicState_OnTargetingSkill(State senderState, Skill skill)
     {
-        ISkillTargetingState skillTargetingState = skill.GetSkillState() as ISkillTargetingState;
-        skillTargetingState.SetTarget(targetedUnit);
         PushState(skill.GetSkillState());
     }
 
@@ -112,70 +112,57 @@ public class StateSystem
         moveState.MoveTo(destination);
     }
 
-    private void IdleState_OnChase(State senderState, Unit targetedUnit)
+    private void IdleState_OnChase(State senderState)
     {
-        if (owner.GetAttackSystem().GetRange() < owner.DistanceToUnit(targetedUnit))
+        if (true == targetedUnitHandler.TargetInAttackRange())
         {            
-            PushState(chaseState);
-            chaseState.ChaseTarget(targetedUnit);
+            PushState(attackState);
         }
         else
         {           
-            PushState(attackState);
-            attackState.Attack(targetedUnit);
+            PushState(chaseState);
         }
     }
-    private void MoveState_OnChase(State senderState, Unit targetedUnit)
+    private void MoveState_OnChase(State senderState)
     {
-        if(owner.GetAttackSystem().GetRange() < owner.DistanceToUnit(targetedUnit))
+        if(true == targetedUnitHandler.TargetInAttackRange())
         {
             PopState();
             PushState(chaseState);
-            chaseState.ChaseTarget(targetedUnit);
         }
         else
         {
             PopState();
             PushState(attackState);
-            attackState.Attack(targetedUnit);
         }
     }
 
     private void ChaseState_OnMove(State senderState, Vector3 destination)
-    {
-        chaseState.ReleaseTarget();
+    {     
         PopState();
         PushState(moveState);
         moveState.MoveTo(destination);
     }
     
-    private void ChaseState_OnAttack(State senderState, Unit targetedUnit)
-    {
-        chaseState.ReleaseTarget();
+    private void ChaseState_OnAttack(State senderState)
+    {        
         PopState();
         PushState(attackState);
-        attackState.Attack(targetedUnit);
     }
 
     private void AttackState_OnMove(State senderState, Vector3 destination)
     {
-        attackState.ReleaseTarget();
         PopState();
         PushState(moveState);
         moveState.MoveTo(destination);
     }
-    private void AttackState_OnChase(State senderState, Unit targetedUnit)
+    private void AttackState_OnChase(State senderState)
     {        
-        attackState.ReleaseTarget();
         PopState();
-        PushState(chaseState);
-        chaseState.ChaseTarget(targetedUnit);
-        
+        PushState(chaseState);        
     }
-    private void AttackState_OnTargetingSkillReserve(State senderState, Skill skill, Unit targetedUnit)
+    private void AttackState_OnTargetingSkillReserve(State senderState, Skill skill)
     {
-        ISkillTargetingState skillTargetingState = skill.GetSkillState() as ISkillTargetingState;
-        skillTargetingState.SetTarget(targetedUnit);
         PopState();
         chaseState.ReserveTargetingSkill(skill);
         PushState(chaseState);

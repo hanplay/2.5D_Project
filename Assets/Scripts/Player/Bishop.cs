@@ -3,7 +3,7 @@
 	protected override void Awake()
 	{
 		base.Awake();
-		attackSystem.Init(new InstantAttackStrategy(this, new HealStrategy(GameAssets.Instance.healEffect)), 4f);
+		attackStrategy =  new InstantAttackStrategy(this, new HealStrategy(GameAssets.Instance.healEffect), 4f);
 		targetingStrategy = new TargetingStrategy<Player>();
 	}
 

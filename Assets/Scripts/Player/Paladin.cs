@@ -7,7 +7,7 @@ public class Paladin : Player
 	protected override void Awake()
 	{
 		base.Awake();
-		attackSystem.Init(new InstantAttackStrategy(this, new CommonDamageStrategy()), 2f);
+		attackStrategy = new InstantAttackStrategy(this, new CommonDamageStrategy(), 2f);
 		targetingStrategy = new TargetingStrategy<Enemy>();
 	}
 

@@ -13,16 +13,16 @@ public class DeadlyPoisonBuff : TimedBuff
     public override void ApplyEffects()
     {
         DamageStrategyAttackDebuffDecorator damageStrategyAttackDebuffDecorator =
-            new DamageStrategyAttackDebuffDecorator(owner.GetAttackSystem().GetAttackStrategy().GetDamageStrategy(), TypeValue, attackDebuff);
-        owner.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageStrategyAttackDebuffDecorator);
+            new DamageStrategyAttackDebuffDecorator(owner.GetAttackStrategy().GetDamageStrategy(), TypeValue, attackDebuff);
+        owner.GetAttackStrategy().SetDamageStrategy(damageStrategyAttackDebuffDecorator);
     }
 
     public override void EraseEffects()
     {
-        DamageStrategyDecorator damageStrategyDecorator = owner.GetAttackSystem().GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
+        DamageStrategyDecorator damageStrategyDecorator = owner.GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
         if (damageStrategyDecorator.DecoratingBuffType == TypeValue)
         {
-            owner.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
+            owner.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
         }
         else
         {

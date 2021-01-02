@@ -12,8 +12,8 @@ public class ConcealBuff : Buff
 
     public override void ApplyEffects()
     {
-        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(owner.GetAttackSystem().GetAttackStrategy().GetDamageStrategy(), TypeValue);
-        owner.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
+        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(owner.GetAttackStrategy().GetDamageStrategy(), TypeValue);
+        owner.GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
         
         int baseAttackPower = owner.GetStatsSystem().GetBaseAttackPower();
         owner.GetStatsSystem().AddAttackPower((multiple - 1) * baseAttackPower);
@@ -29,10 +29,10 @@ public class ConcealBuff : Buff
     public override void EraseEffects()
     {
         
-        DamageStrategyDecorator damageStrategyDecorator = owner.GetAttackSystem().GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
+        DamageStrategyDecorator damageStrategyDecorator = owner.GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
         if(damageStrategyDecorator.DecoratingBuffType == TypeValue)
         {
-            owner.GetAttackSystem().GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
+            owner.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
         }
         else
         {

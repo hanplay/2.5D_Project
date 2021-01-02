@@ -29,7 +29,7 @@ public class MoveState : BasicState, IMoveableState
 
     public override void ChaseTarget(Unit targetUnit)
     {
-        OnChase(this, targetUnit);
+        OnChase(this);
     }
 
     public override void MoveTo(Vector3 destination)

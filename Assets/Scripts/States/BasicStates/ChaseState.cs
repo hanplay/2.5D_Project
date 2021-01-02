@@ -9,14 +9,14 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
     public event StateSystem.TargetSkillEventHandler OnTargetingSkill;
 
     private MoveSystem moveSystem;
-    private AttackSystem attackSystem;
+    private TargetedUnitHandler targetedUnitHandler;
     private Skill targetingSkill;
     
 
     public ChaseState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem) 
     {
         moveSystem = owner.GetMoveSystem();
-        attackSystem = owner.GetAttackSystem();
+        targetedUnitHandler = owner.GetTargetedUnitHandler();
     }
 
     public override void Begin()
@@ -28,7 +28,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
 
     public override void Tick(float deltaTime)
     {
-        if(null == targetedUnit)
+        if(false == targetedUnitHandler.TryGetTargetedUnit(out Unit targetedUnit))
         {
             owner.GetStateSystem().PopState();
             return;
@@ -38,13 +38,13 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         {
             if(owner.DistanceToUnit(targetedUnit) <= targetingSkill.GetRange())
             {                
-                OnTargetingSkill.Invoke(this, targetingSkill, targetedUnit);
+                OnTargetingSkill.Invoke(this, targetingSkill);
             }
         }
 
-        if(true == attackSystem.InRange(targetedUnit))
+        if(true == targetedUnitHandler.TargetInAttackRange())
         {
-            OnAttack.Invoke(this, targetedUnit);
+            OnAttack.Invoke(this);
         }
         else
         {
@@ -55,9 +55,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
 
     public override void ChaseTarget(Unit targetedUnit)
     {
-        if (null != this.targetedUnit)
-            ReleaseTarget();
-        SetTarget(targetedUnit);
+
     }
 
     public override void MoveTo(Vector3 destination)
@@ -67,13 +65,13 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
 
     public void ActivateTargetingSkill(Skill targetingSkill)
     {
-        if (owner.DistanceToUnit(targetedUnit) <= targetingSkill.GetRange())
+        if (true == targetedUnitHandler.TargetInSkillRange(targetingSkill))
         {
-            OnTargetingSkill.Invoke(this, targetingSkill, targetedUnit);
+
         }
         else
         {
-            ReserveTargetingSkill(targetingSkill);
+
         }
     }
 
@@ -81,28 +79,5 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
     {
         this.targetingSkill = targetingSkill;        
         //ToDo
-    }
-
-    public override void End()
-    {
-        base.End();
-        targetingSkill = null;
-    }
-
-    public void SetTarget(Unit targetedUnit)
-    {
-        this.targetedUnit = targetedUnit;
-        targetedUnit.GetHealthPointsSystem().OnDead += ChaseState_OnDead;
-    }
-
-    private void ChaseState_OnDead(Unit unit)
-    {
-        targetedUnit = null;
-    }
-
-    public void ReleaseTarget()
-    {
-        targetedUnit.GetHealthPointsSystem().OnDead -= ChaseState_OnDead;
-        targetedUnit = null;
     }
 }
