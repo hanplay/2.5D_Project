@@ -9,6 +9,15 @@ public class Wave<T> where T : Unit
     private List<T> waveUnitList = new List<T>();
     private System.Random random = new System.Random((int)System.DateTime.Now.Ticks);
 
+    public enum State
+    {
+        Hide,
+        Battle,
+        End,
+    }
+
+    private State state = State.Battle;
+
     public void Init()
     {
         for (int i = 0; i < waveUnitList.Count; i++)
@@ -16,19 +25,37 @@ public class Wave<T> where T : Unit
             waveUnitList[i].GetHealthPointsSystem().OnDead += Unit_OnDead;
         }
     }
+    public void Hide()
+    {
+        for(int i = 0; i < waveUnitList.Count; i++)
+        {
+            waveUnitList[i].gameObject.SetActive(false);
+        }
+        state = State.Hide;
+    }
+
+    public void Show()
+    {
+        for (int i = 0; i < waveUnitList.Count; i++)
+        {
+            waveUnitList[i].gameObject.SetActive(true);
+        }
+        state = State.Battle;
+    }
 
     private void Unit_OnDead(Unit unit)
     {
         T typeUnit = unit as T;
         waveUnitList.Remove(typeUnit);
+        if(0 == waveUnitList.Count)
+        {
+            state = State.End;
+        }
     }
 
-    public bool IsDead()
+    public State GetState()
     {
-        if (0 == waveUnitList.Count)
-            return true;
-        else
-            return false;
+        return state;
     }
 
     public T GetRandomUnit()
@@ -41,4 +68,5 @@ public class Wave<T> where T : Unit
     {
         return waveUnitList;
     }
+
 }

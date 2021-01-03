@@ -35,7 +35,8 @@ public class BattleSystem : MonoBehaviour
     private void Start()
     {
         playerWave.Init();
-        enemyWaveContainer.Init();        
+        enemyWaveContainer.Init();
+        enemyWaveContainer.HideAll();
     }
 
     private void Update()
@@ -51,6 +52,9 @@ public class BattleSystem : MonoBehaviour
             }
             return;
         case State.Battle:
+            if (Wave<Enemy>.State.Hide == enemyWaveContainer.GetCurrentWave().GetState())
+                enemyWaveContainer.GetCurrentWave().Show();
+
             if (enemyWaveContainer.IsCurrentWaveEnd())
                 enemyWaveContainer.SkipToNextWave();
 
@@ -60,7 +64,7 @@ public class BattleSystem : MonoBehaviour
                 state = State.Idle;
             return;
         case State.End:
-            if (true == playerWave.IsDead())
+            if (Wave<Player>.State.End == playerWave.GetState())
                 PlayerLose();
 
             if (true == enemyWaveContainer.IsAllWavesEnd())

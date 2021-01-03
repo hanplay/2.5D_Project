@@ -18,7 +18,10 @@ public class WaveContainer<T> where T : Unit
 
     public bool IsCurrentWaveEnd()
     {
-        return waveList[index].IsDead();
+        if (Wave<T>.State.End == waveList[index].GetState())
+            return true;
+        else
+            return false;
     }
 
     public void SkipToNextWave()
@@ -40,5 +43,13 @@ public class WaveContainer<T> where T : Unit
             return false;
         else
             return true;
+    }
+
+    public void HideAll()
+    {
+        for(int i = 0; i < waveList.Length; i++)
+        {
+            waveList[i].Hide();
+        }
     }
 }
