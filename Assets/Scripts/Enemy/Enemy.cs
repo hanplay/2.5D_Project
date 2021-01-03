@@ -9,6 +9,7 @@ public class Enemy : Unit
 		base.Awake();
 		statsSystem.Init(4, 0);
 		healthPointsSystem.Init(50);
+		stateSystem.PushState(new SummonState(this, stateSystem, 3f, 3));
 		moveSystem.Init(new StraightMoveStrategy(this), 3f);
 		attackStrategy =  new InstantAttackStrategy(this, new CommonDamageStrategy(), 2f);
 		targetingStrategy = new TargetingStrategy<Player>();

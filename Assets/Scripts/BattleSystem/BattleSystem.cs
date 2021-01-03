@@ -5,12 +5,19 @@ public class BattleSystem : MonoBehaviour
 {
     public static BattleSystem Instance { private set; get; }
 
+
+    private TMPro.TextMeshProUGUI textMesh;
+    private Canvas canvas;
+
     private float waitTime = 3f;
     private float lagTime;
 
     private void Awake()
     {
         Instance = this;
+        canvas = GetComponentInChildren<Canvas>();
+        textMesh = canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        canvas.gameObject.SetActive(false);
     }
 
     [SerializeField] private Wave<Player> playerWave = new Wave<Player>();
@@ -53,13 +60,13 @@ public class BattleSystem : MonoBehaviour
                 state = State.Idle;
             return;
         case State.End:
-            if(true == playerWave.IsDead())            
-                print("Player Lose");
-            
-            if(true == enemyWaveContainer.IsAllWavesEnd())            
-                print("Player Win!!");            
+            if (true == playerWave.IsDead())
+                PlayerLose();
 
-            gameObject.SetActive(false);
+            if (true == enemyWaveContainer.IsAllWavesEnd())
+                PlayerWin();
+
+            
             return;
         }
     }
@@ -72,5 +79,19 @@ public class BattleSystem : MonoBehaviour
     public Wave<Enemy> GetEnemyWave()
     {
         return enemyWaveContainer.GetCurrentWave();
+    }
+
+    private void PlayerWin()
+    {
+        canvas.gameObject.SetActive(true);
+        textMesh.text = "WIN";        
+        GetComponent<Animator>().Play("FadeIn");
+    }
+
+    private void PlayerLose()
+    {
+        canvas.gameObject.SetActive(true);
+        textMesh.text = "LOSE";
+        GetComponent<Animator>().Play("FadeIn");
     }
 }

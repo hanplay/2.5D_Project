@@ -50,4 +50,11 @@ public abstract class State
         return isBegun;
     }
 
+    protected void SetTargetable(bool value)
+    {
+        owner.GetComponent<Rigidbody>().isKinematic = !value;
+        owner.GetComponent<Collider>().enabled = value;
+    }
+        
+
 }

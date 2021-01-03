@@ -48,9 +48,13 @@ public class UI_HealthPointsModule : MonoBehaviour
         {
             state = State.Increasing;
         }
-        else
+        else if(healthPointsProportion < healthPointsBar.fillAmount)
         {
             state = State.Decreasing;
+        }
+        else
+        {
+            state = State.Default;
         }
     }
 

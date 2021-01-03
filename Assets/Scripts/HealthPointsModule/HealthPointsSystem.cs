@@ -15,6 +15,7 @@ public class HealthPointsSystem
     private int totalMaxHealthPoints;
     private int healthPoints;
 
+
     protected HealthPointsSystem() { }
     public HealthPointsSystem(Unit unit) 
     {
@@ -50,7 +51,7 @@ public class HealthPointsSystem
 
         if (0 == healthPoints)
         {
-            OnDead?.Invoke(owner);
+            OnDead.Invoke(owner);
             OnDead.GetInvocationList().Initialize();
         }
     }

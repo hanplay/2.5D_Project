@@ -23,11 +23,13 @@ public class AttackState : BasicState, IMoveableState, ITargetingBasicState
 
     public override void Tick(float deltaTime)
     {
+
         if(false == targetedUnitHandler.TryGetTargetedUnit(out Unit targetedUnit))
         {
             stateSystem.PopState();
             return;
         }
+
         if(true == targetedUnitHandler.TargetInAttackRange())
         {
             owner.FlipToTarget(targetedUnit);

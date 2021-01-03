@@ -67,11 +67,11 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
     {
         if (true == targetedUnitHandler.TargetInSkillRange(targetingSkill))
         {
-
+            OnTargetingSkill.Invoke(this, targetingSkill);
         }
         else
         {
-
+            ReserveTargetingSkill(targetingSkill);
         }
     }
 

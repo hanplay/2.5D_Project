@@ -27,7 +27,7 @@
     public void SetTarget(Unit targetedUnit)
     {
         this.targetedUnit = targetedUnit;
-        targetedUnit.GetChaserContainer().AddChaser(targetedUnit);
+        targetedUnit.GetChaserContainer().AddChaser(owner);
     }
 
     public void ReleaseTarget()

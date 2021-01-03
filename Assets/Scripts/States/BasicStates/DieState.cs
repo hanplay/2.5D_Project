@@ -24,9 +24,7 @@ public class DieState : State
         lagTime = 0f;
         animator.Play("Die");
 
-        //타게팅이 안되도록
-        owner.GetComponent<Rigidbody>().isKinematic = true;
-        owner.GetComponent<Collider>().enabled = false;
+        SetTargetable(false);        
     }
 
 
