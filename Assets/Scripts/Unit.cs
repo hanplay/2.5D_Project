@@ -20,6 +20,7 @@ public abstract class Unit : MonoBehaviour
 	protected SkillSystem skillSystem;
 
 	private Transform modelTranform;
+	private Transform statusEffectTransform;
 
 
 	protected virtual void Awake()
@@ -36,6 +37,7 @@ public abstract class Unit : MonoBehaviour
 		skillSystem = null;
 
 		modelTranform = transform.Find("model");
+		statusEffectTransform = transform.Find("StatusEffect");
     }
 
     protected virtual void Update()
@@ -118,6 +120,11 @@ public abstract class Unit : MonoBehaviour
 	public ITargetingStrategy GetTargetingStrategy()
     {
 		return targetingStrategy;
+    }
+
+	public Transform GetStatusEffectTransform()
+    {
+		return statusEffectTransform;
     }
 
 	public void FlipLeft()

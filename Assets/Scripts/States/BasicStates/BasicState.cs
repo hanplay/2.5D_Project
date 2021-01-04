@@ -6,7 +6,7 @@ public abstract class BasicState : State, IMoveableState
 {
     public event StateSystem.SkillEventHandler OnSkill;
 
-    public BasicState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem, Basic) { }
+    public BasicState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem) { }
 
     public abstract void ChaseTarget(Unit targetUnit);
     public abstract void MoveTo(Vector3 destination);

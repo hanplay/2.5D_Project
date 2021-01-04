@@ -9,11 +9,13 @@ public class DieState : State
     private float blinkTime;
     private float lagTime;
     private bool isVisible = false;
+    private Unit owner;
     private BasicFXVisualizer basicFXVisualizer;
 
-    public DieState(Unit player, StateSystem stateSystem) : base(player, stateSystem, Die)
+    public DieState(Unit owner, StateSystem stateSystem) : base(owner, stateSystem)
     {
-        basicFXVisualizer = player.GetComponent<BasicFXVisualizer>();
+        this.owner = owner;
+        basicFXVisualizer = owner.GetComponent<BasicFXVisualizer>();
     }
 
     public override void Begin()
@@ -23,7 +25,7 @@ public class DieState : State
         blinkTime = 1.5f;
         lagTime = 0f;
         animator.Play("Die");
-
+        owner.GetBuffSystem().ClearBuffs();
         SetTargetable(false);        
     }
 

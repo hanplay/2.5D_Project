@@ -4,8 +4,8 @@ public class SummonState : State
 {
     private float duration;
     private float lagTime;
-    public SummonState(Unit owner, StateSystem stateSystem, float duration, int StateType) : base(owner, stateSystem, StateType)
-    {
+    public SummonState(Unit owner, float duration) : base(owner, owner.GetStateSystem())
+    {        
         this.duration = duration;
     }
 

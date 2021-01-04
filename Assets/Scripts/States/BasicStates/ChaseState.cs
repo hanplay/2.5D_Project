@@ -80,4 +80,10 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         this.targetingSkill = targetingSkill;        
         //ToDo
     }
+
+    public override void End()
+    {
+        base.End();
+        targetingSkill = null;
+    }
 }

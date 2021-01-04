@@ -9,7 +9,7 @@ public abstract class SkillState : State
 
 
 
-    public SkillState(Unit player, StateSystem stateSystem, Skill skill) : base(player, stateSystem, Skill) 
+    public SkillState(Unit player, StateSystem stateSystem, Skill skill) : base(player, stateSystem) 
     {
         this.owner = player;
         this.skill = skill;

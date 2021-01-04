@@ -48,4 +48,12 @@ public class BuffSystem
     {
         return buffList;
     }
+
+    public void ClearBuffs()
+    {
+        for(int i = 0; i <buffList.Count; i++)
+        {
+            buffList[i].End();
+        }
+    }
 }

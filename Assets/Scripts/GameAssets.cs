@@ -16,8 +16,17 @@ public enum BuffType
     DeadlyPoison,
     DivineCharge,
     Teleport,
+    Stun,
     None
 
+}
+
+public enum BuffCode
+{
+    None,
+    State,
+    MoveStrategy,
+    DamageStrategy,
 }
 
 public enum SkillType
@@ -60,6 +69,7 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public Sprite fireAuraSprite;    
     [SerializeField] public Sprite chargeSkillSprite;
     [SerializeField] public Sprite teleportSprite;
+    [SerializeField] public Sprite StunSprite;
 
 
 
@@ -76,6 +86,7 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public GameObject divineChargeBuffEffect;
     [SerializeField] public GameObject teleportBuffEffect;
     [SerializeField] public GameObject teleportEffect;
+    [SerializeField] public GameObject stunEffect;
 
     public static GameAssets Instance { private set; get; }
 
@@ -132,6 +143,11 @@ public class GameAssets : MonoBehaviour
             buff = new TeleportBuff(TypeValue, 10f, teleportEffect);
             buff.SetBuffSprite(teleportSprite);
             return buff;
+        case BuffType.Stun:
+            buff = new StunBuff(TypeValue, 3f, stunEffect);
+            if (null == stunEffect)
+            buff.SetBuffSprite(StunSprite);
+            return buff;
         default:
             Assert.IsTrue(true);
             Debug.LogError("Buff Type does not Exist!!!!");
@@ -173,13 +189,6 @@ public class GameAssets : MonoBehaviour
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(concealBuffSprite);
             skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.Conceal), null));
-            return skill;
-        case SkillType.Charge:
-            skill.SetCanCancel(false);
-            skill.SetCooldownTime(15f);
-            skill.SetIsTargetSkill(false);
-            skill.SetSkillSprite(chargeSkillSprite);
-            skill.SetSkillState(new ChargeSkillState(player, skill, 4f, burnExplosionEffect));
             return skill;
         case SkillType.DeadlyPoisonBuff:
             skill.SetCanCancel(false);

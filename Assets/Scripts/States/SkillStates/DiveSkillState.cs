@@ -7,6 +7,7 @@ public class DiveSkillState : SkillState
     private IDamageStrategy damageStrategy = new CommonDamageStrategy();
     private int damage;
     private float radius;
+    private Buff stunDebuff;
 
     private Vector3 originPosition;
     private Vector3 targetPosition;
@@ -60,6 +61,7 @@ public class DiveSkillState : SkillState
                 if (false == owner.IsTargetable(targetedUnit))
                     continue;
                 damageStrategy.Do(targetedUnit, damage);
+                targetedUnit.GetBuffSystem().AddBuff(GameAssets.Instance.CreateBuff(BuffType.Stun));
             }
         }
     }
