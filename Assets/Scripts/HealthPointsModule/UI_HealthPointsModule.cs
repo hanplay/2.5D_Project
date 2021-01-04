@@ -19,8 +19,8 @@ public class UI_HealthPointsModule : MonoBehaviour
     private State state = State.Default;
 
 	private float lagTime;
-    private const float SECOND_PER_FRAME = 0.0002f;
-    private const float DELTA_HEALTH_POINTS_PROPORTION = 0.0001f;
+    private const float SECOND_PER_FRAME = 0.002f;
+    private const float DELTA_HEALTH_POINTS_PROPORTION = 0.0008f;
 
 
     private float healthPointsProportion;
@@ -44,11 +44,11 @@ public class UI_HealthPointsModule : MonoBehaviour
         }       
         healthPointsProportion = healthPointsSystem.GetProportion();
         lagTime = 0f;
-        if(healthPointsProportion > healthPointsBar.fillAmount)
+        if(healthPointsProportion > healthPointsBar.fillAmount + DELTA_HEALTH_POINTS_PROPORTION)
         {
             state = State.Increasing;
         }
-        else if(healthPointsProportion < healthPointsBar.fillAmount)
+        else if(healthPointsProportion < healthPointsBar.fillAmount - DELTA_HEALTH_POINTS_PROPORTION)
         {
             state = State.Decreasing;
         }
@@ -72,28 +72,22 @@ public class UI_HealthPointsModule : MonoBehaviour
             break;                 
         case State.Increasing:
             //Game loop pattern 
-            if (healthPointsBar.fillAmount <= healthPointsProportion)
+            while (healthPointsBar.fillAmount + DELTA_HEALTH_POINTS_PROPORTION < healthPointsProportion && lagTime >= SECOND_PER_FRAME)
             {
-                while(lagTime >= SECOND_PER_FRAME)
-                {
-                    IncreaseHealthPoints();
-                    lagTime -= SECOND_PER_FRAME;
-                }
-            }
-            else            
+                IncreaseHealthPoints();
+                lagTime -= SECOND_PER_FRAME;                
+            }   
+            if(healthPointsBar.fillAmount + DELTA_HEALTH_POINTS_PROPORTION >= healthPointsProportion)
                 state = State.Default;            
             break;
         case State.Decreasing:
             //Game loop pattern
-            if (healthPointsBar.fillAmount >= healthPointsProportion)
+            while (healthPointsBar.fillAmount - DELTA_HEALTH_POINTS_PROPORTION > healthPointsProportion && lagTime >= SECOND_PER_FRAME)
             {
-                while (lagTime >= SECOND_PER_FRAME)
-                {
-                    DecreaseHealthPoints();
-                    lagTime -= SECOND_PER_FRAME;
-                }
-            }                
-            else
+                DecreaseHealthPoints();
+                lagTime -= SECOND_PER_FRAME;                
+            }
+            if(healthPointsBar.fillAmount + DELTA_HEALTH_POINTS_PROPORTION <= healthPointsProportion)
                 state = State.Default;
             break;
         }
