@@ -87,6 +87,7 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public GameObject teleportBuffEffect;
     [SerializeField] public GameObject teleportEffect;
     [SerializeField] public GameObject stunEffect;
+    [SerializeField] public GameObject magicSmoke;
 
     public static GameAssets Instance { private set; get; }
 

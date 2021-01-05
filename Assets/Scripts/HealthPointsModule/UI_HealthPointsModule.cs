@@ -25,14 +25,15 @@ public class UI_HealthPointsModule : MonoBehaviour
 
     private float healthPointsProportion;
 	
-	private void Awake()
-	{
+
+    private void Awake()
+    {
 		healthPointsBar = transform.Find("HealthPointsBar").GetComponent<Image>();
         animator = GetComponent<Animator>();
 		healthPointsSystem = unit.GetHealthPointsSystem();
         healthPointsSystem.OnHealthPointsChanged += HealthPointsSystem_OnHealthPointsChanged;
         healthPointsBar.fillAmount = healthPointsProportion = healthPointsSystem.GetProportion();        
-	}
+    }
 
 
     private void HealthPointsSystem_OnHealthPointsChanged()
