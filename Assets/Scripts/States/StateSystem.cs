@@ -28,12 +28,14 @@ public class StateSystem
 
     public void PopState()
     {
-        stateStack.Peek().End();
+        if(false == stateStack.Peek().IsEnded())
+            stateStack.Peek().End();
         stateStack.Pop();
     }
     public void PushState(State state)
     {
-        stateStack.Peek().End();
+        if (false == stateStack.Peek().IsEnded())
+            stateStack.Peek().End();        
         stateStack.Push(state);
     }
 

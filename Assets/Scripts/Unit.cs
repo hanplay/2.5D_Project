@@ -42,8 +42,8 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual void Update()
 	{
-		buffSystem.Tick(Time.deltaTime);
 		stateSystem.Tick(Time.deltaTime);
+		buffSystem.Tick(Time.deltaTime);
 		skillSystem?.Tick(Time.deltaTime);
 	}
 	

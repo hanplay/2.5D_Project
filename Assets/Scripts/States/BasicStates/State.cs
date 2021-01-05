@@ -18,12 +18,15 @@ public abstract class State
         this.stateSystem = stateSystem;
     }
 
+    //호출하지 말것 StateSystem.PushState()을 통해서 호출
     public virtual void Begin()
     {
         Debug.Log(owner.ToString() + "Begin State: " + ToString());
         isEnded = false;
         isBegun = true;
     }
+
+    //호출하지 말것 StateSystem.PopState()을 통해서 호출
     public virtual void End()
     {
         isEnded = true;

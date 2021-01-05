@@ -53,10 +53,7 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
         }
     }
 
-    public override void ChaseTarget(Unit targetedUnit)
-    {
-
-    }
+    public override void ChaseTarget(Unit targetedUnit) { }
 
     public override void MoveTo(Vector3 destination)
     {
@@ -77,13 +74,14 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
 
     public void ReserveTargetingSkill(Skill targetingSkill)
     {
-        this.targetingSkill = targetingSkill;        
-        //ToDo
+        this.targetingSkill = targetingSkill;
+        targetingSkill?.SetChase(true);
     }
 
     public override void End()
     {
         base.End();
+        targetingSkill?.SetChase(false);
         targetingSkill = null;
     }
 }

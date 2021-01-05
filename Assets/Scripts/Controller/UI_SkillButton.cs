@@ -11,6 +11,14 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
     private Image skillBlockerImage;
     private Color blockColor = new Color(0f, 0f, 0f, 0.5f);
 
+    private enum GlowState
+    {
+        Glow,
+        None
+    }
+
+    private GlowState glowState;
+
     void Awake()
     {
         buttonSkillController = transform.parent.GetComponent<ButtonSkillController>();
@@ -32,8 +40,29 @@ public class UI_SkillButton : MonoBehaviour, IPointerDownHandler
             return;
         if(skill.IsChasing())
         {
-            Glow(new Color(0.3773585f, 0.2277012f, 0f));
+            if(GlowState.None == glowState)
+            {
+                Glow(new Color(0.3773585f, 0.2277012f, 0f));
+                glowState = GlowState.Glow;
+            }
         }
+        else
+        {
+            if (GlowState.Glow == glowState)
+            {
+                Glow(Color.black);
+                glowState = GlowState.None;
+            }
+        }
+        switch(glowState)
+        {
+        case GlowState.Glow:
+          
+            break;
+        case GlowState.None:
+            break;
+        }
+
 
         if(skill.IsCoolDownTime())
         {

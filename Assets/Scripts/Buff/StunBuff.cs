@@ -30,5 +30,5 @@ public class StunBuff : TimedBuff
     public override int IndexNumber()
     {
         return DoNotShow;
-    }
+    }   
 }
