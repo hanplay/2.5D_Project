@@ -88,7 +88,7 @@ public class UI_HealthPointsModule : MonoBehaviour
                 DecreaseHealthPoints();
                 lagTime -= SECOND_PER_FRAME;                
             }
-            if(healthPointsBar.fillAmount + DELTA_HEALTH_POINTS_PROPORTION <= healthPointsProportion)
+            if(healthPointsBar.fillAmount - DELTA_HEALTH_POINTS_PROPORTION <= healthPointsProportion)
                 state = State.Default;
             break;
         }

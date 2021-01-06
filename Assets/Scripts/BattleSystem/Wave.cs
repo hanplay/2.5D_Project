@@ -60,6 +60,9 @@ public class Wave<T> where T : Unit
 
     public T GetRandomUnit()
     {
+        int count = waveUnitList.Count;
+        if (0 == count)
+            return null;
         int randomIndex = random.Next(0, waveUnitList.Count);
         return waveUnitList[randomIndex];
     }

@@ -16,9 +16,20 @@ public class ButtonSkillController : MonoBehaviour
         uI_SkillButtonList.TrimExcess();
     }
 
+
     public void BindPlayerSkillsToUI_SkillButtonsAndShow(Player player)
     {
-        owner = player;
+        Unit selectedUnit = player as Unit;
+        if (owner == selectedUnit)
+            return;
+        else
+        {
+            if(null != owner)            
+                owner.GetHealthPointsSystem().OnDead -= ButtonSkillController_OnDead;            
+            owner = player;
+            owner.GetHealthPointsSystem().OnDead += ButtonSkillController_OnDead;
+        }
+        
         int count = SkillSystem.SkillCount;
         for(int i = 0; i < count; i++)
         {
@@ -32,6 +43,14 @@ public class ButtonSkillController : MonoBehaviour
                 uI_SkillButtonList[i].UpdateSkillImageRemainingProportion();
                 uI_SkillButtonList[i].Show();
             }
+        }
+    }
+
+    private void ButtonSkillController_OnDead(Unit owner)
+    {
+        for(int i = 0; i <uI_SkillButtonList.Count; i++)
+        {
+            uI_SkillButtonList[i].Hide();
         }
     }
 

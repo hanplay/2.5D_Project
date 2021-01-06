@@ -58,7 +58,7 @@ public class BattleSystem : MonoBehaviour
             if (enemyWaveContainer.IsCurrentWaveEnd())
                 enemyWaveContainer.SkipToNextWave();
 
-            if (enemyWaveContainer.IsAllWavesEnd())
+            if (enemyWaveContainer.IsAllWavesEnd() || Wave<Player>.State.End ==  playerWave.GetState())
                 state = State.End;
             else
                 state = State.Idle;
@@ -68,9 +68,7 @@ public class BattleSystem : MonoBehaviour
                 PlayerLose();
 
             if (true == enemyWaveContainer.IsAllWavesEnd())
-                PlayerWin();
-
-            
+                PlayerWin();            
             return;
         }
     }

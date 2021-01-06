@@ -13,7 +13,7 @@
     private void Start()
     {
         attackStrategy = new InstantAttackStrategy(this, 
-            new CompositeDamageStrategy(new CommonDamageStrategy(), BuffType.None, GetTargetingStrategy(), GameAssets.Instance.magicSmoke, 2f), 5f);
+            new CompositeDamageStrategy(new CommonDamageStrategy(), BuffType.None, GetTargetingStrategy(), GameAssets.Instance.magicSmoke, 2f), 7f);
 
     }
 }
