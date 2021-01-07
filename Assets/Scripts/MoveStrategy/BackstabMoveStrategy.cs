@@ -13,4 +13,9 @@ public class BackstabMoveStrategy : IMoveStrategy
     {
         throw new System.NotImplementedException();
     }
+
+    public void ReverseChaseTarget(Unit targetedUnit)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -4,7 +4,7 @@
 	protected override void Awake()
 	{
 		base.Awake();		
-		attackStrategy = new InstantAttackStrategy(this, new CommonDamageStrategy(), 1.5f);
+		attackStrategy = new InstantAttackStrategy(this, new CommonDamageStrategy(), 2f);
 		targetingStrategy = new TargetingStrategy<Enemy>();
 	}
 	

@@ -7,7 +7,7 @@ public class StraightMoveStrategy : IMoveStrategy
     private Unit mover;
     private Rigidbody rigidbody;
     private MoveSystem moveSystem;
-
+    private float closeDistance = 1.5f;
 
     public StraightMoveStrategy(Unit mover)
     {
@@ -16,14 +16,22 @@ public class StraightMoveStrategy : IMoveStrategy
         moveSystem = mover.GetMoveSystem();     
     }
     
-    public void ChaseTarget(Unit targetUnit)
+    public void ChaseTarget(Unit targetedUnit)
     {
-        StraightMove(targetUnit.GetPosition());
+        StraightMove(targetedUnit.GetPosition());
     }
 
     public void MoveTo(Vector3 destination)
     {
         StraightMove(destination);
+    }
+
+    public void ReverseChaseTarget(Unit targetedUnit)
+    {
+        Vector3 direction = mover.GetPosition() - targetedUnit.GetPosition();
+        direction.y = 0f;
+        direction.Normalize();
+        rigidbody.velocity = direction * moveSystem.GetSpeed();
     }
 
     private void StraightMove(Vector3 destination)

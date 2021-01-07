@@ -42,14 +42,20 @@ public class ChaseState : BasicState, IMoveableState, ITargetingBasicState
             }
         }
 
-        if(true == targetedUnitHandler.TargetInAttackRange())
+        if(true == targetedUnitHandler.TargetInProperRange(out bool isTooClose))
         {
             OnAttack.Invoke(this);
+            return;
         }
-        else
+        
+        if(false == isTooClose)
         {
             owner.FlipToTarget(targetedUnit);
             moveSystem.GetUsingMoveStrategy().ChaseTarget(targetedUnit);
+        }
+        else
+        {
+            moveSystem.GetUsingMoveStrategy().ReverseChaseTarget(targetedUnit);
         }
     }
 

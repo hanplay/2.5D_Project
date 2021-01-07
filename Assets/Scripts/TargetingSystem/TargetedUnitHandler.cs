@@ -2,19 +2,29 @@
 {
     private Unit owner;
     private Unit targetedUnit;
+    private float closeDistance = 1.5f;
+
 
     public TargetedUnitHandler(Unit owner)
     {
         this.owner = owner;
     }
 
-    public bool TargetInAttackRange()
+    public bool TargetInProperRange(out bool isTooClose)
     {
-        if (owner.DistanceToUnit(targetedUnit) > owner.GetAttackStrategy().GetRange())
+        isTooClose = false;
+        float distance = owner.DistanceToUnit(targetedUnit);
+        if (distance > owner.GetAttackStrategy().GetRange())
             return false;
+        else if (distance < closeDistance)
+        {
+            isTooClose = true;
+            return false;
+        }
         else
             return true;
     }
+
 
     public bool TargetInSkillRange(Skill targetingSkill)
     {

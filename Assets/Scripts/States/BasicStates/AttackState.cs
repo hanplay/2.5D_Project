@@ -30,7 +30,7 @@ public class AttackState : BasicState, IMoveableState, ITargetingBasicState
             return;
         }
 
-        if(true == targetedUnitHandler.TargetInAttackRange())
+        if(true == targetedUnitHandler.TargetInProperRange(out bool isTooClose))
         {
             owner.FlipToTarget(targetedUnit);
             owner.GetAttackStrategy().Attack(targetedUnit);

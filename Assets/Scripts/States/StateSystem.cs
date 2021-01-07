@@ -116,7 +116,7 @@ public class StateSystem
 
     private void IdleState_OnChase(State senderState)
     {
-        if (true == targetedUnitHandler.TargetInAttackRange())
+        if (true == targetedUnitHandler.TargetInProperRange(out bool isTooClose))
         {            
             PushState(attackState);
         }
@@ -127,7 +127,7 @@ public class StateSystem
     }
     private void MoveState_OnChase(State senderState)
     {
-        if(true == targetedUnitHandler.TargetInAttackRange())
+        if(true == targetedUnitHandler.TargetInProperRange(out bool isTooClose))
         {
             PopState();
             PushState(chaseState);

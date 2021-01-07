@@ -6,4 +6,5 @@ public interface IMoveStrategy
 {
     void MoveTo(Vector3 destination);
     void ChaseTarget(Unit targetUnit);
+    void ReverseChaseTarget(Unit targetedUnit);
 }

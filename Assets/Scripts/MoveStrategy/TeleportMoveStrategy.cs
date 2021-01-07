@@ -41,5 +41,8 @@ public class TeleportMoveStrategy : IMoveStrategy
             GameObject.Instantiate(teleportEffect, destination, Quaternion.Euler(90f, 0f, 0f));
     }
 
-
+    public void ReverseChaseTarget(Unit targetedUnit)
+    {
+        ChaseTarget(targetedUnit);
+    }
 }
