@@ -21,7 +21,6 @@ public class TeleportMoveStrategy : IMoveStrategy
     public void ChaseTarget(Unit targetedUnit)
     {
         float range = mover.GetAttackStrategy().GetRange();
-        Debug.Log("Teleprot: " + range);
         float shftingDistance = mover.DistanceToUnit(targetedUnit) - range + 0.1f;
         Vector3 direction = mover.DirectionToUnit(targetedUnit);
         Vector3 destination = mover.GetPosition() + direction * shftingDistance;

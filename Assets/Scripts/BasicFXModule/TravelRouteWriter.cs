@@ -11,6 +11,7 @@ public class TravelRouteWriter : MonoBehaviour
     private void Awake()
     {
         travelRouteLine = transform.Find("TravelRouteLine");
+        HideRouteLine();
     }
 
     private void DrawRouteLine(Vector3 characterPosition, Vector3 groundPosition)

@@ -4882,6 +4882,7 @@ GameObject:
   - component: {fileID: 4854812599909304}
   - component: {fileID: 198311839871079878}
   - component: {fileID: 199758611781602678}
+  - component: {fileID: -5574638728047711215}
   m_Layer: 0
   m_Name: Arrow_Hit
   m_TagString: Untagged
@@ -9745,6 +9746,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &-5574638728047711215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628173170742744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace04226a5c16794f8d68d20025485e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 1
 --- !u!1 &1838135348591254
 GameObject:
   m_ObjectHideFlags: 0

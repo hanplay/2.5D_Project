@@ -3,56 +3,58 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    private Unit owner;
     private Unit targetedUnit;
 
     [SerializeField]
     private float speed;
     [SerializeField]
     private GameObject hitVisualEffect;
+    private Transform projectileContainerTransform;
 
-    private ProjectileAttackStrategy projectileAttackStrategy;
-    private StatsSystem statsSystem;
+    private void Awake()
+    {
+        Hide();
+    }
 
     void Update()
     {
         if (null == targetedUnit)
         {
-            Hide();
+            StoreInProjectileContainer();
         }
 
-        if (0.5f > Vector3.Distance(transform.position, targetedUnit.GetPosition()))
-        {
-            projectileAttackStrategy.GetDamageStrategy().Do(targetedUnit, statsSystem.GetTotalAttackPower());
-            Instantiate(hitVisualEffect);
+        Vector3 projectilePosition = transform.position;
+        Vector3 targetPosition = targetedUnit.GetPosition();
+
+        if (0.5f > Vector3.Distance(projectilePosition, targetPosition))
+        {      
+            
+            Instantiate(hitVisualEffect, targetedUnit.GetPosition(), Quaternion.identity);
             transform.localPosition = Vector3.zero;
-            targetedUnit = null;
-            Hide();
+            if(null == owner)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            else
+            {
+                owner.GetAttackStrategy().GetDamageStrategy().Do(targetedUnit, owner.GetStatsSystem().GetTotalAttackPower());
+                StoreInProjectileContainer();
+                return;
+            }
         }
-        Vector3 direction = targetedUnit.GetPosition() - transform.position;
+        Vector3 direction = targetPosition - projectilePosition;
         direction.Normalize();
-        transform.Translate(Time.deltaTime * direction * speed);
+        transform.Translate(Time.deltaTime * direction * speed, Space.World);
+        float angle = Mathf.Atan2(direction.z / Mathf.Sqrt(2), direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(45f, 0f, angle);
     }
-
-    public void Init(ProjectileAttackStrategy projectileAttackStrategy, StatsSystem statsSystem )
+    
+    public void Init(Unit owner, Transform projectileContainerTransform)
     {
-        this.projectileAttackStrategy = projectileAttackStrategy;
-        this.statsSystem = statsSystem;
-
-    }
-
-    public void SetProjectileAttackStrategy(ProjectileAttackStrategy projectileAttackStrategy)
-    {
-        this.projectileAttackStrategy = projectileAttackStrategy;
-    }
-
-    public void SetTarget(Unit targetedUnit)
-    {
-        this.targetedUnit = targetedUnit;
-    }
-
-    public void Show()
-    {
-        gameObject.SetActive(true);
+        this.owner = owner;
+        this.projectileContainerTransform = projectileContainerTransform;
     }
 
     public void Hide()
@@ -60,8 +62,19 @@ public class Projectile : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public bool IsActive()
+    public void StoreInProjectileContainer()
     {
-        return gameObject.activeSelf;
+        targetedUnit = null;
+        gameObject.SetActive(false);
+        transform.SetParent(projectileContainerTransform);
+        transform.localPosition = Vector3.zero;
     }
+
+    public void Launch(Unit targetedUnit)
+    {
+        gameObject.SetActive(true);
+        transform.SetParent(null);
+        this.targetedUnit = targetedUnit;
+    }
+
 }

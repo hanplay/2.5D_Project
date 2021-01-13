@@ -3,19 +3,18 @@
 	protected override void Awake()
 	{
 		base.Awake();
-		attackStrategy =  new InstantAttackStrategy(this, new HealStrategy(GameAssets.Instance.healEffect), 4f);
+		statsSystem.Init(5, 1);
+		moveSystem.Init(new StraightMoveStrategy(this), 4f);
+		healthPointsSystem.Init(300);
 		targetingStrategy = new TargetingStrategy<Player>();
 	}
 
 	protected void Start()
 	{
-		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.Pray));
-		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.TeleportBuff));		
-	}
-
-	protected override void Update()
-	{
-		base.Update();
+		attackStrategy =  new InstantAttackStrategy(this, new HealStrategy(GameAssets.Instance.healEffect), 4f);
+		skillSystem.SetSkill(0, GameAssets.Instance.CreateSkill(this, SkillType.Cure));
+		skillSystem.SetSkill(1, GameAssets.Instance.CreateSkill(this, SkillType.Pray));
+			
 	}
 
 }

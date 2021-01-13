@@ -17,6 +17,7 @@ public enum BuffType
     DivineCharge,
     Teleport,
     Stun,
+    Slow,
     None
 
 }
@@ -31,14 +32,13 @@ public enum BuffCode
 
 public enum SkillType
 {
-    Heal,
+    Cure,
     Meteor,
     Aggro,
     Dive,
     Charge,
-    RapidFire,
     DeadlyPoisonBuff,
-    IceAge,
+    IceNova,
     TestBuff,
     FireAura,
     Pray,
@@ -64,12 +64,14 @@ public class GameAssets : MonoBehaviour
     [SerializeField] public Sprite diveSkillSprite;
     [SerializeField] public Sprite PrayBuffSprite;
     [SerializeField] public Sprite divineChargeSprite;
-    [SerializeField] public Sprite healSkillSprite;
     [SerializeField] public Sprite loopingTornadoSprite;
     [SerializeField] public Sprite fireAuraSprite;    
     [SerializeField] public Sprite chargeSkillSprite;
     [SerializeField] public Sprite teleportSprite;
     [SerializeField] public Sprite StunSprite;
+    [SerializeField] public Sprite slowDebufSprite;
+    [SerializeField] public Sprite IceNovaSprite;
+    [SerializeField] public Sprite CureSprite;
 
 
 
@@ -146,8 +148,11 @@ public class GameAssets : MonoBehaviour
             return buff;
         case BuffType.Stun:
             buff = new StunBuff(TypeValue, 3f, stunEffect);
-            if (null == stunEffect)
             buff.SetBuffSprite(StunSprite);
+            return buff;
+        case BuffType.Slow:
+            buff = new SlowDebuff(TypeValue, 5f);
+            buff.SetBuffSprite(slowDebufSprite);
             return buff;
         default:
             Assert.IsTrue(true);
@@ -218,6 +223,20 @@ public class GameAssets : MonoBehaviour
             skill.SetIsTargetSkill(false);
             skill.SetSkillSprite(teleportSprite);
             skill.SetSkillState(new BuffSkillState(player, skill, CreateBuff(BuffType.Teleport), teleportBuffEffect));
+            return skill;
+        case SkillType.IceNova:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(25f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(IceNovaSprite);
+            skill.SetSkillState(new IceNovaSkillState(player, skill, CreateBuff(BuffType.Slow)));
+            return skill;
+        case SkillType.Cure:
+            skill.SetCanCancel(false);
+            skill.SetCooldownTime(20f);
+            skill.SetIsTargetSkill(false);
+            skill.SetSkillSprite(CureSprite);
+            skill.SetSkillState(new CureSkillState(player, skill, divineChargeBuffEffect));
             return skill;
         default:
             Assert.IsTrue(true);

@@ -45,7 +45,6 @@ public class PoisonDebuff : TimedBuff
             lagTime -= damagePeriod;
             basicFXVisualizer.Paint(Color.green);
             trueDamageStrategy.Do(owner, trueDamage);
-            Debug.Log("Debuff True Damage: " + trueDamage);
         }
         base.Tick(deltaTime);
 
