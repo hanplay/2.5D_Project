@@ -43,9 +43,15 @@ public class UI_Buff : MonoBehaviour
 
 
         if (Buff.DoNotShow == buff.IndexNumber())
-            return;
+        {
+            if (0 == textMesh.text.Length)
+                return;
+            textMesh.text = "";
+        }
         else
+        {
             textMesh.text = buff.IndexNumber().ToString();
+        }
     }
 
 

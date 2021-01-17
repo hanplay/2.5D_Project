@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveCommand : ICommand
+public class MoveCommand : Command
 {
     private Vector3 destination;
 
@@ -11,18 +11,20 @@ public class MoveCommand : ICommand
         this.destination = destination;
     }
 
-    public void Execute(Unit unit)
+    public void Execute(Unit owner, Vector3 destination)
     {
-        IMoveableState moveableState = unit.GetStateSystem().GetCurrentState() as IMoveableState;
+        SetOwner(owner);
+        SetDestination(destination);
+        Execute();
+    }
+
+    public override void Execute()
+    {
+        IMoveableState moveableState = owner.GetStateSystem().GetCurrentState() as IMoveableState;
         if (null == moveableState)
             return;
-        if(unit.GetTargetedUnitHandler().TryGetTargetedUnit(out Unit targetedUnit))
-            unit.GetTargetedUnitHandler().ReleaseTarget();
-        moveableState.MoveTo(destination);
-    }
-    public void Execute(Unit unit, Vector3 destination)
-    {
-        SetDestination(destination);
-        Execute(unit);
+        if(owner.GetTargetedUnitHandler().TryGetTargetedUnit(out Unit targetedUnit))
+            owner.GetTargetedUnitHandler().ReleaseTarget();
+        moveableState.MoveTo(destination);        
     }
 }

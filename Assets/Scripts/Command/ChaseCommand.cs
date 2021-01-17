@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseCommand : ICommand
+public class ChaseCommand : Command
 {
     private Unit targetedUnit;
     public void SetTargetUnit(Unit targetUnit)
@@ -10,26 +10,30 @@ public class ChaseCommand : ICommand
         this.targetedUnit = targetUnit;
     }
 
-    public void Execute(Unit unit)
+    public void Execute(Unit owner, Unit targetUnit)
     {
-        IMoveableState moveableState = unit.GetStateSystem().GetCurrentState() as IMoveableState;
+        SetOwner(owner);
+        SetTargetUnit(targetUnit);
+        Execute();
+    }
+
+    public override void Execute()
+    {
+        IMoveableState moveableState = owner.GetStateSystem().GetCurrentState() as IMoveableState;
         if (null == moveableState)
             return;
 
-        if (true == unit.GetTargetedUnitHandler().TryGetTargetedUnit(out Unit handlerUnit))
+        if (true == owner.GetTargetedUnitHandler().TryGetTargetedUnit(out Unit handlerUnit))
         {
-            if (handlerUnit != targetedUnit)            
-                unit.GetTargetedUnitHandler().ReleaseTarget();            
+            if (handlerUnit != targetedUnit)
+            {
+                owner.GetTargetedUnitHandler().ReleaseTarget();
+                owner.GetTargetedUnitHandler().SetTarget(targetedUnit);
+            }
         }
         else
-            unit.GetTargetedUnitHandler().SetTarget(targetedUnit);
+            owner.GetTargetedUnitHandler().SetTarget(targetedUnit);
 
         moveableState.ChaseTarget(targetedUnit);
-    }
-
-    public void Execute(Unit unit, Unit targetUnit)
-    {
-        SetTargetUnit(targetUnit);
-        Execute(unit);
     }
 }

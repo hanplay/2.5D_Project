@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4719540334879272100}
   - component: {fileID: 4872426859707693336}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4719341397065799282}
   - component: {fileID: 4872132752579211278}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Pants
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4711003581473620970}
   - component: {fileID: 4872351517350305630}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 4719559123851614832}
   - component: {fileID: 4628929710581993328}
   - component: {fileID: 4713550628340970437}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4719355715453782136}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: WeaponSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4719639539634623556}
   - component: {fileID: 4872402024550705538}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Leg-R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4711045812483346762}
   - component: {fileID: 4871913488068799250}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: helmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4711088087233249162}
   - component: {fileID: 4872201947817393230}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -601,7 +601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4711038388111953904}
   - component: {fileID: 4872127092264291834}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 54653306803631280}
   - component: {fileID: 4714160095356238759}
   - component: {fileID: 4714160095356238757}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Orc(Hammer)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -786,7 +786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4719597249878706468}
   - component: {fileID: 4871651427280558764}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -905,7 +905,7 @@ GameObject:
   - component: {fileID: 7319283088551611046}
   - component: {fileID: 7319283088551611045}
   - component: {fileID: 7319283088551611044}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: UI_HealthPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1030,7 +1030,7 @@ GameObject:
   - component: {fileID: 7319283088621853704}
   - component: {fileID: 7319283088621853703}
   - component: {fileID: 7319283088621853702}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1136,7 +1136,7 @@ GameObject:
   - component: {fileID: 7319283089889089659}
   - component: {fileID: 7319283089889089661}
   - component: {fileID: 7319283089889089660}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: HealthPointsBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -50,14 +50,13 @@ public class PlayerInputListener : MonoBehaviour,
     {
         travelRouteWriter.HideRouteLine();
         RaycastResult raycastResult = eventData.pointerCurrentRaycast;
-        Unit unit;
-        if(false == raycastResult.gameObject.TryGetComponent<Unit>(out unit))
+        if (false == raycastResult.gameObject.TryGetComponent<Unit>(out Unit unit))
         {
             moveCommand.Execute(player, raycastResult.worldPosition);
             return;
-        }      
-        
-        if(player == unit)
+        }
+
+        if (player == unit)
         {
             PlayerSelector.Instance.SetPlayer(player);
             return;

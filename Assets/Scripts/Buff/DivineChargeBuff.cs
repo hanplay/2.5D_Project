@@ -6,44 +6,57 @@ public class DivineChargeBuff : TimedBuff
 {
     private GameObject strikeEffect;
     private float radius;
+    private RemoveDamageStrategeDecoratorCommand removeDamageStrategeDecoratorCommand = new RemoveDamageStrategeDecoratorCommand();
 
     public DivineChargeBuff(BuffType TypeValue, GameObject strikeEffect, float radius, float duration) : base(TypeValue, duration)
     {
         this.strikeEffect = strikeEffect;
         this.radius = radius;
+        maxStack = 5;
+        currentStack = maxStack;
     }
 
     public override void ApplyEffects()
     {
         owner.GetStatsSystem().AddAttackPower(1);        
+
         CompositeDamageStrategy compositeDamageStrategy =
-            new CompositeDamageStrategy(owner.GetAttackStrategy().GetDamageStrategy(), BuffType.DivineCharge, owner.GetTargetingStrategy(), strikeEffect, radius);
-        owner.GetAttackStrategy().SetDamageStrategy(compositeDamageStrategy);
+            new CompositeDamageStrategy(owner.GetAttackStrategy().GetDamageStrategy(), TypeValue, owner.GetTargetingStrategy(), strikeEffect, radius);
+
+        DamageNotifyDecorator damageNotifyDecorator = new DamageNotifyDecorator(compositeDamageStrategy, BuffType.DivineCharge);
+        damageNotifyDecorator.OnDamage += DamageNotifyDecorator_OnDamage;
+
+        owner.GetAttackStrategy().SetDamageStrategy(damageNotifyDecorator);
+    }
+
+    private void DamageNotifyDecorator_OnDamage(object sender, System.EventArgs e)
+    {
+        currentStack -= 1;
     }
 
     public override void EraseEffects()
     {
         owner.GetStatsSystem().AddAttackPower(-1);
-        DamageStrategyDecorator damageStrategyDecorator = owner.GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
-        if (damageStrategyDecorator.DecoratingBuffType == TypeValue)
-        {
-            owner.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
-        }
-        else
-        {
-
-            DamageStrategyDecorator nextDamageStrategyDecorator = damageStrategyDecorator.GetDamageStrategy() as DamageStrategyDecorator;
-            while (TypeValue != nextDamageStrategyDecorator.DecoratingBuffType)
-            {
-                damageStrategyDecorator = nextDamageStrategyDecorator;
-                nextDamageStrategyDecorator = damageStrategyDecorator.GetDamageStrategy() as DamageStrategyDecorator;
-            }
-            damageStrategyDecorator.SetDamageStrategy(nextDamageStrategyDecorator.GetDamageStrategy());
-        }
+        removeDamageStrategeDecoratorCommand.Execute(owner, TypeValue);
     }
 
     public override int IndexNumber()
     {
-        return DoNotShow;
+        return currentStack;
+    }
+
+    public override void Stack()
+    {
+        base.Stack();
+        currentStack = maxStack;
+    }
+
+    public override void Tick(float deltaTime)
+    {
+        base.Tick(deltaTime);
+        if(0 == currentStack)
+        {
+            End();
+        }
     }
 }

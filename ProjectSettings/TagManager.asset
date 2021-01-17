@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - FxTemporaire
+  - Mon_WeaponCollider
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - Player
-  - Enemy
+  - Unit
   - Ground
-  - UnPointable
+  - 
+  - 
   - 
   - 
   - 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DeadlyPoisonBuff : TimedBuff
 {
     private Buff attackDebuff;
+    private RemoveDamageStrategeDecoratorCommand removeDamageStrategeDecoratorCommand = new RemoveDamageStrategeDecoratorCommand();
     public DeadlyPoisonBuff(BuffType TypeValue, float duration, Buff attackDebuff) : base(TypeValue, duration)
     {
         this.attackDebuff = attackDebuff;
@@ -19,22 +20,7 @@ public class DeadlyPoisonBuff : TimedBuff
 
     public override void EraseEffects()
     {
-        DamageStrategyDecorator damageStrategyDecorator = owner.GetAttackStrategy().GetDamageStrategy() as DamageStrategyDecorator;
-        if (damageStrategyDecorator.DecoratingBuffType == TypeValue)
-        {
-            owner.GetAttackStrategy().SetDamageStrategy(damageStrategyDecorator.GetDamageStrategy());
-        }
-        else
-        {
-
-            DamageStrategyDecorator nextDamageStrategyDecorator = damageStrategyDecorator.GetDamageStrategy() as DamageStrategyDecorator;
-            while (TypeValue != nextDamageStrategyDecorator.DecoratingBuffType)
-            {
-                damageStrategyDecorator = nextDamageStrategyDecorator;
-                nextDamageStrategyDecorator = damageStrategyDecorator.GetDamageStrategy() as DamageStrategyDecorator;
-            }
-            damageStrategyDecorator.SetDamageStrategy(nextDamageStrategyDecorator.GetDamageStrategy());
-        }
+        removeDamageStrategeDecoratorCommand.Execute(owner, TypeValue);
     }
     
     public override int IndexNumber()
