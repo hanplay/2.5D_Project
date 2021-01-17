@@ -139,7 +139,7 @@ public class GameAssets : MonoBehaviour
             buff.SetBuffSprite(PrayBuffSprite);
             return buff;
         case BuffType.DivineCharge:
-            buff = new DivineChargeBuff(TypeValue, divineChargeEffect, 3f, 10f);
+            buff = new DivineChargeBuff(TypeValue, divineChargeEffect, 5, 3f, 10f);
             buff.SetBuffSprite(divineChargeSprite);
             return buff;
         case BuffType.Teleport:
@@ -169,7 +169,7 @@ public class GameAssets : MonoBehaviour
         {
         case SkillType.Dive:
             skill.SetCanCancel(true);
-            skill.SetCooldownTime(5f);
+            skill.SetCooldownTime(15f);
             skill.SetIsTargetSkill(true);
             skill.SetSkillSprite(diveSkillSprite);
             skill.SetRange(6f);

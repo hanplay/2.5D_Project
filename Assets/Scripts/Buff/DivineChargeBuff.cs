@@ -8,17 +8,17 @@ public class DivineChargeBuff : TimedBuff
     private float radius;
     private RemoveDamageStrategeDecoratorCommand removeDamageStrategeDecoratorCommand = new RemoveDamageStrategeDecoratorCommand();
 
-    public DivineChargeBuff(BuffType TypeValue, GameObject strikeEffect, float radius, float duration) : base(TypeValue, duration)
+    public DivineChargeBuff(BuffType TypeValue, GameObject strikeEffect, int maxStack, float radius, float duration) : base(TypeValue, duration)
     {
         this.strikeEffect = strikeEffect;
         this.radius = radius;
-        maxStack = 5;
+        this.maxStack = maxStack;
         currentStack = maxStack;
     }
 
     public override void ApplyEffects()
     {
-        owner.GetStatsSystem().AddAttackPower(1);        
+        owner.GetStatsSystem().AddAttackPower(5);        
 
         CompositeDamageStrategy compositeDamageStrategy =
             new CompositeDamageStrategy(owner.GetAttackStrategy().GetDamageStrategy(), TypeValue, owner.GetTargetingStrategy(), strikeEffect, radius);
@@ -36,7 +36,7 @@ public class DivineChargeBuff : TimedBuff
 
     public override void EraseEffects()
     {
-        owner.GetStatsSystem().AddAttackPower(-1);
+        owner.GetStatsSystem().AddAttackPower(-5);
         removeDamageStrategeDecoratorCommand.Execute(owner, TypeValue);
     }
 
