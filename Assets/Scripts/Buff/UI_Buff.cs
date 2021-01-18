@@ -35,13 +35,21 @@ public class UI_Buff : MonoBehaviour
 
     private void Update()
     {
+        UpdateRemainingTime();
+        UpdateIndex();
+    }
+
+    private void UpdateRemainingTime()
+    {
         TimedBuff timedBuff = buff as TimedBuff;
         if (null == timedBuff)
             uI_Blocker.fillAmount = 0f;
         else
             uI_Blocker.fillAmount = timedBuff.GetRemainingTimeProportion();
+    }
 
-
+    private void UpdateIndex()
+    {
         if (Buff.DoNotShow == buff.IndexNumber())
         {
             if (0 == textMesh.text.Length)
@@ -53,7 +61,5 @@ public class UI_Buff : MonoBehaviour
             textMesh.text = buff.IndexNumber().ToString();
         }
     }
-
-
 
 }
